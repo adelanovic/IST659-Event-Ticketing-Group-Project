@@ -119,3 +119,26 @@ Leave out `DB_HOST` to use a local SQLite file (`concert_tickets.db`) instead.
 
 For a class project this connects as `sa`. A real deployment would use a
 dedicated SQL login with rights only on `concert_tickets`, HTTPS, and login rate limiting.
+
+## References
+
+Anthropic. (2026). *Claude Code* (Claude Opus 5.5, model `claude-opus-5-5`) [AI coding assistant]. https://claude.com/claude-code
+
+### How AI was used
+
+This website was generated with Claude Code, an AI coding assistant, working from
+the team's prompts and design decisions, in November 2026. The team directed the
+work, reviewed and tested the results, and is responsible for the final submission.
+
+Generated with AI assistance:
+
+- All website code: `app.py`, `db.py`, `config.py`, `load_ticketmaster_data.py`,
+  `reset_db.py`, `show_accounts.py`
+- The page templates (`templates/`) and visual design (`static/style.css`)
+- The Docker setup (`Dockerfile`, `docker-compose.yml`, `up.bat`, `down.bat`, `run.bat`)
+- The automated tests (`tests/`)
+- `sql/account_tables.sql`, written as a reference for the login tables. The
+  team's own UP/DOWN SQL file is the official schema.
+
+Per the project charter, the team writes the conceptual and logical data models
+and the project's SQL file; this website is the AI-assisted frontend.
