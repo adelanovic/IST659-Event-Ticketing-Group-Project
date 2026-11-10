@@ -83,7 +83,7 @@ h2 { font: 600 20px/1.3 var(--body); margin: 36px 0 8px; }
 
 form { display: grid; gap: 16px; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.field { display: grid; gap: 6px; min-width: 0; }
+.field { display: grid; gap: 6px; min-width: 0; align-content: start; }  /* keep inputs level when a neighbour has a hint */
 label { font-weight: 600; font-size: 14px; }
 .optional { font-weight: 400; color: var(--muted); }
 input {
