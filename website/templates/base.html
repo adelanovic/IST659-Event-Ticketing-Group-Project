@@ -4,39 +4,69 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <meta name="description" content="Find live music near you: browse upcoming shows, venues and artists.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 8h24v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6z' fill='%23c8342b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500&family=Work+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+{% set ep = request.endpoint or '' %}
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="brand" href="{{ url_for('index') }}">{{ site_name }}</a>
-    <nav>
-      <a href="{{ url_for('venues_search') }}">Venues</a>
-      {% if current_name %}
-        {% if current_type == 'venue' %}
-          <a href="{{ url_for('venue_home') }}">My venue</a>
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('index') }}">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8h24v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6z"/></svg>
+        {{ site_name }}
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="{{ url_for('events_search') }}" {% if ep in ('events_search', 'event_detail', 'artist_detail') %}aria-current="page"{% endif %}>Shows</a>
+        <a href="{{ url_for('venues_search') }}" {% if ep in ('venues_search', 'venue_detail') %}aria-current="page"{% endif %}>Venues</a>
+      </nav>
+      <nav class="account-nav" aria-label="Account">
+        {% if current_name %}
+          {% if current_type == 'venue' %}
+            <a href="{{ url_for('venue_home') }}" {% if ep in ('venue_home', 'list_event') %}aria-current="page"{% endif %}>My venue</a>
+          {% else %}
+            <a href="{{ url_for('account') }}" {% if ep == 'account' %}aria-current="page"{% endif %}>My account</a>
+          {% endif %}
+          <form method="post" action="{{ url_for('logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="link-button" type="submit">Log out</button>
+          </form>
         {% else %}
-          <a href="{{ url_for('account') }}">My account</a>
+          <a href="{{ url_for('login') }}" {% if ep == 'login' %}aria-current="page"{% endif %}>Log in</a>
+          <a class="button small" href="{{ url_for('register') }}">Sign up</a>
         {% endif %}
-        <form method="post" action="{{ url_for('logout') }}">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button class="link-button" type="submit">Log out</button>
-        </form>
-      {% else %}
-        <a href="{{ url_for('login') }}">Log in</a>
-        <a class="button small" href="{{ url_for('register') }}">Create account</a>
-      {% endif %}
-    </nav>
+      </nav>
+    </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     {% with messages = get_flashed_messages() %}
       {% for m in messages %}<p class="flash" role="status">{{ m }}</p>{% endfor %}
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="site-footer">IST659 class project · {{ site_name }}</footer>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <p class="brand footer-brand">{{ site_name }}</p>
+        <p class="footer-note">IST659 class project. Show listings from Ticketmaster, for academic use.</p>
+      </div>
+      <nav aria-label="Footer">
+        <p class="footer-head">Find shows</p>
+        <a href="{{ url_for('events_search') }}">All upcoming shows</a>
+        <a href="{{ url_for('venues_search') }}">Venues</a>
+      </nav>
+      <nav aria-label="For venues">
+        <p class="footer-head">For venues</p>
+        <a href="{{ url_for('register_venue') }}">Register your venue</a>
+        <a href="{{ url_for('login') }}">Venue log in</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>

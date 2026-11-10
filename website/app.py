@@ -12,13 +12,13 @@ import hmac
 import os
 import re
 import secrets
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from functools import wraps
 
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
-from sqlalchemy import func, insert, select, update
+from sqlalchemy import distinct, func, insert, or_, select, update
 from sqlalchemy.exc import IntegrityError
 
 import config
@@ -126,11 +126,6 @@ EMAIL_TAKEN = "An account with this email already exists. Log in instead."
 
 
 # --- Pages -------------------------------------------------------------------
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -441,9 +436,9 @@ def events_at_venue(conn, venue_id):
                   event_artists.c.billing_order)).all()
     by_id = {}
     for r in rows:
-        ev = by_id.setdefault(r.event_id, {"name": r.name, "date": r.event_date,
-                                           "time": r.event_time, "status": r.status,
-                                           "artists": []})
+        ev = by_id.setdefault(r.event_id, {"event_id": r.event_id, "name": r.name,
+                                           "date": r.event_date, "time": r.event_time,
+                                           "status": r.status, "artists": []})
         if r.artist:
             ev["artists"].append(r.artist)
     return list(by_id.values())
@@ -490,8 +485,9 @@ def venues_search():
         states = conn.execute(select(venues.c.state).distinct().order_by(venues.c.state)).scalars().all()
 
     pages = max(1, -(-total // PAGE_SIZE))
+    params = {k: v for k, v in {"q": q, "state": state}.items() if v}
     return render_template("venues.html", q=q, state=state, states=states, results=results,
-                           total=total, page=page, pages=pages)
+                           total=total, page=page, pages=pages, params=params)
 
 
 @app.route("/venues/<int:venue_id>")
@@ -502,11 +498,212 @@ def venue_detail(venue_id):
         venue = conn.execute(select(venues).where(venues.c.venue_id == venue_id)).first()
         if venue is None:
             abort(404)
-        all_events = events_at_venue(conn, venue_id)
+        rows = conn.execute(select(*EVENT_COLUMNS)
+                            .select_from(events.join(venues, venues.c.venue_id == events.c.venue_id))
+                            .where(events.c.venue_id == venue_id)
+                            .order_by(events.c.event_date, events.c.event_time,
+                                      events.c.event_id)).all()
+        all_shows = with_lineups(conn, rows)
     cutoff = today()
     return render_template("venue_public.html", venue=venue,
-                           upcoming=[e for e in all_events if e["date"] >= cutoff],
-                           past=[e for e in all_events if e["date"] < cutoff])
+                           upcoming=[s for s in all_shows if s["event_date"] >= cutoff],
+                           past=[s for s in all_shows if s["event_date"] < cutoff])
+
+
+# --- Shows: home page, search, show and artist pages ------------------------------
+
+EVENT_COLUMNS = (events.c.event_id, events.c.name, events.c.event_date, events.c.event_time,
+                 events.c.status, venues.c.venue_id, venues.c.name.label("venue_name"),
+                 venues.c.city, venues.c.state)
+
+
+def with_lineups(conn, rows):
+    """Turn event rows into dicts with `artists` (billing order) and the headliner's `genre`."""
+    shows = [dict(r._mapping, artists=[], genre=None) for r in rows]
+    if not shows:
+        return shows
+    by_id = {s["event_id"]: s for s in shows}
+    lineup = conn.execute(
+        select(event_artists.c.event_id, artists.c.artist_id, artists.c.name,
+               genres.c.genre_id, genres.c.name.label("genre_name"))
+        .join(artists, artists.c.artist_id == event_artists.c.artist_id)
+        .outerjoin(genres, genres.c.genre_id == artists.c.genre_id)
+        .where(event_artists.c.event_id.in_(list(by_id)))
+        .order_by(event_artists.c.event_id, event_artists.c.billing_order)).all()
+    for r in lineup:
+        show = by_id[r.event_id]
+        show["artists"].append({"artist_id": r.artist_id, "name": r.name})
+        if show["genre"] is None and r.genre_id is not None:
+            show["genre"] = {"genre_id": r.genre_id, "name": r.genre_name}
+    return shows
+
+
+def find_shows(conn, *, q="", genre_id=None, state="", date_from=None, date_to=None,
+               on_sale_only=False, limit=PAGE_SIZE, offset=0):
+    """Shows matching the filters in date order, plus how many match in total."""
+    filters = [events.c.event_date >= (date_from or today())]
+    if on_sale_only:
+        filters.append(events.c.status == "onsale")
+    if date_to:
+        filters.append(events.c.event_date <= date_to)
+    if q:
+        by_artist = (select(event_artists.c.event_id)
+                     .join(artists, artists.c.artist_id == event_artists.c.artist_id)
+                     .where(artists.c.name.contains(q, autoescape=True)))
+        filters.append(or_(events.c.name.contains(q, autoescape=True),
+                           venues.c.name.contains(q, autoescape=True),
+                           venues.c.city.contains(q, autoescape=True),
+                           events.c.event_id.in_(by_artist)))
+    if genre_id:
+        filters.append(events.c.event_id.in_(
+            select(event_artists.c.event_id)
+            .join(artists, artists.c.artist_id == event_artists.c.artist_id)
+            .where(artists.c.genre_id == genre_id)))
+    if state:
+        filters.append(venues.c.state == state)
+
+    joined = events.join(venues, venues.c.venue_id == events.c.venue_id)
+    total = conn.execute(select(func.count()).select_from(joined).where(*filters)).scalar_one()
+    rows = conn.execute(select(*EVENT_COLUMNS).select_from(joined).where(*filters)
+                        .order_by(events.c.event_date, events.c.event_time, events.c.event_id)
+                        .limit(limit).offset(offset)).all()
+    return with_lineups(conn, rows), total
+
+
+def popular_genres(conn, limit=12):
+    """Genres with the most upcoming shows."""
+    n = func.count(distinct(events.c.event_id))
+    return conn.execute(
+        select(genres.c.genre_id, genres.c.name, n.label("shows"))
+        .join(artists, artists.c.genre_id == genres.c.genre_id)
+        .join(event_artists, event_artists.c.artist_id == artists.c.artist_id)
+        .join(events, events.c.event_id == event_artists.c.event_id)
+        .where(events.c.event_date >= today())
+        .group_by(genres.c.genre_id, genres.c.name)
+        .order_by(n.desc(), genres.c.name).limit(limit)).all()
+
+
+def parse_day(value):
+    try:
+        return date.fromisoformat(value) if value else None
+    except ValueError:
+        return None
+
+
+@app.route("/")
+def index():
+    start = today()
+    with engine.connect() as conn:
+        # Six cards fill two rows of three; only shows you could actually buy.
+        this_week, _ = find_shows(conn, date_to=start + timedelta(days=6),
+                                  on_sale_only=True, limit=6)
+        _, week_total = find_shows(conn, date_to=start + timedelta(days=6), limit=1)  # "See all" count
+        genre_list = popular_genres(conn, limit=9)
+        counts = {
+            "shows": conn.execute(select(func.count()).select_from(events)
+                                  .where(events.c.event_date >= start)).scalar_one(),
+            "venues": conn.execute(select(func.count()).select_from(venues)).scalar_one(),
+            "artists": conn.execute(select(func.count()).select_from(artists)).scalar_one(),
+        }
+        n_upcoming = func.count(events.c.event_id)
+        busiest = conn.execute(
+            select(venues.c.venue_id, venues.c.name, venues.c.city, venues.c.state,
+                   n_upcoming.label("shows"))
+            .join(events, events.c.venue_id == venues.c.venue_id)
+            .where(events.c.event_date >= start)
+            .group_by(venues.c.venue_id, venues.c.name, venues.c.city, venues.c.state)
+            .order_by(n_upcoming.desc(), venues.c.name).limit(5)).all()
+    weekend = start + timedelta(days=(5 - start.weekday()) % 7)   # next Saturday (or today)
+    return render_template("index.html", this_week=this_week, week_total=week_total,
+                           genres=genre_list, counts=counts, busiest=busiest,
+                           week_end=start + timedelta(days=6),
+                           weekend_from=weekend, weekend_to=weekend + timedelta(days=1))
+
+
+@app.route("/events")
+def events_search():
+    q = request.args.get("q", "").strip()[:100]
+    state = request.args.get("state", "").strip().upper()[:2]
+    genre_arg = request.args.get("genre", "")
+    genre_id = int(genre_arg) if genre_arg.isdigit() and int(genre_arg) <= MAX_INT else None
+    date_from = max(parse_day(request.args.get("from")) or today(), today())
+    date_to = parse_day(request.args.get("to"))
+    if date_to and date_to < date_from:
+        date_to = None
+    page = max(1, min(request.args.get("page", 1, type=int) or 1, 10_000))
+
+    with engine.connect() as conn:
+        shows, total = find_shows(conn, q=q, genre_id=genre_id, state=state, date_from=date_from,
+                                  date_to=date_to, limit=PAGE_SIZE,
+                                  offset=(page - 1) * PAGE_SIZE)
+        genre_list = conn.execute(select(genres).order_by(genres.c.name)).all()
+        states = conn.execute(select(venues.c.state).distinct().order_by(venues.c.state)).scalars().all()
+
+    genre_name = next((g.name for g in genre_list if g.genre_id == genre_id), None)
+    filters_on = bool(q or genre_id or state or date_to or date_from != today())
+    params = {k: v for k, v in {"q": q, "genre": genre_id, "state": state,
+                                "from": date_from.isoformat() if date_from != today() else None,
+                                "to": date_to.isoformat() if date_to else None}.items() if v}
+    return render_template("events.html", shows=shows, total=total, q=q, state=state,
+                           genre_id=genre_id, genre_name=genre_name, genres=genre_list,
+                           states=states, date_from=date_from, date_to=date_to, page=page,
+                           pages=max(1, -(-total // PAGE_SIZE)), params=params,
+                           filters_on=filters_on, min_date=today())
+
+
+@app.route("/events/<int:event_id>")
+def event_detail(event_id):
+    if event_id > MAX_INT:
+        abort(404)
+    with engine.connect() as conn:
+        row = conn.execute(select(*EVENT_COLUMNS, venues.c.address, venues.c.postal_code)
+                           .select_from(events.join(venues, venues.c.venue_id == events.c.venue_id))
+                           .where(events.c.event_id == event_id)).first()
+        if row is None:
+            abort(404)
+        show = with_lineups(conn, [row])[0]
+        more = conn.execute(select(*EVENT_COLUMNS)
+                            .select_from(events.join(venues, venues.c.venue_id == events.c.venue_id))
+                            .where(events.c.venue_id == row.venue_id,
+                                   events.c.event_id != event_id,
+                                   events.c.event_date >= today())
+                            .order_by(events.c.event_date, events.c.event_time).limit(4)).all()
+        more = with_lineups(conn, more)
+    return render_template("event.html", show=show, more=more, is_past=show["event_date"] < today())
+
+
+@app.route("/artists/<int:artist_id>")
+def artist_detail(artist_id):
+    if artist_id > MAX_INT:
+        abort(404)
+    with engine.connect() as conn:
+        artist = conn.execute(select(artists.c.artist_id, artists.c.name, genres.c.genre_id,
+                                     genres.c.name.label("genre_name"))
+                              .outerjoin(genres, genres.c.genre_id == artists.c.genre_id)
+                              .where(artists.c.artist_id == artist_id)).first()
+        if artist is None:
+            abort(404)
+        rows = conn.execute(select(*EVENT_COLUMNS)
+                            .select_from(events.join(venues, venues.c.venue_id == events.c.venue_id)
+                                         .join(event_artists, event_artists.c.event_id == events.c.event_id))
+                            .where(event_artists.c.artist_id == artist_id,
+                                   events.c.event_date >= today())
+                            .order_by(events.c.event_date, events.c.event_time)).all()
+        shows = with_lineups(conn, rows)
+    return render_template("artist.html", artist=artist, shows=shows)
+
+
+@app.errorhandler(404)
+def not_found(_error):
+    return render_template("error.html", code=404, title="We couldn't find that page",
+                           message="The link may be old, or the show may have been removed."), 404
+
+
+@app.errorhandler(400)
+def bad_request(error):
+    return render_template("error.html", code=400, title="Something went wrong with that form",
+                           message=getattr(error, "description", None)
+                           or "Go back, reload the page and try again."), 400
 
 
 if __name__ == "__main__":

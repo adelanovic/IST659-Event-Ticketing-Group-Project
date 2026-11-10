@@ -2,22 +2,34 @@
 {% import "_macros.html" as m %}
 {% block title %}{{ venue.name }} · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="account venue-page">
-  <p class="eyebrow"><a href="{{ url_for('venues_search') }}">Venues</a> · {{ venue.city }}, {{ venue.state }}</p>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('venues_search') }}">Venues</a> <span aria-hidden="true">/</span>
+  <a href="{{ url_for('venues_search', state=venue.state) }}">{{ venue.state }}</a> <span aria-hidden="true">/</span>
+  <span>{{ venue.city }}</span>
+</nav>
+
+<section class="browse wide">
+  <p class="eyebrow">Venue</p>
   <h1>{{ venue.name }}</h1>
   <p class="lede small">{{ venue.address ~ ", " if venue.address }}{{ venue.city }}, {{ venue.state }} {{ venue.postal_code }}</p>
 
-  <h2>Upcoming shows{% if upcoming %} <span class="count-badge">{{ upcoming|length }}</span>{% endif %}</h2>
+  <div class="section-head">
+    <h2>Upcoming shows{% if upcoming %} <span class="count-badge">{{ upcoming|length }}</span>{% endif %}</h2>
+    <a class="see-all" href="{{ url_for('events_search', q=venue.city, state=venue.state) }}">More in {{ venue.city }} →</a>
+  </div>
   {% if upcoming %}
-    {{ m.event_table(upcoming) }}
+    {{ m.show_grid(upcoming, show_venue=False) }}
   {% else %}
-    <p class="note">No upcoming shows are listed for this venue.</p>
+    <div class="empty">
+      <p>No upcoming shows are listed for this venue.</p>
+      <a class="button ghost" href="{{ url_for('events_search', q=venue.city, state=venue.state) }}">Shows in {{ venue.city }}</a>
+    </div>
   {% endif %}
 
   {% if past %}
   <details class="past">
     <summary>Past shows ({{ past|length }})</summary>
-    {{ m.event_table(past) }}
+    {{ m.show_grid(past, show_venue=False) }}
   </details>
   {% endif %}
 </section>

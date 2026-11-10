@@ -1,21 +1,66 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m %}
 {% block content %}
-<section class="hero">
-  <p class="eyebrow">Live music · US venues</p>
-  <h1>Your seat at the next show starts here.</h1>
-  <p class="lede">Create a free account to buy tickets, keep track of your orders and get into the venue faster.</p>
-  <div class="actions">
-    {% if current_type == 'venue' %}
-      <a class="button" href="{{ url_for('venue_home') }}">Go to my venue</a>
-    {% elif current_name %}
-      <a class="button" href="{{ url_for('account') }}">Go to my account</a>
-    {% else %}
-      <a class="button" href="{{ url_for('register') }}">Create account</a>
-      <a class="button ghost" href="{{ url_for('login') }}">I already have one</a>
-    {% endif %}
-    <a class="button ghost" href="{{ url_for('venues_search') }}">Browse venues</a>
+<section class="hero-band">
+  <div class="hero-inner">
+    <p class="eyebrow">Live music across the US</p>
+    <h1 class="hero-title">Find your next <span>show.</span></h1>
+    <form class="hero-search" method="get" action="{{ url_for('events_search') }}" role="search">
+      <label for="hero-q" class="visually-hidden">Search shows</label>
+      <input id="hero-q" name="q" type="search" placeholder="Artist, venue or city" autocomplete="off" maxlength="100">
+      <button class="button" type="submit">Search shows</button>
+    </form>
+    <p class="quick-links">
+      <a class="chip" href="{{ url_for('events_search', to=week_end.isoformat()) }}">Next 7 days</a>
+      <a class="chip" href="{{ url_for('events_search', **{'from': weekend_from.isoformat(), 'to': weekend_to.isoformat()}) }}">This weekend</a>
+      {% for g in genres[:4] %}<a class="chip" href="{{ url_for('events_search', genre=g.genre_id) }}">{{ g.name }}</a>{% endfor %}
+    </p>
+    <dl class="stats">
+      <div><dt>Upcoming shows</dt><dd>{{ "{:,}".format(counts.shows) }}</dd></div>
+      <div><dt>Venues</dt><dd>{{ "{:,}".format(counts.venues) }}</dd></div>
+      <div><dt>Artists</dt><dd>{{ "{:,}".format(counts.artists) }}</dd></div>
+    </dl>
   </div>
 </section>
+
+<section class="home-section">
+  <div class="section-head">
+    <h2>On sale this week</h2>
+    {% if week_total %}<a class="see-all" href="{{ url_for('events_search', to=week_end.isoformat()) }}">See all {{ "{:,}".format(week_total) }} →</a>{% endif %}
+  </div>
+  {% if this_week %}
+    {{ m.show_grid(this_week) }}
+  {% else %}
+    <p class="note">No shows in the next seven days. <a href="{{ url_for('events_search') }}">Browse everything coming up</a>.</p>
+  {% endif %}
+</section>
+
+<div class="home-columns">
+  {% if genres %}
+  <section class="home-section">
+    <h2>Browse by genre</h2>
+    <ul class="genre-tiles">
+      {% for g in genres %}
+      <li><a href="{{ url_for('events_search', genre=g.genre_id) }}"><span>{{ g.name }}</span><small>{{ g.shows }} show{{ "s" if g.shows != 1 }}</small></a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if busiest %}
+  <section class="home-section">
+    <div class="section-head">
+      <h2>Busiest venues</h2>
+      <a class="see-all" href="{{ url_for('venues_search') }}">All venues →</a>
+    </div>
+    <ol class="rank-list">
+      {% for v in busiest %}
+      <li><a href="{{ url_for('venue_detail', venue_id=v.venue_id) }}"><span class="rank-name">{{ v.name }}<small>{{ v.city }}, {{ v.state }}</small></span><span class="rank-count">{{ v.shows }}</span></a></li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+</div>
 
 {% if not current_name %}
 <section class="split">

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="error-page">
+  <p class="error-code" aria-hidden="true">{{ code }}</p>
+  <h1>{{ title }}</h1>
+  <p class="lede">{{ message }}</p>
+  <div class="actions">
+    <a class="button" href="{{ url_for('events_search') }}">Browse shows</a>
+    <a class="button ghost" href="{{ url_for('index') }}">Go to the home page</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ artist.name }} · {{ site_name }}{% endblock %}
+{% block content %}
+<nav class="crumbs" aria-label="Breadcrumb">
+  <a href="{{ url_for('events_search') }}">Shows</a> <span aria-hidden="true">/</span>
+  {% if artist.genre_id %}<a href="{{ url_for('events_search', genre=artist.genre_id) }}">{{ artist.genre_name }}</a>{% else %}<span>Artists</span>{% endif %}
+</nav>
+
+<section class="browse wide">
+  <p class="eyebrow">Artist</p>
+  <h1>{{ artist.name }}</h1>
+  <p class="result-line">
+    {% if shows %}<strong>{{ shows|length }}</strong> upcoming show{{ "s" if shows|length != 1 }}.{% else %}No upcoming shows right now.{% endif %}
+    {% if artist.genre_id %}{{ m.genre_chip({"genre_id": artist.genre_id, "name": artist.genre_name}) }}{% endif %}
+  </p>
+  {% if shows %}
+    {{ m.show_grid(shows) }}
+  {% else %}
+    <div class="empty">
+      <p>Check back later, or find something similar.</p>
+      <a class="button ghost" href="{{ url_for('events_search', genre=artist.genre_id) if artist.genre_id else url_for('events_search') }}">
+        {{ "More " ~ artist.genre_name ~ " shows" if artist.genre_id else "Browse all shows" }}</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -96,7 +96,7 @@ Leave out `DB_HOST` to use a local SQLite file (`concert_tickets.db`) instead.
 
 | File | What it does |
 |---|---|
-| `app.py` | Pages: home, customer and venue registration, log in/out, customer account, venue page |
+| `app.py` | Pages: home, show search (`/events`), show, artist and venue pages, customer and venue registration, log in/out, customer account, venue owner page and event listing |
 | `db.py` | Database connection and table definitions; creates the database and missing tables, migrates the old `customers` layout |
 | `config.py` | Reads settings from `.env` |
 | `templates/`, `static/` | HTML and CSS |

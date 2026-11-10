@@ -275,6 +275,85 @@ def test_same_event_twice_is_rejected(client):
     assert r.status_code == 400 and "already has an event" in r.get_data(as_text=True)
 
 
+# --- Shows: home, search, show and artist pages ------------------------------
+
+def add_show(event_id, name, venue_id, day, artist_ids=(), status="onsale", when=None):
+    """Extra upcoming shows for these tests (the sample has only one)."""
+    from datetime import date
+    from sqlalchemy import insert
+    with db.engine.begin() as conn:
+        conn.execute(insert(db.events).values(event_id=event_id, name=name, venue_id=venue_id,
+                                              event_date=date(2026, 12, day), event_time=when,
+                                              status=status))
+        for order, artist_id in enumerate(artist_ids, start=1):
+            conn.execute(insert(db.event_artists).values(event_id=event_id, artist_id=artist_id,
+                                                         billing_order=order))
+
+
+@pytest.fixture
+def shows(client):
+    add_show(10, "Winter Rock Fest", 1, 8, artist_ids=(1, 2))      # Rock headliner, SF
+    add_show(11, "Denver Jazz Night", 2, 20, artist_ids=(2,))      # no genre, CO
+    add_show(12, "Called Off", 2, 9, status="cancelled")
+    return client
+
+
+def test_home_page_shows_this_week_genres_and_venues(shows):
+    html = page(shows, "/")
+    week = html.split("On sale this week")[1].split("Browse by genre")[0]
+    assert "Winter Rock Fest" in week
+    assert "Matinee" not in week and "Called Off" not in week   # cancelled shows aren't highlighted
+    assert "Denver Jazz Night" not in week                       # Dec 20 is beyond 7 days
+    assert "See all 3 →" in week                                   # links to every show that week
+    assert 'href="/events?genre=1"' in html and "Busiest venues" in html
+    assert "Upcoming shows</dt><dd>4" in html
+
+
+def test_show_search_matches_names_artists_venues_and_cities(shows):
+    assert "Winter Rock Fest" in page(shows, "/events?q=headliner")   # artist name
+    assert "Denver Jazz Night" in page(shows, "/events?q=auditorium")  # venue name
+    html = page(shows, "/events?q=san+francisco")                     # city
+    assert "Winter Rock Fest" in html and "Denver Jazz Night" not in html
+    assert "No shows match" in page(shows, "/events?q=%25")             # wildcard is literal
+
+
+def test_show_search_filters_and_past_shows_hidden(shows):
+    html = page(shows, "/events")
+    assert "<strong>4</strong> shows" in html and "Big Rock Night" not in html   # Dec 5 is past
+    html = page(shows, "/events?genre=1")
+    assert "Rock shows" in html and "Winter Rock Fest" in html and "Matinee" not in html
+    html = page(shows, "/events?state=CO")
+    assert "Denver Jazz Night" in html and "Winter Rock Fest" not in html
+    html = page(shows, "/events?from=2026-12-09&to=2026-12-31")
+    assert "Denver Jazz Night" in html and "Called Off" in html and "Winter Rock Fest" not in html
+    assert page(shows, "/events?from=junk&to=2026-01-01&genre=abc&page=0")   # bad input is ignored
+
+
+def test_show_page_links_lineup_and_venue(shows):
+    html = page(shows, "/events/10")
+    assert "Winter Rock Fest" in html and "Tickets coming soon" in html
+    assert 'href="/artists/1"' in html and 'href="/artists/2"' in html
+    assert 'href="/venues/1"' in html and "More at The Fillmore" in html and "Matinee" in html
+    assert "This show was cancelled." in page(shows, "/events/12")
+    assert "already happened" in page(shows, "/events/1")
+
+
+def test_artist_page_lists_upcoming_shows(shows):
+    html = page(shows, "/artists/2")
+    assert "Opening Act" in html and "<strong>2</strong> upcoming shows" in html
+    assert "Winter Rock Fest" in html and "Denver Jazz Night" in html
+    assert "Big Rock Night" not in html                                  # past show
+
+
+def test_friendly_404_and_current_page_in_menu(shows):
+    r = shows.get("/events/999")
+    assert r.status_code == 404 and "Browse shows" in r.get_data(as_text=True)
+    assert shows.get("/artists/99999999999").status_code == 404
+    assert shows.get("/no-such-page").status_code == 404
+    html = page(shows, "/events")
+    assert 'href="/events" aria-current="page"' in html
+
+
 # --- Fresh start and reset -------------------------------------------------------
 
 def test_demo_accounts_log_in_and_are_not_duplicated(client):

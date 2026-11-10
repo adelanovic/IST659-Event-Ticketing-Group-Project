@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ genre_name ~ " shows" if genre_name else "Upcoming shows" }} · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="browse wide">
+  <p class="eyebrow">Upcoming shows</p>
+  <h1>{{ genre_name ~ " shows" if genre_name else "Shows" }}</h1>
+
+  <form class="filters" method="get" action="{{ url_for('events_search') }}" role="search">
+    <div class="field grow">
+      <label for="q">Search</label>
+      <input id="q" name="q" type="search" value="{{ q }}" placeholder="Artist, venue, city or show" maxlength="100" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="genre">Genre</label>
+      <select id="genre" name="genre">
+        <option value="">Any genre</option>
+        {% for g in genres %}<option value="{{ g.genre_id }}" {{ 'selected' if g.genre_id == genre_id }}>{{ g.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field narrow">
+      <label for="state">State</label>
+      <select id="state" name="state">
+        <option value="">All</option>
+        {% for s in states %}<option value="{{ s }}" {{ 'selected' if s == state }}>{{ s }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="from">From</label>
+      <input id="from" name="from" type="date" value="{{ date_from.isoformat() }}" min="{{ min_date.isoformat() }}">
+    </div>
+    <div class="field">
+      <label for="to">To</label>
+      <input id="to" name="to" type="date" value="{{ date_to.isoformat() if date_to else '' }}" min="{{ min_date.isoformat() }}">
+    </div>
+    <button class="button" type="submit">Search</button>
+  </form>
+
+  <p class="result-line">
+    {% if total %}
+      <strong>{{ "{:,}".format(total) }}</strong> show{{ "s" if total != 1 }}
+      {%- if q %} matching “{{ q }}”{% endif %}
+      {%- if state %} in {{ state }}{% endif %}
+      {%- if date_to %}, {{ m.show_date(date_from) }} to {{ m.show_date(date_to) }}{% elif date_from != min_date %}, from {{ m.show_date(date_from) }}{% endif %}.
+    {% else %}
+      No shows match these filters.
+    {% endif %}
+    {% if filters_on %}<a class="clear-link" href="{{ url_for('events_search') }}">Clear filters</a>{% endif %}
+  </p>
+
+  {% if shows %}
+    {{ m.show_grid(shows) }}
+    {{ m.pager('events_search', params, page, pages) }}
+  {% else %}
+    <div class="empty">
+      <p>Try a different spelling, a wider date range, or another genre.</p>
+      <a class="button ghost" href="{{ url_for('events_search') }}">See all upcoming shows</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

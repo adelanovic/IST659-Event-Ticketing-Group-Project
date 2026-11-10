@@ -4,6 +4,61 @@
   {{ d.strftime("%a %b") }} {{ d.day }}, {{ d.year }}
 {%- endmacro %}
 
+{% macro show_time(t) -%}
+  {{ t.strftime("%I:%M %p").lstrip("0") if t else "Time TBA" }}
+{%- endmacro %}
+
+{# The torn-ticket date block used on cards and the show page. #}
+{% macro date_stub(d, size="") -%}
+<span class="date-stub {{ size }}" aria-hidden="true">
+  <span class="ds-month">{{ d.strftime("%b") }}</span>
+  <span class="ds-day">{{ d.day }}</span>
+  <span class="ds-weekday">{{ d.strftime("%a") }}</span>
+</span>
+{%- endmacro %}
+
+{% macro status_badge(status) -%}
+  {% if status and status != "onsale" %}<span class="status status-{{ status }}">{{ "Off sale" if status == "offsale" else status|capitalize }}</span>{% endif %}
+{%- endmacro %}
+
+{% macro genre_chip(g) -%}
+  {% if g %}<a class="chip" href="{{ url_for('events_search', genre=g.genre_id) }}">{{ g.name }}</a>{% endif %}
+{%- endmacro %}
+
+{# One show as a card. `s` comes from app.with_lineups(). #}
+{% macro show_card(s, show_venue=True) %}
+<article class="show-card {{ 'is-' ~ s.status }}">
+  {{ date_stub(s.event_date) }}
+  <div class="sc-body">
+    <h3 class="sc-title"><a class="stretched" href="{{ url_for('event_detail', event_id=s.event_id) }}">{{ s.name }}</a></h3>
+    {% set lineup = s.artists|map(attribute="name")|join(" · ") %}
+    {% if lineup and lineup|lower not in s.name|lower %}<p class="sc-lineup">{{ lineup }}</p>{% endif %}
+    <p class="sc-meta">
+      {{ show_time(s.event_time) }}{% if show_venue %} · {{ s.venue_name }}, {{ s.city }}, {{ s.state }}{% endif %}
+    </p>
+    <p class="sc-tags">{{ status_badge(s.status) }}{{ genre_chip(s.genre) }}</p>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro show_grid(shows, show_venue=True) %}
+<div class="show-grid">
+  {% for s in shows %}{{ show_card(s, show_venue) }}{% endfor %}
+</div>
+{% endmacro %}
+
+{# Previous / next links that keep the current filters. #}
+{% macro pager(endpoint, params, page, pages) %}
+{% if pages > 1 %}
+<nav class="pager" aria-label="Pages">
+  {% if page > 1 %}<a class="button ghost small" href="{{ url_for(endpoint, page=page - 1, **params) }}" rel="prev">← Previous</a>{% else %}<span></span>{% endif %}
+  <span class="pager-pos">Page {{ page }} of {{ pages }}</span>
+  {% if page < pages %}<a class="button ghost small" href="{{ url_for(endpoint, page=page + 1, **params) }}" rel="next">Next →</a>{% else %}<span></span>{% endif %}
+</nav>
+{% endif %}
+{% endmacro %}
+
+{# Table of a venue's events, used on venue pages. #}
 {% macro event_table(event_list) %}
 <div class="table-wrap">
   <table class="events">
@@ -13,7 +68,7 @@
       <tr>
         <td class="nowrap">{{ show_date(e.date) }}</td>
         <td class="nowrap">{{ e.time.strftime("%I:%M %p").lstrip("0") if e.time else "TBA" }}</td>
-        <td><span class="ev-name">{{ e.name }}</span>{% if e.artists %}<span class="ev-artists">{{ e.artists|join(" · ") }}</span>{% endif %}</td>
+        <td><a class="ev-name" href="{{ url_for('event_detail', event_id=e.event_id) }}">{{ e.name }}</a>{% if e.artists %}<span class="ev-artists">{{ e.artists|join(" · ") }}</span>{% endif %}</td>
         <td><span class="status status-{{ e.status }}">{{ e.status }}</span></td>
       </tr>
       {% endfor %}

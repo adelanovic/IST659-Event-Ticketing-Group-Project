@@ -2,7 +2,7 @@
 {% import "_macros.html" as m %}
 {% block title %}Venues · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="browse">
+<section class="browse wide">
   <p class="eyebrow">Find a venue</p>
   <h1>Venues</h1>
 
@@ -27,7 +27,6 @@
       {%- if q %} matching “{{ q }}”{% endif %}
       {%- if state %} in {{ state }}{% endif %}
       {%- if not q %}, busiest first{% endif %}.
-      {% if pages > 1 %}Page {{ page }} of {{ pages }}.{% endif %}
     {% else %}
       No venues match{% if q %} “{{ q }}”{% endif %}{% if state %} in {{ state }}{% endif %}.
       <a href="{{ url_for('venues_search') }}">Clear the search</a>
@@ -57,11 +56,6 @@
   </ul>
   {% endif %}
 
-  {% if pages > 1 %}
-  <nav class="pager" aria-label="Pages">
-    {% if page > 1 %}<a class="button ghost small" href="{{ url_for('venues_search', q=q or None, state=state or None, page=page - 1) }}">← Previous</a>{% else %}<span></span>{% endif %}
-    {% if page < pages %}<a class="button ghost small" href="{{ url_for('venues_search', q=q or None, state=state or None, page=page + 1) }}">Next →</a>{% endif %}
-  </nav>
-  {% endif %}
+  {{ m.pager('venues_search', params, page, pages) }}
 </section>
 {% endblock %}
