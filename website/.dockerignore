@@ -1,6 +1,12 @@
+.git/
+.gitignore
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
+tests/
+pytest.ini
+requirements-dev.txt
 .env
 .secret_key
 *.db

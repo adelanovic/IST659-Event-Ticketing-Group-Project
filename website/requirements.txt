@@ -1,4 +1,5 @@
-flask>=3.0
-sqlalchemy>=2.0
-argon2-cffi>=23.1
-pymssql>=2.3      # SQL Server driver (no ODBC install needed)
+# Exact versions, tested together. Upgrade on purpose, then re-run the tests.
+flask==3.1.3
+sqlalchemy==2.1.8
+argon2-cffi==25.1.0
+pymssql==2.4.6      # SQL Server driver (no ODBC install needed)

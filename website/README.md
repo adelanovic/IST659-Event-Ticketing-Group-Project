@@ -67,6 +67,18 @@ installed in `.venv`.
 - SQLPad (http://127.0.0.1:5002) or Adminer (http://127.0.0.1:5003) from
   learn-databases: database `concert_tickets`, tables `dbo.accounts`, `dbo.customers`, `dbo.venues`.
 
+## Tests
+
+```powershell
+.venv\Scripts\python -m pip install -r requirements-dev.txt   # first time only
+.venv\Scripts\python -m pytest
+```
+
+The tests use a temporary SQLite database with a few sample venues and events,
+so they don't need SQL Server and never change your data. They cover customer and
+venue registration, login, page access by account type, CSRF protection, venue
+claiming, and the migration from the first `customers` layout.
+
 ## Settings (`.env`)
 
 | Setting | Meaning |
@@ -91,6 +103,8 @@ Leave out `DB_HOST` to use a local SQLite file (`concert_tickets.db`) instead.
 | `sql/account_tables.sql` | `accounts`, `customers` and `venues.account_id` as SQL Server DDL, for the team's UP/DOWN file |
 | `load_ticketmaster_data.py` | Loads the Ticketmaster CSVs for development |
 | `show_accounts.py` | Prints every account |
+| `tests/` | Automated tests (`pytest`) |
+| `requirements.txt`, `requirements-dev.txt` | Exact package versions for the site, plus pytest for the tests |
 
 ## Security choices
 
