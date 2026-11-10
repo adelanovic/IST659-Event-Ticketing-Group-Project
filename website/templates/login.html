@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Log in · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="stub narrow">
+  <div class="stub-main">
+    <p class="eyebrow">Customers and venues</p>
+    <h1>Log in</h1>
+    {% if error %}<p class="error banner" role="alert">{{ error }}</p>{% endif %}
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" value="{{ email }}" autocomplete="email" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="button wide" type="submit">Log in</button>
+    </form>
+  </div>
+  <aside class="stub-tear">
+    <p>New here?</p>
+    <a href="{{ url_for('register') }}">Create account</a>
+    <p class="tear-gap">Run a venue?</p>
+    <a href="{{ url_for('register_venue') }}">Register your venue</a>
+  </aside>
+</section>
+{% endblock %}

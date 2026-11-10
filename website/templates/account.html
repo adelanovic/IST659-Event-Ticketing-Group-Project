@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My account · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="account">
+  <p class="eyebrow">Customer #{{ c.customer_id }}</p>
+  <h1>{{ c.first_name }} {{ c.last_name }}</h1>
+
+  <dl class="details">
+    <div><dt>Email</dt><dd>{{ c.email }}</dd></div>
+    <div><dt>Phone</dt><dd>{{ c.phone or "Not given" }}</dd></div>
+    <div><dt>Member since</dt><dd>{{ c.created_at.strftime("%B") }} {{ c.created_at.day }}, {{ c.created_at.year }}</dd></div>
+  </dl>
+
+  <h2>Your rows in the database</h2>
+  <p class="note">Your login is one row in <code>accounts</code>; your name and phone are one row in <code>customers</code>, linked by <code>account_id</code>. The password column holds an Argon2id hash. Your actual password isn't saved anywhere and can't be recovered from the hash.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr class="group"><td colspan="2">accounts</td></tr>
+        <tr><td>account_id</td><td>{{ c.account_id }}</td></tr>
+        <tr><td>email</td><td>{{ c.email }}</td></tr>
+        <tr><td>password_hash</td><td class="hash">{{ c.password_hash }}</td></tr>
+        <tr><td>account_type</td><td>{{ c.account_type }}</td></tr>
+        <tr><td>created_at</td><td>{{ c.created_at.strftime("%Y-%m-%d %H:%M:%S") }} UTC</td></tr>
+        <tr><td>last_login_at</td><td>{{ c.last_login_at.strftime("%Y-%m-%d %H:%M:%S") ~ " UTC" if c.last_login_at else "NULL" }}</td></tr>
+        <tr><td>is_active</td><td>{{ 1 if c.is_active else 0 }}</td></tr>
+        <tr class="group"><td colspan="2">customers</td></tr>
+        <tr><td>customer_id</td><td>{{ c.customer_id }}</td></tr>
+        <tr><td>account_id</td><td>{{ c.account_id }}</td></tr>
+        <tr><td>first_name</td><td>{{ c.first_name }}</td></tr>
+        <tr><td>last_name</td><td>{{ c.last_name }}</td></tr>
+        <tr><td>phone</td><td>{{ c.phone if c.phone else "NULL" }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

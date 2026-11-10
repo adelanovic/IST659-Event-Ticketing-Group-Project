@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Register a venue · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="stub wide">
+  <div class="stub-main">
+    <p class="eyebrow">For venues</p>
+    <h1>Register your venue</h1>
+
+    <h2 class="step"><span>1</span> Find your venue</h2>
+    <form class="search" method="get" action="{{ url_for('register_venue') }}" role="search">
+      <label for="q" class="visually-hidden">Venue name or city</label>
+      <input id="q" name="q" value="{{ q }}" placeholder="Venue name or city, e.g. Fillmore or Austin" maxlength="100" autocomplete="off">
+      <button class="button" type="submit">Search</button>
+    </form>
+
+    <form method="post" action="{{ url_for('register_venue') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="q" value="{{ q }}">
+
+      <fieldset class="choices {{ 'has-error' if errors.choice }}">
+        <legend class="visually-hidden">Which venue is yours?</legend>
+        {% if q and results %}
+          <p class="hint">{{ results|length }}{{ "+" if results|length == 25 }} unclaimed venue{{ "s" if results|length != 1 }} match “{{ q }}”. Pick yours.</p>
+          {% for v in results %}
+          <label class="choice">
+            <input type="radio" name="choice" value="{{ v.venue_id }}" {{ 'checked' if form.choice == v.venue_id|string }}>
+            <span class="choice-body">
+              <strong>{{ v.name }}</strong>
+              <span>{{ v.address ~ ", " if v.address }}{{ v.city }}, {{ v.state }}</span>
+            </span>
+            <span class="count">{{ v.event_count }} event{{ "s" if v.event_count != 1 }}</span>
+          </label>
+          {% endfor %}
+        {% elif q %}
+          <p class="hint">No unclaimed venues match “{{ q }}”. Check the spelling, or add your venue below.</p>
+        {% else %}
+          <p class="hint">Search above to find your venue among those already listed. If it isn't there, add it below.</p>
+        {% endif %}
+
+        <label class="choice choice-new">
+          <input type="radio" name="choice" value="new" {{ 'checked' if form.choice == 'new' }}>
+          <span class="choice-body"><strong>My venue isn't listed</strong><span>Add its details</span></span>
+        </label>
+        {% if errors.choice %}<p class="error">{{ errors.choice }}</p>{% endif %}
+
+        <div class="new-fields">
+          <div class="field {{ 'has-error' if errors.new_name }}">
+            <label for="new_name">Venue name</label>
+            <input id="new_name" name="new_name" value="{{ form.new_name or '' }}" maxlength="100" autocomplete="organization">
+            {% if errors.new_name %}<p class="error">{{ errors.new_name }}</p>{% endif %}
+          </div>
+          <div class="field {{ 'has-error' if errors.new_address }}">
+            <label for="new_address">Street address <span class="optional">optional</span></label>
+            <input id="new_address" name="new_address" value="{{ form.new_address or '' }}" maxlength="100" autocomplete="street-address">
+            {% if errors.new_address %}<p class="error">{{ errors.new_address }}</p>{% endif %}
+          </div>
+          <div class="row three">
+            <div class="field {{ 'has-error' if errors.new_city }}">
+              <label for="new_city">City</label>
+              <input id="new_city" name="new_city" value="{{ form.new_city or '' }}" maxlength="50" autocomplete="address-level2">
+              {% if errors.new_city %}<p class="error">{{ errors.new_city }}</p>{% endif %}
+            </div>
+            <div class="field {{ 'has-error' if errors.new_state }}">
+              <label for="new_state">State</label>
+              <input id="new_state" name="new_state" value="{{ form.new_state or '' }}" maxlength="2" autocomplete="address-level1" placeholder="NY">
+              {% if errors.new_state %}<p class="error">{{ errors.new_state }}</p>{% endif %}
+            </div>
+            <div class="field {{ 'has-error' if errors.new_postal }}">
+              <label for="new_postal">ZIP code</label>
+              <input id="new_postal" name="new_postal" value="{{ form.new_postal or '' }}" maxlength="10" inputmode="numeric" autocomplete="postal-code">
+              {% if errors.new_postal %}<p class="error">{{ errors.new_postal }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <h2 class="step"><span>2</span> Create the venue login</h2>
+      <div class="field {{ 'has-error' if errors.email }}">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" value="{{ form.email or '' }}" maxlength="255" autocomplete="email" required>
+        {% if errors.email %}<p class="error">{{ errors.email }}</p>{% else %}<p class="hint">The address your venue team will log in with.</p>{% endif %}
+      </div>
+      <div class="row">
+        <div class="field {{ 'has-error' if errors.password }}">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+          {% if errors.password %}<p class="error">{{ errors.password }}</p>{% else %}<p class="hint">At least 8 characters.</p>{% endif %}
+        </div>
+        <div class="field {{ 'has-error' if errors.confirm_password }}">
+          <label for="confirm_password">Confirm password</label>
+          <input id="confirm_password" name="confirm_password" type="password" maxlength="128" autocomplete="new-password" required>
+          {% if errors.confirm_password %}<p class="error">{{ errors.confirm_password }}</p>{% endif %}
+        </div>
+      </div>
+      <button class="button wide" type="submit">Register venue</button>
+    </form>
+  </div>
+  <aside class="stub-tear">
+    <p>Already registered?</p>
+    <a href="{{ url_for('login') }}">Log in</a>
+    <p class="tear-gap">Buying tickets?</p>
+    <a href="{{ url_for('register') }}">Create a customer account</a>
+  </aside>
+</section>
+{% endblock %}

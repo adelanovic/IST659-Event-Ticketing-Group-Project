@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Live music · US venues</p>
+  <h1>Your seat at the next show starts here.</h1>
+  <p class="lede">Create a free account to buy tickets, keep track of your orders and get into the venue faster.</p>
+  <div class="actions">
+    {% if current_type == 'venue' %}
+      <a class="button" href="{{ url_for('venue_home') }}">Go to my venue</a>
+    {% elif current_name %}
+      <a class="button" href="{{ url_for('account') }}">Go to my account</a>
+    {% else %}
+      <a class="button" href="{{ url_for('register') }}">Create account</a>
+      <a class="button ghost" href="{{ url_for('login') }}">I already have one</a>
+    {% endif %}
+  </div>
+</section>
+
+{% if not current_name %}
+<section class="split">
+  <div>
+    <p class="eyebrow">For venues</p>
+    <h2>List your shows and track your sales</h2>
+    <p class="note">Claim your venue to manage its events, set ticket prices and see how each show is selling. Only your account can see your venue's sales.</p>
+  </div>
+  <a class="button ghost" href="{{ url_for('register_venue') }}">Register a venue</a>
+</section>
+{% endif %}
+{% endblock %}

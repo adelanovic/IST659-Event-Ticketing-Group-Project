@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Create account · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="stub">
+  <div class="stub-main">
+    <p class="eyebrow">Admit one</p>
+    <h1>Create your account</h1>
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="row">
+        <div class="field {{ 'has-error' if errors.first_name }}">
+          <label for="first_name">First name</label>
+          <input id="first_name" name="first_name" value="{{ form.first_name or '' }}" maxlength="50" autocomplete="given-name" required>
+          {% if errors.first_name %}<p class="error">{{ errors.first_name }}</p>{% endif %}
+        </div>
+        <div class="field {{ 'has-error' if errors.last_name }}">
+          <label for="last_name">Last name</label>
+          <input id="last_name" name="last_name" value="{{ form.last_name or '' }}" maxlength="50" autocomplete="family-name" required>
+          {% if errors.last_name %}<p class="error">{{ errors.last_name }}</p>{% endif %}
+        </div>
+      </div>
+      <div class="field {{ 'has-error' if errors.email }}">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" value="{{ form.email or '' }}" maxlength="255" autocomplete="email" required>
+        {% if errors.email %}<p class="error">{{ errors.email }}</p>{% endif %}
+      </div>
+      <div class="field {{ 'has-error' if errors.phone }}">
+        <label for="phone">Phone <span class="optional">optional</span></label>
+        <input id="phone" name="phone" type="tel" value="{{ form.phone or '' }}" maxlength="20" autocomplete="tel">
+        {% if errors.phone %}<p class="error">{{ errors.phone }}</p>{% endif %}
+      </div>
+      <div class="row">
+        <div class="field {{ 'has-error' if errors.password }}">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+          {% if errors.password %}<p class="error">{{ errors.password }}</p>{% else %}<p class="hint">At least 8 characters.</p>{% endif %}
+        </div>
+        <div class="field {{ 'has-error' if errors.confirm_password }}">
+          <label for="confirm_password">Confirm password</label>
+          <input id="confirm_password" name="confirm_password" type="password" maxlength="128" autocomplete="new-password" required>
+          {% if errors.confirm_password %}<p class="error">{{ errors.confirm_password }}</p>{% endif %}
+        </div>
+      </div>
+      <button class="button wide" type="submit">Create account</button>
+    </form>
+  </div>
+  <aside class="stub-tear">
+    <p>Already registered?</p>
+    <a href="{{ url_for('login') }}">Log in</a>
+    <p class="tear-gap">Run a venue?</p>
+    <a href="{{ url_for('register_venue') }}">Register your venue</a>
+  </aside>
+</section>
+{% endblock %}

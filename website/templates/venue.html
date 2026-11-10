@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ venue.name }} · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="account venue-page">
+  <p class="eyebrow">Venue #{{ venue.venue_id }}{{ " · from Ticketmaster" if venue.tm_venue_id else " · added on this site" }}</p>
+  <h1>{{ venue.name }}</h1>
+  <p class="lede small">{{ venue.address ~ ", " if venue.address }}{{ venue.city }}, {{ venue.state }} {{ venue.postal_code }}</p>
+
+  <dl class="details">
+    <div><dt>Events listed</dt><dd class="big">{{ venue_events|length }}</dd></div>
+    <div><dt>On sale</dt><dd class="big">{{ venue_events|selectattr("status", "equalto", "onsale")|list|length }}</dd></div>
+    <div><dt>Login</dt><dd>{{ acct.email }}</dd></div>
+  </dl>
+
+  <h2>Your events</h2>
+  {% if venue_events %}
+  <div class="table-wrap">
+    <table class="events">
+      <thead><tr><th>Date</th><th>Time</th><th>Event</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for e in venue_events %}
+        <tr>
+          <td class="nowrap">{{ e.date.strftime("%a %b") }} {{ e.date.day }}, {{ e.date.year }}</td>
+          <td class="nowrap">{{ e.time.strftime("%I:%M %p").lstrip("0") if e.time else "TBA" }}</td>
+          <td><span class="ev-name">{{ e.name }}</span>{% if e.artists %}<span class="ev-artists">{{ e.artists|join(" · ") }}</span>{% endif %}</td>
+          <td><span class="status status-{{ e.status }}">{{ e.status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="note">No events are listed for this venue yet. Event and price tier management is coming next.</p>
+  {% endif %}
+
+  <h2>Sales</h2>
+  <p class="note">Ticket sales will appear here once orders and tickets are added to the database. Only this account can see them.</p>
+</section>
+{% endblock %}

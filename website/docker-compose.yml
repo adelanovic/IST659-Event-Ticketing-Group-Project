@@ -1,0 +1,22 @@
+# The website only. SQL Server runs separately from ../../learn-databases
+# (docker-compose up -d there first); this joins that project's network and
+# reaches the database at hostname "mssql".
+
+services:
+  web:
+    build: .
+    image: concert-tickets-web
+    env_file: .env
+    environment:
+      DB_HOST: mssql          # container name on learndb_net (overrides DB_HOST in .env)
+      DB_PORT: "1433"
+    ports:
+      - "5000:8000"           # http://127.0.0.1:5000
+    networks:
+      - learndb
+    restart: unless-stopped
+
+networks:
+  learndb:
+    external: true
+    name: learn-databases_learndb_net
