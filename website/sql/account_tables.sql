@@ -23,6 +23,17 @@ CREATE TABLE dbo.customers (
     phone        VARCHAR(20)  NULL
 );
 
+-- Optional profile photo, at most one per customer. A separate table so normal
+-- customer queries never read the image bytes.
+CREATE TABLE dbo.customer_avatars (
+    customer_id   INT NOT NULL CONSTRAINT PK_customer_avatars PRIMARY KEY
+        CONSTRAINT FK_customer_avatars_customer REFERENCES dbo.customers(customer_id),
+    image         VARBINARY(MAX) NOT NULL,      -- PNG, JPEG or WebP, up to 2 MB (checked by the site)
+    content_type  VARCHAR(20)    NOT NULL
+        CONSTRAINT CK_customer_avatars_type CHECK (content_type IN ('image/png', 'image/jpeg', 'image/webp')),
+    updated_at    DATETIME2      NOT NULL CONSTRAINT DF_customer_avatars_updated DEFAULT SYSUTCDATETIME()
+);
+
 -- A venue account manages one venue. NULL = nobody has claimed it yet.
 ALTER TABLE dbo.venues ADD account_id INT NULL
     CONSTRAINT FK_venues_account REFERENCES dbo.accounts(account_id);
@@ -36,5 +47,6 @@ GO
 -- DROP INDEX UX_venues_account_id ON dbo.venues;
 -- ALTER TABLE dbo.venues DROP CONSTRAINT FK_venues_account;
 -- ALTER TABLE dbo.venues DROP COLUMN account_id;
+-- DROP TABLE dbo.customer_avatars;
 -- DROP TABLE dbo.customers;
 -- DROP TABLE dbo.accounts;

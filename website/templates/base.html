@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 {% set ep = request.endpoint or '' %}
+{% import "_macros.html" as m %}
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
@@ -23,13 +24,18 @@
       <nav class="main-nav" aria-label="Main">
         <a href="{{ url_for('events_search') }}" {% if ep in ('events_search', 'event_detail', 'artist_detail') %}aria-current="page"{% endif %}>Shows</a>
         <a href="{{ url_for('venues_search') }}" {% if ep in ('venues_search', 'venue_detail') %}aria-current="page"{% endif %}>Venues</a>
+        {% if current_type == 'customer' %}
+        <a href="{{ url_for('my_shows') }}" {% if ep == 'my_shows' %}aria-current="page"{% endif %}>My shows</a>
+        {% endif %}
       </nav>
       <nav class="account-nav" aria-label="Account">
         {% if current_name %}
           {% if current_type == 'venue' %}
             <a href="{{ url_for('venue_home') }}" {% if ep in ('venue_home', 'list_event') %}aria-current="page"{% endif %}>My venue</a>
           {% else %}
-            <a href="{{ url_for('account') }}" {% if ep == 'account' %}aria-current="page"{% endif %}>My account</a>
+            <a class="account-link" href="{{ url_for('account') }}" {% if ep == 'account' %}aria-current="page"{% endif %}>
+              {{ m.avatar(current_initial, current_hue, current_avatar, "sm") }}<span>{{ current_name }}</span>
+            </a>
           {% endif %}
           <form method="post" action="{{ url_for('logout') }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

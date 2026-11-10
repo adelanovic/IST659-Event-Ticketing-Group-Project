@@ -17,6 +17,12 @@
 </span>
 {%- endmacro %}
 
+{# Round profile picture: the customer's photo, or their initial on a colour of their own. #}
+{% macro avatar(initial, hue, version=None, size="") -%}
+{% if version %}<img class="avatar {{ size }}" src="{{ url_for('avatar_image', v=version) }}" alt="">
+{%- else %}<span class="avatar {{ size }} hue-{{ hue }}" aria-hidden="true">{{ initial }}</span>{% endif %}
+{%- endmacro %}
+
 {% macro status_badge(status) -%}
   {% if status and status != "onsale" %}<span class="status status-{{ status }}">{{ "Off sale" if status == "offsale" else status|capitalize }}</span>{% endif %}
 {%- endmacro %}
@@ -45,6 +51,24 @@
 <div class="show-grid">
   {% for s in shows %}{{ show_card(s, show_venue) }}{% endfor %}
 </div>
+{% endmacro %}
+
+{# A purchased ticket on My shows. `t` comes from app.tickets_for_customer(). #}
+{% macro ticket_card(t, is_past=False) %}
+<article class="ticket {{ 'is-past' if is_past }} {{ 'is-' ~ t.status }}">
+  {{ date_stub(t.event_date) }}
+  <div class="tk-body">
+    <p class="sc-tags">{{ status_badge(t.status) }}</p>
+    <h3 class="sc-title"><a class="stretched" href="{{ url_for('event_detail', event_id=t.event_id) }}">{{ t.event_name }}</a></h3>
+    <p class="sc-meta">{{ show_date(t.event_date) }} · {{ show_time(t.event_time) }}</p>
+    <p class="sc-meta">{{ t.venue_name }}, {{ t.city }}, {{ t.state }}</p>
+  </div>
+  <div class="tk-stub">
+    <p class="tk-qty"><span>{{ t.quantity }}</span> ticket{{ "s" if t.quantity != 1 }}</p>
+    <p class="tk-tier">{{ t.tier_name }}</p>
+    <p class="tk-order">Order #{{ t.order_id }}<br>{{ "${:,.2f}".format(t.total_paid) }}</p>
+  </div>
+</article>
 {% endmacro %}
 
 {# Previous / next links that keep the current filters. #}

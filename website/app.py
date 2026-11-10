@@ -17,17 +17,19 @@ from functools import wraps
 
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
-from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
+from flask import (Flask, Response, abort, flash, redirect, render_template, request, session,
+                   url_for)
 from sqlalchemy import distinct, func, insert, or_, select, update
 from sqlalchemy.exc import IntegrityError
 
 import config
-from db import (accounts, artists, customers, engine, event_artists, events, genres, init_db,
-                venues)
+from db import (accounts, artists, customer_avatars, customers, engine, event_artists, events,
+                genres, init_db, venues)
 
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=config.SECRET_KEY,
+    MAX_CONTENT_LENGTH=3 * 1024 * 1024,     # bigger requests are refused (413) before reading
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
 )
@@ -41,7 +43,7 @@ PHONE_RE = re.compile(r"^[0-9 +().-]{7,20}$")
 STATE_RE = re.compile(r"^[A-Z]{2}$")
 ZIP_RE = re.compile(r"^\d{5}(-\d{4})?$")
 MIN_PASSWORD, MAX_PASSWORD = 8, 128
-HOME_FOR = {"customer": "account", "venue": "venue_home"}
+HOME_FOR = {"customer": "my_shows", "venue": "venue_home"}
 PAGE_SIZE = 20
 MAX_INT = 2_147_483_647     # SQL Server INT; bigger ids can't exist and would error
 
@@ -57,9 +59,21 @@ def today():
 
 @app.context_processor
 def template_globals():
+    name = session.get("display_name") or ""
     return {"site_name": config.SITE_NAME, "csrf_token": csrf_token,
-            "current_name": session.get("display_name"),
-            "current_type": session.get("account_type")}
+            "current_name": name,
+            "current_type": session.get("account_type"),
+            "current_avatar": session.get("avatar_v"),          # photo version, or None
+            "current_initial": name[:1].upper(),
+            "current_hue": avatar_hue(session.get("account_id"))}
+
+
+AVATAR_HUES = 6
+
+
+def avatar_hue(account_id):
+    """Which of the six initials-badge colours this account gets (stable per account)."""
+    return (account_id or 0) % AVATAR_HUES
 
 
 # --- CSRF protection: every POST form carries a token tied to the session -----
@@ -95,10 +109,12 @@ def login_required(account_type):
     return decorator
 
 
-def start_session(account_id, account_type, display_name):
+def start_session(account_id, account_type, display_name, avatar_v=None):
     """Fresh session on login, so an old session id can't be reused."""
     session.clear()
     session.update(account_id=account_id, account_type=account_type, display_name=display_name)
+    if avatar_v:
+        session["avatar_v"] = avatar_v
 
 
 # --- Shared form checks ------------------------------------------------------
@@ -159,7 +175,7 @@ def register():
 
     start_session(account_id, "customer", form["first_name"])
     flash(f"Welcome, {form['first_name']}. Your account is ready.")
-    return redirect(url_for("account"))
+    return redirect(url_for("my_shows"))
 
 
 def search_unclaimed_venues(q):
@@ -275,14 +291,19 @@ def login():
     with engine.begin() as conn:
         conn.execute(update(accounts).where(accounts.c.account_id == account.account_id)
                      .values(**changes))
+        avatar_v = None
         if account.account_type == "customer":
-            name = conn.execute(select(customers.c.first_name)
-                                .where(customers.c.account_id == account.account_id)).scalar()
+            cust = conn.execute(select(customers.c.first_name, customer_avatars.c.updated_at)
+                                .outerjoin(customer_avatars,
+                                           customer_avatars.c.customer_id == customers.c.customer_id)
+                                .where(customers.c.account_id == account.account_id)).first()
+            name = cust.first_name if cust else None
+            avatar_v = avatar_version(cust.updated_at) if cust and cust.updated_at else None
         else:
             name = conn.execute(select(venues.c.name)
                                 .where(venues.c.account_id == account.account_id)).scalar()
 
-    start_session(account.account_id, account.account_type, name or email)
+    start_session(account.account_id, account.account_type, name or email, avatar_v)
     return redirect(next_url or url_for(HOME_FOR[account.account_type]))
 
 
@@ -293,19 +314,192 @@ def logout():
     return redirect(url_for("index"))
 
 
+def tickets_for_customer(conn, customer_id):
+    """Ticket orders shown on My shows, soonest first.
+
+    Returns [] until the team's orders/tickets/price-tier tables exist. Then this
+    is the one place to fill in (a view such as vw_customer_tickets fits well).
+    Each item is a dict with:
+        order_id, event_id, event_name, event_date, event_time, status,
+        venue_id, venue_name, city, state, tier_name, quantity, total_paid, ordered_at
+    """
+    return []
+
+
+@app.route("/my-shows")
+@login_required("customer")
+def my_shows():
+    with engine.connect() as conn:
+        customer = conn.execute(select(customers.c.customer_id, customers.c.first_name).where(
+            customers.c.account_id == session["account_id"])).first()
+        if customer is None:
+            session.clear()
+            return redirect(url_for("login"))
+        tickets = tickets_for_customer(conn, customer.customer_id)
+        suggestions, _ = find_shows(conn, date_to=today() + timedelta(days=6),
+                                    on_sale_only=True, limit=3)
+    cutoff = today()
+    upcoming = [t for t in tickets if t["event_date"] >= cutoff]
+    past = sorted((t for t in tickets if t["event_date"] < cutoff),
+                  key=lambda t: t["event_date"], reverse=True)
+    tab = "past" if request.args.get("tab") == "past" else "upcoming"
+    return render_template("my_shows.html", customer=customer, tab=tab, upcoming=upcoming,
+                           past=past, shown=past if tab == "past" else upcoming,
+                           suggestions=suggestions)
+
+
+def avatar_version(updated_at):
+    """Changes whenever the photo changes, so browsers fetch the new one."""
+    return updated_at.strftime("%Y%m%d%H%M%S%f")
+
+
+def current_customer(conn):
+    """The logged-in customer's account, profile and photo info, or None."""
+    return conn.execute(
+        select(accounts, customers.c.customer_id, customers.c.first_name, customers.c.last_name,
+               customers.c.phone, customer_avatars.c.updated_at.label("avatar_updated"))
+        .join(customers, customers.c.account_id == accounts.c.account_id)
+        .outerjoin(customer_avatars, customer_avatars.c.customer_id == customers.c.customer_id)
+        .where(accounts.c.account_id == session["account_id"])).first()
+
+
+def render_account(c, form=None, errors=None, photo_error=None, status=200):
+    with engine.connect() as conn:
+        tickets = tickets_for_customer(conn, c.customer_id)
+    upcoming = [t for t in tickets if t["event_date"] >= today()]
+    stats = {"upcoming": len(upcoming), "tickets": sum(t["quantity"] for t in tickets),
+             "next": min(upcoming, key=lambda t: t["event_date"]) if upcoming else None}
+    form = form or {"first_name": c.first_name, "last_name": c.last_name, "phone": c.phone or ""}
+    return render_template("account.html", c=c, stats=stats, form=form, errors=errors or {},
+                           photo_error=photo_error, editing=bool(errors),
+                           hue=avatar_hue(c.account_id),
+                           avatar_v=avatar_version(c.avatar_updated) if c.avatar_updated else None), status
+
+
+def logged_out_customer():
+    session.clear()
+    return redirect(url_for("login"))
+
+
 @app.route("/account")
 @login_required("customer")
 def account():
     with engine.connect() as conn:
+        c = current_customer(conn)
+    if c is None:          # account was deleted while logged in
+        return logged_out_customer()
+    return render_account(c)
+
+
+@app.route("/account/profile", methods=["POST"])
+@login_required("customer")
+def update_profile():
+    form = {k: " ".join(request.form.get(k, "").split()) for k in ("first_name", "last_name", "phone")}
+    errors = {}
+    if not form["first_name"] or len(form["first_name"]) > 50:
+        errors["first_name"] = "Enter your first name (up to 50 characters)."
+    if not form["last_name"] or len(form["last_name"]) > 50:
+        errors["last_name"] = "Enter your last name (up to 50 characters)."
+    if form["phone"] and not PHONE_RE.match(form["phone"]):
+        errors["phone"] = "Use digits only, with optional spaces, dashes or a leading +."
+    with engine.begin() as conn:
+        c = current_customer(conn)
+        if c is None:
+            return logged_out_customer()
+        if not errors:
+            conn.execute(update(customers).where(customers.c.customer_id == c.customer_id).values(
+                first_name=form["first_name"], last_name=form["last_name"],
+                phone=form["phone"] or None))
+    if errors:
+        return render_account(c, form=form, errors=errors, status=400)
+    session["display_name"] = form["first_name"]
+    flash("Your details are saved.")
+    return redirect(url_for("account"))
+
+
+MAX_AVATAR_BYTES = 2 * 1024 * 1024
+
+
+def image_type(data):
+    """The image's real type from its first bytes. Anything else, SVG included, is refused."""
+    if data.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if data.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return "image/webp"
+    return None
+
+
+@app.route("/account/avatar", methods=["POST"])
+@login_required("customer")
+def upload_avatar():
+    upload = request.files.get("avatar")
+    data = upload.read(MAX_AVATAR_BYTES + 1) if upload else b""
+    content_type = image_type(data)
+    error = None
+    if not data:
+        error = "Choose a photo to upload."
+    elif len(data) > MAX_AVATAR_BYTES:
+        error = "That photo is over 2 MB. Pick a smaller one."
+    elif content_type is None:
+        error = "Use a PNG, JPEG or WebP image."
+
+    now = now_utc()
+    with engine.begin() as conn:
+        c = current_customer(conn)
+        if c is None:
+            return logged_out_customer()
+        if not error:
+            values = {"image": data, "content_type": content_type, "updated_at": now}
+            changed = conn.execute(update(customer_avatars)
+                                   .where(customer_avatars.c.customer_id == c.customer_id)
+                                   .values(**values)).rowcount
+            if not changed:
+                conn.execute(insert(customer_avatars).values(customer_id=c.customer_id, **values))
+    if error:
+        return render_account(c, photo_error=error, status=400)
+    session["avatar_v"] = avatar_version(now)
+    flash("Your photo is updated.")
+    return redirect(url_for("account"))
+
+
+@app.route("/account/avatar/delete", methods=["POST"])
+@login_required("customer")
+def delete_avatar():
+    with engine.begin() as conn:
+        c = current_customer(conn)
+        if c is None:
+            return logged_out_customer()
+        conn.execute(customer_avatars.delete().where(customer_avatars.c.customer_id == c.customer_id))
+    session.pop("avatar_v", None)
+    flash("Your photo is removed.")
+    return redirect(url_for("account"))
+
+
+@app.route("/account/avatar")
+@login_required("customer")
+def avatar_image():
+    """The logged-in customer's own photo. Nobody else's can be fetched."""
+    with engine.connect() as conn:
         row = conn.execute(
-            select(accounts, customers.c.customer_id, customers.c.first_name,
-                   customers.c.last_name, customers.c.phone)
-            .join(customers, customers.c.account_id == accounts.c.account_id)
-            .where(accounts.c.account_id == session["account_id"])).first()
-    if row is None:          # account was deleted while logged in
-        session.clear()
-        return redirect(url_for("login"))
-    return render_template("account.html", c=row)
+            select(customer_avatars.c.image, customer_avatars.c.content_type)
+            .join(customers, customers.c.customer_id == customer_avatars.c.customer_id)
+            .where(customers.c.account_id == session["account_id"])).first()
+    if row is None:
+        abort(404)
+    return Response(bytes(row.image), mimetype=row.content_type, headers={
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "private, max-age=31536000",   # URL carries ?v=, so it changes on update
+        "Content-Disposition": "inline",
+    })
+
+
+@app.errorhandler(413)
+def too_large(_error):
+    flash("That upload is too big. Photos can be up to 2 MB.")
+    return redirect(url_for("account") if session.get("account_type") == "customer"
+                    else url_for("index"))
 
 
 @app.route("/venue")

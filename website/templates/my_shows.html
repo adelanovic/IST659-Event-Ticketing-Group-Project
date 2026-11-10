@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}My shows · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="browse wide">
+  <p class="eyebrow">Hi, {{ customer.first_name }}</p>
+  <div class="section-head page-head">
+    <h1>My shows</h1>
+    <a class="see-all" href="{{ url_for('account') }}">Account details →</a>
+  </div>
+
+  <nav class="tabs" aria-label="My shows">
+    <a href="{{ url_for('my_shows') }}" {% if tab == 'upcoming' %}aria-current="page"{% endif %}>Upcoming <span>{{ upcoming|length }}</span></a>
+    <a href="{{ url_for('my_shows', tab='past') }}" {% if tab == 'past' %}aria-current="page"{% endif %}>Past <span>{{ past|length }}</span></a>
+  </nav>
+
+  {% if shown %}
+    <div class="ticket-list">
+      {% for t in shown %}{{ m.ticket_card(t, is_past=(tab == 'past')) }}{% endfor %}
+    </div>
+  {% elif tab == 'past' %}
+    <div class="empty">
+      <p>Shows you've been to will appear here after the date passes.</p>
+    </div>
+  {% else %}
+    <div class="empty empty-tickets">
+      <svg class="empty-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8h24v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6z"/></svg>
+      <h2>No tickets yet</h2>
+      <p>When you buy tickets, your shows will be listed here with the date, venue and order number.</p>
+      <a class="button" href="{{ url_for('events_search') }}">Find a show</a>
+    </div>
+  {% endif %}
+
+  {% if suggestions and tab == 'upcoming' %}
+  <div class="section-head">
+    <h2>On sale this week</h2>
+    <a class="see-all" href="{{ url_for('events_search') }}">Browse all shows →</a>
+  </div>
+  {{ m.show_grid(suggestions) }}
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,38 +1,114 @@
 {% extends "base.html" %}
-{% block title %}My account · {{ site_name }}{% endblock %}
+{% import "_macros.html" as m %}
+{% block title %}{{ c.first_name }} {{ c.last_name }} · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="account">
-  <p class="eyebrow">Customer #{{ c.customer_id }}</p>
-  <h1>{{ c.first_name }} {{ c.last_name }}</h1>
+<section class="profile">
+  <header class="profile-card">
+    <div class="profile-photo">
+      {{ m.avatar(c.first_name[:1]|upper, hue, avatar_v, "xl") }}
+      <form class="photo-form" method="post" action="{{ url_for('upload_avatar') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="photo-pick" for="avatar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4H9zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
+          <span>{{ "Change photo" if avatar_v else "Add a photo" }}</span>
+        </label>
+        <input id="avatar" class="visually-hidden" type="file" name="avatar" accept="image/png,image/jpeg,image/webp">
+        <button class="button small js-hide" type="submit">Upload</button>
+      </form>
+      {% if avatar_v %}
+      <form method="post" action="{{ url_for('delete_avatar') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="link-button remove-photo" type="submit">Remove photo</button>
+      </form>
+      {% endif %}
+      {% if photo_error %}<p class="error" role="alert">{{ photo_error }}</p>{% endif %}
+    </div>
 
-  <dl class="details">
-    <div><dt>Email</dt><dd>{{ c.email }}</dd></div>
-    <div><dt>Phone</dt><dd>{{ c.phone or "Not given" }}</dd></div>
-    <div><dt>Member since</dt><dd>{{ c.created_at.strftime("%B") }} {{ c.created_at.day }}, {{ c.created_at.year }}</dd></div>
+    <div class="profile-id">
+      <p class="eyebrow">Your profile</p>
+      <h1>{{ c.first_name }} {{ c.last_name }}</h1>
+      <p class="profile-meta">
+        {% if c.is_active %}<span class="pill-active">Active</span>{% else %}<span class="pill-off">Inactive</span>{% endif %}
+        <span>Member since {{ c.created_at.strftime("%B %Y") }}</span>
+      </p>
+    </div>
+  </header>
+
+  <dl class="profile-stats">
+    <div>
+      <dt>Upcoming shows</dt>
+      <dd>{{ stats.upcoming }}</dd>
+      <a href="{{ url_for('my_shows') }}">My shows →</a>
+    </div>
+    <div>
+      <dt>Tickets bought</dt>
+      <dd>{{ stats.tickets }}</dd>
+      <a href="{{ url_for('events_search') }}">Find a show →</a>
+    </div>
+    <div>
+      <dt>Next show</dt>
+      {% if stats.next %}
+        <dd class="small">{{ m.show_date(stats.next.event_date) }}</dd>
+        <a href="{{ url_for('event_detail', event_id=stats.next.event_id) }}">{{ stats.next.event_name }}</a>
+      {% else %}
+        <dd class="small">Nothing booked yet</dd>
+        <a href="{{ url_for('events_search') }}">See what's on →</a>
+      {% endif %}
+    </div>
   </dl>
 
-  <h2>Your rows in the database</h2>
-  <p class="note">Your login is one row in <code>accounts</code>; your name and phone are one row in <code>customers</code>, linked by <code>account_id</code>. The password column holds an Argon2id hash. Your actual password isn't saved anywhere and can't be recovered from the hash.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Column</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr class="group"><td colspan="2">accounts</td></tr>
-        <tr><td>account_id</td><td>{{ c.account_id }}</td></tr>
-        <tr><td>email</td><td>{{ c.email }}</td></tr>
-        <tr><td>password_hash</td><td class="hash">{{ c.password_hash }}</td></tr>
-        <tr><td>account_type</td><td>{{ c.account_type }}</td></tr>
-        <tr><td>created_at</td><td>{{ c.created_at.strftime("%Y-%m-%d %H:%M:%S") }} UTC</td></tr>
-        <tr><td>last_login_at</td><td>{{ c.last_login_at.strftime("%Y-%m-%d %H:%M:%S") ~ " UTC" if c.last_login_at else "NULL" }}</td></tr>
-        <tr><td>is_active</td><td>{{ 1 if c.is_active else 0 }}</td></tr>
-        <tr class="group"><td colspan="2">customers</td></tr>
-        <tr><td>customer_id</td><td>{{ c.customer_id }}</td></tr>
-        <tr><td>account_id</td><td>{{ c.account_id }}</td></tr>
-        <tr><td>first_name</td><td>{{ c.first_name }}</td></tr>
-        <tr><td>last_name</td><td>{{ c.last_name }}</td></tr>
-        <tr><td>phone</td><td>{{ c.phone if c.phone else "NULL" }}</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <section class="profile-section">
+    <div class="section-head">
+      <h2>Your details</h2>
+    </div>
+    <dl class="detail-list">
+      <div><dt>Name</dt><dd>{{ c.first_name }} {{ c.last_name }}</dd></div>
+      <div><dt>Email</dt><dd>{{ c.email }}</dd></div>
+      <div><dt>Phone</dt><dd>{{ c.phone or "Not added" }}</dd></div>
+      <div><dt>Last log in</dt><dd>{{ m.show_date(c.last_login_at) if c.last_login_at else "This is your first visit" }}</dd></div>
+    </dl>
+    <details class="edit-details" {{ 'open' if editing }}>
+      <summary class="button ghost small">Edit details</summary>
+      <form class="edit-form" method="post" action="{{ url_for('update_profile') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="row">
+          <div class="field {{ 'has-error' if errors.first_name }}">
+            <label for="first_name">First name</label>
+            <input id="first_name" name="first_name" value="{{ form.first_name }}" maxlength="50" autocomplete="given-name" required>
+            {% if errors.first_name %}<p class="error">{{ errors.first_name }}</p>{% endif %}
+          </div>
+          <div class="field {{ 'has-error' if errors.last_name }}">
+            <label for="last_name">Last name</label>
+            <input id="last_name" name="last_name" value="{{ form.last_name }}" maxlength="50" autocomplete="family-name" required>
+            {% if errors.last_name %}<p class="error">{{ errors.last_name }}</p>{% endif %}
+          </div>
+        </div>
+        <div class="field {{ 'has-error' if errors.phone }}">
+          <label for="phone">Phone <span class="optional">optional</span></label>
+          <input id="phone" name="phone" type="tel" value="{{ form.phone }}" maxlength="20" autocomplete="tel">
+          {% if errors.phone %}<p class="error">{{ errors.phone }}</p>{% endif %}
+        </div>
+        <p class="hint">Your email is your login, so it can't be changed here.</p>
+        <div class="actions">
+          <button class="button" type="submit">Save details</button>
+          <a class="button ghost" href="{{ url_for('account') }}">Cancel</a>
+        </div>
+      </form>
+    </details>
+  </section>
+
+  <p class="privacy-note">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3zm-1 14-4-4 1.4-1.4 2.6 2.6 5.6-5.6L18 9l-7 7z"/></svg>
+    Your password is stored only as a secure hash. Nobody, including us, can read it.
+  </p>
 </section>
+
+<script>
+  // Upload as soon as a photo is picked; the Upload button stays for browsers without JS.
+  document.querySelectorAll(".photo-form").forEach(function (form) {
+    var input = form.querySelector("input[type=file]");
+    form.classList.add("js");
+    input.addEventListener("change", function () { if (input.files.length) form.submit(); });
+  });
+</script>
 {% endblock %}

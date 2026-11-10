@@ -21,7 +21,7 @@ def page(client, path):
 
 def test_customer_registration_stores_hash_not_password(client):
     r = register_customer(client, email="Ada@Example.com")
-    assert r.status_code == 302 and r.headers["Location"] == "/account"
+    assert r.status_code == 302 and r.headers["Location"] == "/my-shows"
 
     with db.engine.connect() as conn:
         acct = conn.execute(select(db.accounts)).one()
@@ -67,7 +67,7 @@ def test_wrong_password_and_unknown_email_look_the_same(client):
 def test_login_sends_each_account_type_home(client):
     register_customer(client)
     log_out(client)
-    assert log_in(client, " ADA@example.com ").headers["Location"] == "/account"
+    assert log_in(client, " ADA@example.com ").headers["Location"] == "/my-shows"
     log_out(client)
     register_venue(client, choice="1")
     log_out(client)
@@ -77,7 +77,7 @@ def test_login_sends_each_account_type_home(client):
 def test_pages_are_limited_to_their_account_type(client):
     assert client.get("/account").headers["Location"].startswith("/login")
     register_customer(client)
-    assert client.get("/venue").headers["Location"] == "/account"
+    assert client.get("/venue").headers["Location"] == "/my-shows"
     log_out(client)
     register_venue(client, choice="1")
     assert client.get("/account").headers["Location"] == "/venue"
@@ -87,7 +87,7 @@ def test_pages_are_limited_to_their_account_type(client):
 def test_login_never_redirects_off_site(client, next_url):
     register_customer(client)
     log_out(client)
-    assert log_in(client, "ada@example.com", next_url=next_url).headers["Location"] == "/account"
+    assert log_in(client, "ada@example.com", next_url=next_url).headers["Location"] == "/my-shows"
 
 
 # --- CSRF ----------------------------------------------------------------------
@@ -218,7 +218,7 @@ def list_event(client, **fields):
 def test_only_venues_can_list_events(client):
     assert client.get("/venue/events/new").headers["Location"].startswith("/login")
     register_customer(client)
-    assert client.get("/venue/events/new").headers["Location"] == "/account"
+    assert client.get("/venue/events/new").headers["Location"] == "/my-shows"
 
 
 def test_listing_an_event_links_existing_and_new_performers(client):
@@ -354,6 +354,136 @@ def test_friendly_404_and_current_page_in_menu(shows):
     assert 'href="/events" aria-current="page"' in html
 
 
+# --- Customer profile ---------------------------------------------------------
+
+PNG_1PX = bytes.fromhex(
+    "89504e470d0a1a0a0000000d4948445200000001000000010806000000"
+    "1f15c4890000000d49444154789c6300010000000500010d0a2db40000000049454e44ae426082")
+
+
+def upload(client, data, filename="me.png"):
+    from io import BytesIO
+    return client.post("/account/avatar", data={"csrf_token": csrf(client, "/account"),
+                                                "avatar": (BytesIO(data), filename)},
+                       content_type="multipart/form-data")
+
+
+def test_profile_is_personal_not_a_database_dump(client):
+    register_customer(client)
+    html = page(client, "/account")
+    assert "Ada Lovelace" in html and "Member since" in html
+    assert 'class="pill-active">Active' in html
+    assert "password_hash" not in html and "$argon2id$" not in html
+    assert 'class="avatar xl hue-' in html and ">A</span>" in html          # initials badge
+    assert 'class="avatar sm hue-' in html                                   # same badge in header
+
+
+def test_editing_profile_details(client):
+    register_customer(client)
+    token = csrf(client, "/account")
+    r = client.post("/account/profile", data={"csrf_token": token, "first_name": "  Augusta ",
+                                              "last_name": "King", "phone": ""})
+    assert r.status_code == 302
+    html = page(client, "/account")
+    assert "Augusta King" in html and "Not added" in html
+    assert "<span>Augusta</span>" in html                                    # header name updates
+    r = client.post("/account/profile", data={"csrf_token": token, "first_name": "",
+                                              "last_name": "King", "phone": "call me"})
+    assert r.status_code == 400
+    body = r.get_data(as_text=True)
+    assert "Enter your first name" in body and "Use digits only" in body and "<details class=\"edit-details\" open" in body
+
+
+def test_photo_upload_show_and_remove(client):
+    register_customer(client)
+    assert client.get("/account/avatar").status_code == 404
+    assert upload(client, PNG_1PX).status_code == 302
+    html = page(client, "/account")
+    assert '<img class="avatar xl" src="/account/avatar?v=' in html and "Remove photo" in html
+    r = client.get("/account/avatar")
+    assert r.data == PNG_1PX and r.mimetype == "image/png"
+    assert r.headers["X-Content-Type-Options"] == "nosniff"
+
+    upload(client, PNG_1PX)                                                  # replacing works too
+    with db.engine.connect() as conn:
+        assert conn.execute(select(db.customer_avatars)).all().__len__() == 1
+
+    client.post("/account/avatar/delete", data={"csrf_token": csrf(client, "/account")})
+    assert client.get("/account/avatar").status_code == 404
+    assert "Add a photo" in page(client, "/account")
+
+
+@pytest.mark.parametrize("data, filename, message", [
+    (b"<svg xmlns='http://www.w3.org/2000/svg'><script>alert(1)</script></svg>", "x.svg", "PNG, JPEG or WebP"),
+    (b"GIF89a....", "fake.png", "PNG, JPEG or WebP"),                       # name says png, bytes don't
+    (b"", "empty.png", "Choose a photo"),
+])
+def test_photo_upload_rejects_non_images(client, data, filename, message):
+    register_customer(client)
+    r = upload(client, data, filename)
+    assert r.status_code == 400 and message in r.get_data(as_text=True)
+
+
+def test_photo_upload_size_limits(client):
+    register_customer(client)
+    r = upload(client, PNG_1PX + b"\0" * (2 * 1024 * 1024))                  # just over 2 MB
+    assert r.status_code == 400 and "over 2 MB" in r.get_data(as_text=True)
+    r = upload(client, PNG_1PX + b"\0" * (4 * 1024 * 1024))                  # over the request cap
+    assert r.status_code == 302
+    assert "too big" in page(client, "/account")
+
+
+def test_photos_are_private_to_their_owner(client):
+    register_customer(client)
+    upload(client, PNG_1PX)
+    log_out(client)
+    assert client.get("/account/avatar").headers["Location"].startswith("/login")
+    register_customer(client, email="other@example.com")
+    assert client.get("/account/avatar").status_code == 404                  # their own, which is none
+
+
+# --- My shows ------------------------------------------------------------------
+
+def test_my_shows_is_for_customers_only(client):
+    assert client.get("/my-shows").headers["Location"].startswith("/login")
+    register_venue(client, choice="2")
+    assert client.get("/my-shows").headers["Location"] == "/venue"
+
+
+def test_my_shows_empty_state_and_menu_link(shows):
+    register_customer(shows)
+    html = page(shows, "/my-shows")
+    assert "Hi, Ada" in html and "No tickets yet" in html and "Find a show" in html
+    assert 'href="/my-shows" aria-current="page"' in html              # in the menu, highlighted
+    assert "Winter Rock Fest" in html                                     # on-sale suggestion
+    assert "Shows you've been to" in page(shows, "/my-shows?tab=past")
+
+
+def test_my_shows_lists_tickets_by_tab(shows, monkeypatch):
+    """The page is ready for orders: feed it tickets in the documented shape."""
+    from datetime import date, datetime, time
+    import app as app_module
+    base = {"event_time": time(20, 0), "status": "onsale", "venue_id": 1,
+            "venue_name": "The Fillmore", "city": "San Francisco", "state": "CA",
+            "tier_name": "General Admission", "ordered_at": datetime(2026, 11, 1)}
+    tickets = [
+        {**base, "order_id": 501, "event_id": 10, "event_name": "Winter Rock Fest",
+         "event_date": date(2026, 12, 8), "quantity": 2, "total_paid": 118.5},
+        {**base, "order_id": 400, "event_id": 1, "event_name": "Big Rock Night",
+         "event_date": date(2026, 12, 5), "quantity": 1, "total_paid": 45},
+    ]
+    monkeypatch.setattr(app_module, "tickets_for_customer", lambda conn, customer_id: tickets)
+    register_customer(shows)
+
+    html = page(shows, "/my-shows")
+    assert "Upcoming <span>1</span>" in html and "Past <span>1</span>" in html
+    assert "Winter Rock Fest" in html.split("On sale this week")[0]
+    assert "Order #501" in html and "$118.50" in html and "General Admission" in html
+    assert "Order #400" not in html
+    past = page(shows, "/my-shows?tab=past")
+    assert "Order #400" in past and "is-past" in past and "Order #501" not in past
+
+
 # --- Fresh start and reset -------------------------------------------------------
 
 def test_demo_accounts_log_in_and_are_not_duplicated(client):
@@ -369,7 +499,7 @@ def test_demo_accounts_log_in_and_are_not_duplicated(client):
     assert log_in(client, "demo.venue@example.com", "DemoVenue2026!").headers["Location"] == "/venue"
     assert "The Fillmore" in page(client, "/venue")
     log_out(client)
-    assert log_in(client, "demo.customer@example.com", "DemoCustomer2026!").headers["Location"] == "/account"
+    assert log_in(client, "demo.customer@example.com", "DemoCustomer2026!").headers["Location"] == "/my-shows"
 
 
 def test_reset_removes_everything(client):

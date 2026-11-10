@@ -13,7 +13,8 @@ import re
 import time
 
 from sqlalchemy import (Boolean, CheckConstraint, Column, Date, DateTime, ForeignKey, Index,
-                        Integer, MetaData, SmallInteger, String, Table, Time, Unicode,
+                        Integer, LargeBinary, MetaData, SmallInteger, String, Table, Time,
+                        Unicode,
                         create_engine, inspect, insert, select, text)
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import OperationalError
@@ -42,6 +43,16 @@ customers = Table(
     Column("first_name", Unicode(50), nullable=False),
     Column("last_name", Unicode(50), nullable=False),
     Column("phone", String(20)),
+)
+
+# Optional profile photo, one per customer. Kept out of `customers` so ordinary
+# customer queries never drag image bytes along.
+customer_avatars = Table(
+    "customer_avatars", metadata,
+    Column("customer_id", Integer, ForeignKey("customers.customer_id"), primary_key=True),
+    Column("image", LargeBinary, nullable=False),                   # VARBINARY(MAX) on SQL Server
+    Column("content_type", String(20), nullable=False),             # image/png, image/jpeg, image/webp
+    Column("updated_at", DateTime, nullable=False),                 # UTC
 )
 
 genres = Table(
