@@ -12,7 +12,7 @@ import hmac
 import os
 import re
 import secrets
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from functools import wraps
 
 from argon2 import PasswordHasher
@@ -22,7 +22,7 @@ from sqlalchemy import func, insert, select, update
 from sqlalchemy.exc import IntegrityError
 
 import config
-from db import (accounts, artists, customers, engine, event_artists, events, init_db,
+from db import (accounts, artists, customers, engine, event_artists, events, genres, init_db,
                 venues)
 
 app = Flask(__name__)
@@ -42,10 +42,17 @@ STATE_RE = re.compile(r"^[A-Z]{2}$")
 ZIP_RE = re.compile(r"^\d{5}(-\d{4})?$")
 MIN_PASSWORD, MAX_PASSWORD = 8, 128
 HOME_FOR = {"customer": "account", "venue": "venue_home"}
+PAGE_SIZE = 20
+MAX_INT = 2_147_483_647     # SQL Server INT; bigger ids can't exist and would error
 
 
 def now_utc():
     return datetime.now(timezone.utc).replace(tzinfo=None)
+
+
+def today():
+    """Today's date; tests can pin it with app.config["TODAY"]."""
+    return app.config.get("TODAY") or date.today()
 
 
 @app.context_processor
@@ -317,25 +324,189 @@ def venue_home():
         if acct is None or venue is None:
             session.clear()
             return redirect(url_for("login"))
-        rows = conn.execute(
-            select(events.c.event_id, events.c.name, events.c.event_date, events.c.event_time,
-                   events.c.status, artists.c.name.label("artist"))
-            .outerjoin(event_artists, event_artists.c.event_id == events.c.event_id)
-            .outerjoin(artists, artists.c.artist_id == event_artists.c.artist_id)
-            .where(events.c.venue_id == venue.venue_id)
-            .order_by(events.c.event_date, events.c.event_time, events.c.event_id,
-                      event_artists.c.billing_order)).all()
+        venue_events = events_at_venue(conn, venue.venue_id)
+    return render_template("venue.html", acct=acct, venue=venue, venue_events=venue_events)
 
-    # One entry per event, with its artists in billing order.
-    venue_events = {}
+
+MAX_PERFORMERS = 10
+MAX_DAYS_AHEAD = 2 * 365
+
+
+def parse_performers(text_block):
+    """One name per line, in billing order; blanks and repeats (ignoring case) dropped."""
+    names, seen = [], set()
+    for line in text_block.splitlines():
+        name = " ".join(line.split())
+        if name and name.lower() not in seen:
+            seen.add(name.lower())
+            names.append(name)
+    return names
+
+
+@app.route("/venue/events/new", methods=["GET", "POST"])
+@login_required("venue")
+def list_event():
+    with engine.connect() as conn:
+        venue = conn.execute(select(venues).where(
+            venues.c.account_id == session["account_id"])).first()
+        genre_list = conn.execute(select(genres).order_by(genres.c.name)).all()
+    if venue is None:
+        session.clear()
+        return redirect(url_for("login"))
+
+    first_day = today()
+    last_day = date.fromordinal(first_day.toordinal() + MAX_DAYS_AHEAD)
+    ctx = {"venue": venue, "genres": genre_list, "min_date": first_day, "max_date": last_day,
+           "max_performers": MAX_PERFORMERS}
+    if request.method == "GET":
+        return render_template("list_event.html", form={}, errors={}, **ctx)
+
+    form = {k: request.form.get(k, "").strip()
+            for k in ("name", "event_date", "event_time", "performers", "genre_id")}
+    errors = {}
+
+    name = " ".join(form["name"].split())
+    if not name or len(name) > 200:
+        errors["name"] = "Enter the event name (up to 200 characters)."
+
+    event_date = None
+    try:
+        event_date = date.fromisoformat(form["event_date"])
+    except ValueError:
+        errors["event_date"] = "Pick the date of the show."
+    else:
+        if not first_day <= event_date <= last_day:
+            errors["event_date"] = (f"Pick a date from {first_day:%b} {first_day.day}, {first_day.year} "
+                                    f"to {last_day:%b} {last_day.day}, {last_day.year}.")
+
+    event_time = None
+    if form["event_time"]:
+        try:
+            event_time = datetime.strptime(form["event_time"], "%H:%M").time()
+        except ValueError:
+            errors["event_time"] = "Use a time like 7:30 PM, or leave it blank if it isn't set yet."
+
+    performers = parse_performers(form["performers"])
+    if len(performers) > MAX_PERFORMERS:
+        errors["performers"] = f"List at most {MAX_PERFORMERS} performers."
+    elif any(len(p) > 100 for p in performers):
+        errors["performers"] = "Each performer name can be up to 100 characters."
+
+    genre_id = int(form["genre_id"]) if form["genre_id"].isdigit() else None
+    if genre_id is not None and genre_id not in {g.genre_id for g in genre_list}:
+        errors["genre_id"] = "Pick a genre from the list."
+
+    if not errors:
+        with engine.begin() as conn:
+            duplicate = conn.execute(select(events.c.event_id).where(
+                events.c.venue_id == venue.venue_id, events.c.event_date == event_date,
+                events.c.name == name)).first()
+            if duplicate:
+                errors["name"] = "This venue already has an event with this name on that date."
+            else:
+                event_id = conn.execute(insert(events).values(
+                    name=name, venue_id=venue.venue_id, event_date=event_date,
+                    event_time=event_time, status="onsale")).inserted_primary_key[0]
+                for order, performer in enumerate(performers, start=1):
+                    conn.execute(insert(event_artists).values(
+                        event_id=event_id, billing_order=order,
+                        artist_id=find_or_add_artist(conn, performer, genre_id)))
+
+    if errors:
+        return render_template("list_event.html", form=form, errors=errors, **ctx), 400
+
+    flash(f"“{name}” is listed for {event_date:%a %b} {event_date.day}, {event_date.year}.")
+    return redirect(url_for("venue_home"))
+
+
+def find_or_add_artist(conn, name, genre_id):
+    """Reuse an artist with this name (ignoring case); otherwise add one with the chosen genre."""
+    existing = conn.execute(select(artists.c.artist_id)
+                            .where(func.lower(artists.c.name) == name.lower())
+                            .order_by(artists.c.artist_id)).first()
+    if existing:
+        return existing.artist_id
+    return conn.execute(insert(artists).values(name=name, genre_id=genre_id)).inserted_primary_key[0]
+
+
+def events_at_venue(conn, venue_id):
+    """All events at a venue in date order, each with its artists in billing order."""
+    rows = conn.execute(
+        select(events.c.event_id, events.c.name, events.c.event_date, events.c.event_time,
+               events.c.status, artists.c.name.label("artist"))
+        .outerjoin(event_artists, event_artists.c.event_id == events.c.event_id)
+        .outerjoin(artists, artists.c.artist_id == event_artists.c.artist_id)
+        .where(events.c.venue_id == venue_id)
+        .order_by(events.c.event_date, events.c.event_time, events.c.event_id,
+                  event_artists.c.billing_order)).all()
+    by_id = {}
     for r in rows:
-        ev = venue_events.setdefault(r.event_id, {"name": r.name, "date": r.event_date,
-                                                  "time": r.event_time, "status": r.status,
-                                                  "artists": []})
+        ev = by_id.setdefault(r.event_id, {"name": r.name, "date": r.event_date,
+                                           "time": r.event_time, "status": r.status,
+                                           "artists": []})
         if r.artist:
             ev["artists"].append(r.artist)
-    return render_template("venue.html", acct=acct, venue=venue,
-                           venue_events=list(venue_events.values()))
+    return list(by_id.values())
+
+
+# --- Public venue search -------------------------------------------------------
+
+@app.route("/venues")
+def venues_search():
+    q = request.args.get("q", "").strip()[:100]
+    state = request.args.get("state", "").strip().upper()[:2]
+    page = max(1, min(request.args.get("page", 1, type=int) or 1, 10_000))
+
+    # Upcoming shows per venue: how many, and the date of the next one.
+    upcoming = (select(events.c.venue_id,
+                       func.count().label("upcoming"),
+                       func.min(events.c.event_date).label("next_date"))
+                .where(events.c.event_date >= today())
+                .group_by(events.c.venue_id).subquery())
+    n_upcoming = func.coalesce(upcoming.c.upcoming, 0)
+
+    filters = []
+    if q:
+        filters.append(venues.c.name.contains(q, autoescape=True)
+                       | venues.c.city.contains(q, autoescape=True))
+    if state:
+        filters.append(venues.c.state == state)
+
+    base = select(venues).outerjoin(upcoming, upcoming.c.venue_id == venues.c.venue_id).where(*filters)
+    # With a search, alphabetical; without one, the busiest venues first.
+    order = ([venues.c.name, venues.c.city] if q
+             else [n_upcoming.desc(), venues.c.name])
+    stmt = (select(venues.c.venue_id, venues.c.name, venues.c.address, venues.c.city,
+                   venues.c.state, n_upcoming.label("upcoming"), upcoming.c.next_date)
+            .select_from(venues)
+            .outerjoin(upcoming, upcoming.c.venue_id == venues.c.venue_id)
+            .where(*filters)
+            .order_by(*order)
+            .limit(PAGE_SIZE).offset((page - 1) * PAGE_SIZE))
+
+    with engine.connect() as conn:
+        total = conn.execute(select(func.count()).select_from(base.subquery())).scalar_one()
+        results = conn.execute(stmt).all()
+        states = conn.execute(select(venues.c.state).distinct().order_by(venues.c.state)).scalars().all()
+
+    pages = max(1, -(-total // PAGE_SIZE))
+    return render_template("venues.html", q=q, state=state, states=states, results=results,
+                           total=total, page=page, pages=pages)
+
+
+@app.route("/venues/<int:venue_id>")
+def venue_detail(venue_id):
+    if venue_id > MAX_INT:
+        abort(404)
+    with engine.connect() as conn:
+        venue = conn.execute(select(venues).where(venues.c.venue_id == venue_id)).first()
+        if venue is None:
+            abort(404)
+        all_events = events_at_venue(conn, venue_id)
+    cutoff = today()
+    return render_template("venue_public.html", venue=venue,
+                           upcoming=[e for e in all_events if e["date"] >= cutoff],
+                           past=[e for e in all_events if e["date"] < cutoff])
 
 
 if __name__ == "__main__":

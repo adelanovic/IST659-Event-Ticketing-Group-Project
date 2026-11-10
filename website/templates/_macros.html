@@ -1,0 +1,23 @@
+{# Shared pieces. Import with: {% import "_macros.html" as m %} #}
+
+{% macro show_date(d) -%}
+  {{ d.strftime("%a %b") }} {{ d.day }}, {{ d.year }}
+{%- endmacro %}
+
+{% macro event_table(event_list) %}
+<div class="table-wrap">
+  <table class="events">
+    <thead><tr><th>Date</th><th>Time</th><th>Event</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for e in event_list %}
+      <tr>
+        <td class="nowrap">{{ show_date(e.date) }}</td>
+        <td class="nowrap">{{ e.time.strftime("%I:%M %p").lstrip("0") if e.time else "TBA" }}</td>
+        <td><span class="ev-name">{{ e.name }}</span>{% if e.artists %}<span class="ev-artists">{{ e.artists|join(" · ") }}</span>{% endif %}</td>
+        <td><span class="status status-{{ e.status }}">{{ e.status }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}

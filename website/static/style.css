@@ -150,8 +150,48 @@ td.nowrap { white-space: nowrap; color: var(--ink) !important; }
 .status-onsale { color: var(--ok); border-color: var(--ok); }
 .status-cancelled { color: var(--error); border-color: var(--error); }
 .status-rescheduled, .status-postponed { color: var(--warn); border-color: var(--warn); }
+.public-link { margin: -12px 0 20px; font-size: 14px; }
+.section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 36px 0 8px; }
+.section-head h2 { margin: 0; }
+textarea {
+  width: 100%; padding: 11px 12px; font: 16px/1.5 var(--body); color: var(--ink); resize: vertical;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+}
+textarea:focus, select:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+.stub-tear p:first-child { line-height: 1.45; }
+
+/* Venue search */
+.browse { max-width: 900px; }
+form.filters { display: flex; align-items: end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+form.filters .grow { flex: 1 1 280px; }
+form.filters .field:not(.grow) { flex: 0 0 140px; }
+select {
+  width: 100%; padding: 11px 12px; font: 16px var(--body); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+}
+.result-line { color: var(--muted); margin: 0 0 16px; }
+.venue-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.venue-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px;
+  padding: 14px 18px; background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  color: var(--ink); text-decoration: none;
+}
+.venue-row:hover { border-color: var(--accent); }
+.venue-main, .venue-shows { display: grid; min-width: 0; }
+.venue-main strong { font-size: 17px; }
+.venue-main span, .venue-shows span { color: var(--muted); font-size: 14px; }
+.venue-shows { text-align: right; font-size: 14px; }
+.venue-shows strong { font: 22px/1 var(--display); color: var(--accent); }
+.pager { display: flex; justify-content: space-between; margin-top: 20px; }
+.count-badge { font: 500 13px var(--mono); color: var(--muted); vertical-align: middle; }
+.eyebrow a { color: inherit; }
+details.past { margin-top: 28px; }
+details.past summary { cursor: pointer; font-weight: 600; margin-bottom: 12px; }
 
 @media (max-width: 640px) {
+  .venue-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .venue-shows { text-align: left; }
+  form.filters .field:not(.grow) { flex: 1 1 100%; }
   .row.three { grid-template-columns: minmax(0, 1fr); }
   form.search { flex-direction: column; }
   h1 { font-size: 34px; }

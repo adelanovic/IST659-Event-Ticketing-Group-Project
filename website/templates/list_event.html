@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}List an event · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="stub wide">
+  <div class="stub-main">
+    <p class="eyebrow"><a href="{{ url_for('venue_home') }}">{{ venue.name }}</a></p>
+    <h1>List an event</h1>
+
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="field {{ 'has-error' if errors.name }}">
+        <label for="name">Event name</label>
+        <input id="name" name="name" value="{{ form.name or '' }}" maxlength="200" required
+               placeholder="e.g. Brandi Carlile: The All Request Tour">
+        {% if errors.name %}<p class="error">{{ errors.name }}</p>{% endif %}
+      </div>
+
+      <div class="row">
+        <div class="field {{ 'has-error' if errors.event_date }}">
+          <label for="event_date">Date</label>
+          <input id="event_date" name="event_date" type="date" value="{{ form.event_date or '' }}"
+                 min="{{ min_date.isoformat() }}" max="{{ max_date.isoformat() }}" required>
+          {% if errors.event_date %}<p class="error">{{ errors.event_date }}</p>{% endif %}
+        </div>
+        <div class="field {{ 'has-error' if errors.event_time }}">
+          <label for="event_time">Start time <span class="optional">optional</span></label>
+          <input id="event_time" name="event_time" type="time" value="{{ form.event_time or '' }}">
+          {% if errors.event_time %}<p class="error">{{ errors.event_time }}</p>{% else %}<p class="hint">Leave blank if it isn't set yet. It shows as TBA.</p>{% endif %}
+        </div>
+      </div>
+
+      <div class="field {{ 'has-error' if errors.performers }}">
+        <label for="performers">Performers <span class="optional">optional</span></label>
+        <textarea id="performers" name="performers" rows="4"
+                  placeholder="Headliner&#10;Opening act">{{ form.performers or '' }}</textarea>
+        {% if errors.performers %}<p class="error">{{ errors.performers }}</p>{% else %}<p class="hint">One per line, headliner first, up to {{ max_performers }}. Names already on the site are linked to the existing artist.</p>{% endif %}
+      </div>
+
+      <div class="field {{ 'has-error' if errors.genre_id }}">
+        <label for="genre_id">Genre for new performers <span class="optional">optional</span></label>
+        <select id="genre_id" name="genre_id">
+          <option value="">No genre</option>
+          {% for g in genres %}<option value="{{ g.genre_id }}" {{ 'selected' if form.genre_id == g.genre_id|string }}>{{ g.name }}</option>{% endfor %}
+        </select>
+        {% if errors.genre_id %}<p class="error">{{ errors.genre_id }}</p>{% endif %}
+      </div>
+
+      <button class="button wide" type="submit">List event</button>
+    </form>
+  </div>
+  <aside class="stub-tear">
+    <p>The event goes on sale right away and appears on your public venue page.</p>
+    <a href="{{ url_for('venue_home') }}">Back to my venue</a>
+  </aside>
+</section>
+{% endblock %}

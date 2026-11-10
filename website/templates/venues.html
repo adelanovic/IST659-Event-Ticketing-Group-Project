@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}Venues · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="browse">
+  <p class="eyebrow">Find a venue</p>
+  <h1>Venues</h1>
+
+  <form class="filters" method="get" action="{{ url_for('venues_search') }}" role="search">
+    <div class="field grow">
+      <label for="q">Venue name or city</label>
+      <input id="q" name="q" value="{{ q }}" placeholder="e.g. Fillmore or Nashville" maxlength="100" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="state">State</label>
+      <select id="state" name="state">
+        <option value="">All states</option>
+        {% for s in states %}<option value="{{ s }}" {{ 'selected' if s == state }}>{{ s }}</option>{% endfor %}
+      </select>
+    </div>
+    <button class="button" type="submit">Search</button>
+  </form>
+
+  <p class="result-line">
+    {% if total %}
+      {{ "{:,}".format(total) }} venue{{ "s" if total != 1 }}
+      {%- if q %} matching “{{ q }}”{% endif %}
+      {%- if state %} in {{ state }}{% endif %}
+      {%- if not q %}, busiest first{% endif %}.
+      {% if pages > 1 %}Page {{ page }} of {{ pages }}.{% endif %}
+    {% else %}
+      No venues match{% if q %} “{{ q }}”{% endif %}{% if state %} in {{ state }}{% endif %}.
+      <a href="{{ url_for('venues_search') }}">Clear the search</a>
+    {% endif %}
+  </p>
+
+  {% if results %}
+  <ul class="venue-list">
+    {% for v in results %}
+    <li>
+      <a class="venue-row" href="{{ url_for('venue_detail', venue_id=v.venue_id) }}">
+        <span class="venue-main">
+          <strong>{{ v.name }}</strong>
+          <span>{{ v.address ~ ", " if v.address }}{{ v.city }}, {{ v.state }}</span>
+        </span>
+        <span class="venue-shows">
+          {% if v.upcoming %}
+            <strong>{{ v.upcoming }}</strong> upcoming show{{ "s" if v.upcoming != 1 }}
+            <span>Next: {{ m.show_date(v.next_date) }}</span>
+          {% else %}
+            <span>No upcoming shows</span>
+          {% endif %}
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if pages > 1 %}
+  <nav class="pager" aria-label="Pages">
+    {% if page > 1 %}<a class="button ghost small" href="{{ url_for('venues_search', q=q or None, state=state or None, page=page - 1) }}">← Previous</a>{% else %}<span></span>{% endif %}
+    {% if page < pages %}<a class="button ghost small" href="{{ url_for('venues_search', q=q or None, state=state or None, page=page + 1) }}">Next →</a>{% endif %}
+  </nav>
+  {% endif %}
+</section>
+{% endblock %}

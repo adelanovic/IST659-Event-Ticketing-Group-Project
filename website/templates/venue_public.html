@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ venue.name }} · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="account venue-page">
+  <p class="eyebrow"><a href="{{ url_for('venues_search') }}">Venues</a> · {{ venue.city }}, {{ venue.state }}</p>
+  <h1>{{ venue.name }}</h1>
+  <p class="lede small">{{ venue.address ~ ", " if venue.address }}{{ venue.city }}, {{ venue.state }} {{ venue.postal_code }}</p>
+
+  <h2>Upcoming shows{% if upcoming %} <span class="count-badge">{{ upcoming|length }}</span>{% endif %}</h2>
+  {% if upcoming %}
+    {{ m.event_table(upcoming) }}
+  {% else %}
+    <p class="note">No upcoming shows are listed for this venue.</p>
+  {% endif %}
+
+  {% if past %}
+  <details class="past">
+    <summary>Past shows ({{ past|length }})</summary>
+    {{ m.event_table(past) }}
+  </details>
+  {% endif %}
+</section>
+{% endblock %}

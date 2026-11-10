@@ -165,6 +165,116 @@ def test_email_cannot_be_both_customer_and_venue(client):
     assert r.status_code == 400 and "already exists" in r.get_data(as_text=True)
 
 
+# --- Public venue search -------------------------------------------------------
+
+def test_venue_search_is_public_and_busiest_first(client):
+    html = page(client, "/venues")
+    assert "2 venues" in html and "busiest first" in html
+    assert html.index("The Fillmore") < html.index("Fillmore Auditorium")   # 1 upcoming vs 0
+    assert "1</strong> upcoming show" in html and "Next: Sun Dec 6, 2026" in html
+
+
+@pytest.mark.parametrize("query, expected, absent", [
+    ("q=fillmore", ["The Fillmore", "Fillmore Auditorium"], []),
+    ("q=denver", ["Fillmore Auditorium"], ["The Fillmore<"]),
+    ("state=CA", ["The Fillmore"], ["Fillmore Auditorium"]),
+    ("q=fillmore&state=co", ["Fillmore Auditorium"], ["The Fillmore<"]),
+])
+def test_venue_search_filters(client, query, expected, absent):
+    html = page(client, f"/venues?{query}")
+    for name in expected:
+        assert name in html
+    for name in absent:
+        assert name not in html
+
+
+def test_venue_search_no_match_and_wildcards(client):
+    assert "No venues match" in page(client, "/venues?q=%25%25")
+    assert "No venues match" in page(client, "/venues?q=zzz")
+    assert client.get("/venues?page=-5").status_code == 200   # bad page numbers are clamped
+
+
+def test_venue_detail_splits_upcoming_and_past(client):
+    html = page(client, "/venues/1")
+    upcoming, past = html.split("Past shows (1)")
+    assert "Matinee" in upcoming and "TBA" in upcoming
+    assert "Big Rock Night" in past and "Headliner Band · Opening Act" in past
+
+
+@pytest.mark.parametrize("venue_id", [999, 99999999999])
+def test_unknown_venue_is_404(client, venue_id):
+    assert client.get(f"/venues/{venue_id}").status_code == 404
+
+
+# --- Venues listing events -----------------------------------------------------
+
+def list_event(client, **fields):
+    data = {"csrf_token": csrf(client, "/venue/events/new"), "name": "Holiday Show",
+            "event_date": "2026-12-20", "event_time": "19:30", "performers": "", "genre_id": "",
+            **fields}
+    return client.post("/venue/events/new", data=data)
+
+
+def test_only_venues_can_list_events(client):
+    assert client.get("/venue/events/new").headers["Location"].startswith("/login")
+    register_customer(client)
+    assert client.get("/venue/events/new").headers["Location"] == "/account"
+
+
+def test_listing_an_event_links_existing_and_new_performers(client):
+    register_venue(client, choice="2")   # Fillmore Auditorium, no events yet
+    r = list_event(client, performers=" headliner   band \nBrand New Artist\nHEADLINER BAND\n\n",
+                   genre_id="1")
+    assert r.status_code == 302 and r.headers["Location"] == "/venue"
+
+    with db.engine.connect() as conn:
+        ev = conn.execute(select(db.events).where(db.events.c.name == "Holiday Show")).one()
+        lineup = conn.execute(
+            select(db.artists.c.artist_id, db.artists.c.name, db.artists.c.genre_id)
+            .join(db.event_artists, db.event_artists.c.artist_id == db.artists.c.artist_id)
+            .where(db.event_artists.c.event_id == ev.event_id)
+            .order_by(db.event_artists.c.billing_order)).all()
+    assert (ev.venue_id, ev.status, str(ev.event_time)) == (2, "onsale", "19:30:00")
+    assert ev.tm_event_id is None
+    assert lineup[0].artist_id == 1                       # matched "Headliner Band", repeat dropped
+    assert (lineup[1].name, lineup[1].genre_id) == ("Brand New Artist", 1)
+    assert len(lineup) == 2
+
+    assert "Holiday Show" in page(client, "/venue")
+    public = page(client, "/venues/2")
+    assert "Holiday Show" in public and "Headliner Band · Brand New Artist" in public
+
+
+def test_listing_an_event_without_time_or_performers(client):
+    register_venue(client, choice="2")
+    assert list_event(client, event_time="").status_code == 302
+    assert "TBA" in page(client, "/venues/2")
+
+
+@pytest.mark.parametrize("fields, field_error", [
+    ({"name": ""}, "Enter the event name"),
+    ({"event_date": ""}, "Pick the date of the show"),
+    ({"event_date": "2026-12-01"}, "Pick a date from"),           # before "today" (Dec 6)
+    ({"event_date": "2031-01-01"}, "Pick a date from"),           # more than two years out
+    ({"event_time": "25:99"}, "Use a time like"),
+    ({"performers": "\n".join(f"Act {i}" for i in range(11))}, "at most 10 performers"),
+    ({"genre_id": "999"}, "Pick a genre from the list"),
+])
+def test_list_event_validation(client, fields, field_error):
+    register_venue(client, choice="2")
+    r = list_event(client, **fields)
+    assert r.status_code == 400 and field_error in r.get_data(as_text=True)
+    with db.engine.connect() as conn:
+        assert conn.execute(select(db.events).where(db.events.c.venue_id == 2)).first() is None
+
+
+def test_same_event_twice_is_rejected(client):
+    register_venue(client, choice="2")
+    list_event(client)
+    r = list_event(client)
+    assert r.status_code == 400 and "already has an event" in r.get_data(as_text=True)
+
+
 # --- Migration from the first version ------------------------------------------
 
 def test_old_customers_table_is_migrated_without_losing_logins(fresh_db):

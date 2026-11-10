@@ -66,6 +66,7 @@ def client(fresh_db):
         for table, rows in SAMPLE.items():
             conn.execute(insert(table), rows)
     flask_app.config["TESTING"] = True
+    flask_app.config["TODAY"] = date(2026, 12, 6)   # Matinee (Dec 6) upcoming, Dec 5 show past
     return flask_app.test_client()
 
 
