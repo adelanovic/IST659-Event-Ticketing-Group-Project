@@ -275,6 +275,32 @@ def test_same_event_twice_is_rejected(client):
     assert r.status_code == 400 and "already has an event" in r.get_data(as_text=True)
 
 
+# --- Fresh start and reset -------------------------------------------------------
+
+def test_demo_accounts_log_in_and_are_not_duplicated(client):
+    import load_ticketmaster_data as loader
+    for _ in range(2):                                   # second run must skip both
+        with db.engine.begin() as conn:
+            loader.create_demo_accounts(conn)
+    with db.engine.connect() as conn:
+        emails = conn.execute(select(db.accounts.c.email)).scalars().all()
+    assert sorted(emails) == ["demo.customer@example.com", "demo.venue@example.com"]
+
+    # No Smalls Jazz Club in the sample, so the busiest unclaimed venue is used.
+    assert log_in(client, "demo.venue@example.com", "DemoVenue2026!").headers["Location"] == "/venue"
+    assert "The Fillmore" in page(client, "/venue")
+    log_out(client)
+    assert log_in(client, "demo.customer@example.com", "DemoCustomer2026!").headers["Location"] == "/account"
+
+
+def test_reset_removes_everything(client):
+    register_customer(client)
+    db.drop_database()
+    from sqlalchemy import inspect
+    with db.engine.connect() as conn:
+        assert inspect(conn).get_table_names() == []
+
+
 # --- Migration from the first version ------------------------------------------
 
 def test_old_customers_table_is_migrated_without_losing_logins(fresh_db):

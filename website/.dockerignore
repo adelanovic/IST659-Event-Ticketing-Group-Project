@@ -11,3 +11,5 @@ requirements-dev.txt
 .secret_key
 *.db
 run.bat
+up.bat
+down.bat

@@ -12,5 +12,5 @@ RUN useradd --create-home --uid 10001 app && chown -R app /app
 USER app
 
 EXPOSE 8000
-# 1) wait for SQL Server and create the database/table once, 2) start the web server
-CMD ["sh", "-c", "python -c 'from db import init_db; init_db()' && exec gunicorn --bind 0.0.0.0:8000 --workers 2 --access-logfile - app:app"]
+# 1) wait for SQL Server, create the database/tables and load data if empty, 2) start the web server
+CMD ["sh", "-c", "python load_ticketmaster_data.py && exec gunicorn --bind 0.0.0.0:8000 --workers 2 --access-logfile - app:app"]

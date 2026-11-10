@@ -1,6 +1,9 @@
 # The website only. SQL Server runs separately from ../../learn-databases
 # (docker-compose up -d there first); this joins that project's network and
 # reaches the database at hostname "mssql".
+#
+#   up.bat     start the site (fresh database: loads data and demo logins)
+#   down.bat   stop the site and delete its database
 
 services:
   web:
@@ -10,6 +13,10 @@ services:
     environment:
       DB_HOST: mssql          # container name on learndb_net (overrides DB_HOST in .env)
       DB_PORT: "1433"
+      CSV_DIR: /seed          # Ticketmaster CSVs, loaded when the database is empty
+      DEMO_ACCOUNTS: "1"      # create demo.venue@ / demo.customer@example.com on start
+    volumes:
+      - ../data/csv:/seed:ro
     ports:
       - "5000:8000"           # http://127.0.0.1:5000
     networks:

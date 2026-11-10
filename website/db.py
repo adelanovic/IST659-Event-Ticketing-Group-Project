@@ -92,14 +92,45 @@ event_artists = Table(
 )
 
 
+def _database_name(url):
+    """The database name, checked so it's safe to put inside SQL text."""
+    name = url.database
+    if not name or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name):
+        raise SystemExit(f"DB_NAME must be letters, digits and underscores, got {name!r}")
+    return name
+
+
+def database_label():
+    url = make_url(config.DATABASE_URL)
+    if url.get_backend_name() == "mssql":
+        return f"SQL Server database {url.database} on {url.host}"
+    return f"SQLite file {url.database}"
+
+
+def drop_database():
+    """Delete everything the site stored. SQL Server: drop the whole database; SQLite: drop the tables."""
+    url = make_url(config.DATABASE_URL)
+    engine.dispose()   # close this process's own pooled connections first
+    if url.get_backend_name() != "mssql":
+        with engine.begin() as conn:
+            metadata.drop_all(conn)
+        return
+    name = _database_name(url)
+    master = create_engine(url.set(database="master"), isolation_level="AUTOCOMMIT")
+    with master.connect() as conn:
+        # SINGLE_USER ... ROLLBACK IMMEDIATE disconnects anyone else using it (SQLPad, SSMS).
+        conn.execute(text(f"IF DB_ID(N'{name}') IS NOT NULL BEGIN "
+                          f"ALTER DATABASE [{name}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; "
+                          f"DROP DATABASE [{name}]; END"))
+    master.dispose()
+
+
 def ensure_database(wait_seconds=60):
     """SQL Server only: wait for the server to accept logins, then create the database if missing."""
     url = make_url(config.DATABASE_URL)
     if url.get_backend_name() != "mssql":
         return
-    name = url.database
-    if not name or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name):
-        raise SystemExit(f"DB_NAME must be letters, digits and underscores, got {name!r}")
+    name = _database_name(url)
 
     master = create_engine(url.set(database="master"), isolation_level="AUTOCOMMIT")
     deadline = time.monotonic() + wait_seconds

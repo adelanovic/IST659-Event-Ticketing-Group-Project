@@ -10,17 +10,6 @@ Registration and login for two kinds of accounts:
 Data lives in the `concert_tickets` database on SQL Server. Passwords are
 stored only as Argon2id hashes.
 
-## Load the Ticketmaster data (development)
-
-Venues need venue rows to claim. Until the team's UP/DOWN script is ready, load
-the CSVs from `../data/csv` once:
-
-```powershell
-.venv\Scripts\python load_ticketmaster_data.py
-```
-
-It skips loading if `venues` already has rows.
-
 ## Run it in Docker (recommended)
 
 SQL Server runs separately, from the `learn-databases` project. Start it first:
@@ -33,9 +22,23 @@ docker-compose up -d
 Then, from this folder:
 
 ```powershell
-copy .env.example .env      # first time only; then set SECRET_KEY
-docker compose up -d --build
+copy .env.example .env      # first time only; then set SECRET_KEY and DB_PASSWORD
+up.bat                      # start the site
+down.bat                    # stop the site and DELETE its database
 ```
+
+Nothing is kept between runs: `down.bat` drops the `concert_tickets` database
+(all accounts, claimed venues and listed events), and the next `up.bat` starts
+from a clean copy. On a fresh start the container loads the Ticketmaster CSVs from
+`../data/csv` and creates two demo logins:
+
+| Login | Password | What it is |
+|---|---|---|
+| `demo.venue@example.com` | `DemoVenue2026!` | Venue account managing Smalls Jazz Club |
+| `demo.customer@example.com` | `DemoCustomer2026!` | Customer account |
+
+`down.bat` asks before deleting; `down.bat /y` skips the question. To wipe the
+database without stopping anything, run `.venv\Scripts\python reset_db.py`.
 
 Open http://127.0.0.1:5000. The web container joins the `learn-databases_learndb_net`
 network and reaches SQL Server at hostname `mssql`. On start it waits up to 60
@@ -44,12 +47,10 @@ seconds for SQL Server, creates the `concert_tickets` database and the
 
 | Task | Command |
 |---|---|
-| Rebuild after code changes | `docker compose up -d --build` |
+| Rebuild after code changes (keeps data) | `up.bat` |
 | See logs | `docker compose logs -f web` |
-| Stop | `docker compose down` |
-
-Registrations are stored in SQL Server, so stopping or rebuilding the web
-container doesn't lose them.
+| Stop and delete data | `down.bat` |
+| Stop but keep data | `docker compose down` |
 
 ## Run it without Docker
 
@@ -101,7 +102,9 @@ Leave out `DB_HOST` to use a local SQLite file (`concert_tickets.db`) instead.
 | `templates/`, `static/` | HTML and CSS |
 | `Dockerfile`, `docker-compose.yml` | Container image and how it joins the SQL Server network |
 | `sql/account_tables.sql` | `accounts`, `customers` and `venues.account_id` as SQL Server DDL, for the team's UP/DOWN file |
-| `load_ticketmaster_data.py` | Loads the Ticketmaster CSVs for development |
+| `load_ticketmaster_data.py` | Fills an empty database: Ticketmaster CSVs and the demo logins (runs on container start) |
+| `reset_db.py` | Deletes the site's database |
+| `up.bat`, `down.bat` | Start the site; stop it and delete its data |
 | `show_accounts.py` | Prints every account |
 | `tests/` | Automated tests (`pytest`) |
 | `requirements.txt`, `requirements-dev.txt` | Exact package versions for the site, plus pytest for the tests |
