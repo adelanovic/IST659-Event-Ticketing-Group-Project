@@ -13,3 +13,5 @@ requirements-dev.txt
 run.bat
 up.bat
 down.bat
+.env.*
+!.env.example
