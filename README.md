@@ -117,7 +117,7 @@ More detail, including running without Docker and the tests, is in
 ## Data use
 
 Event data comes from the Ticketmaster Discovery API and is used for academic
-purposes only. Keep this repository private and don't redistribute the data.
+purposes only.
 
 ## References
 
