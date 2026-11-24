@@ -3,7 +3,7 @@
 {% block title %}{{ venue.name }} · {{ site_name }}{% endblock %}
 {% block content %}
 <section class="account venue-page">
-  <p class="eyebrow">Venue #{{ venue.venue_id }}{{ " · from Ticketmaster" if venue.tm_venue_id else " · added on this site" }}</p>
+  <p class="eyebrow">Venue #{{ venue.venue_id }} · {{ venue.city }}, {{ venue.state }}</p>
   <h1>{{ venue.name }}</h1>
   <p class="public-link"><a href="{{ url_for('venue_detail', venue_id=venue.venue_id) }}">See your public venue page</a></p>
   <p class="lede small">{{ venue.address ~ ", " if venue.address }}{{ venue.city }}, {{ venue.state }} {{ venue.postal_code }}</p>

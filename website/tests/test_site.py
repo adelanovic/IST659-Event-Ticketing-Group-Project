@@ -143,9 +143,9 @@ def test_adding_a_new_venue(client):
                        new_postal="13210")
     assert r.status_code == 302
     html = page(client, "/venue")
-    assert "Syracuse, NY 13210" in html and "added on this site" in html
+    assert "Syracuse, NY 13210" in html and "The Westcott Theater" in html
     with db.engine.connect() as conn:
-        venue = conn.execute(select(db.venues).where(db.venues.c.tm_venue_id.is_(None))).one()
+        venue = conn.execute(select(db.venues).where(db.venues.c.name == "The Westcott Theater")).one()
     assert venue.state == "NY" and venue.account_id is not None
 
 
@@ -235,7 +235,6 @@ def test_listing_an_event_links_existing_and_new_performers(client):
             .where(db.event_artists.c.event_id == ev.event_id)
             .order_by(db.event_artists.c.billing_order)).all()
     assert (ev.venue_id, ev.status, str(ev.event_time)) == (2, "onsale", "19:30:00")
-    assert ev.tm_event_id is None
     assert lineup[0].artist_id == 1                       # matched "Headliner Band", repeat dropped
     assert (lineup[1].name, lineup[1].genre_id) == ("Brand New Artist", 1)
     assert len(lineup) == 2

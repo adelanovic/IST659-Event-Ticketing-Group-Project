@@ -64,7 +64,6 @@ genres = Table(
 venues = Table(
     "venues", metadata,
     Column("venue_id", Integer, primary_key=True, autoincrement=True),
-    Column("tm_venue_id", String(25)),                  # NULL for venues added on this site
     Column("name", Unicode(100), nullable=False),
     Column("address", Unicode(100)),
     Column("city", Unicode(50), nullable=False),
@@ -79,7 +78,6 @@ Index("UX_venues_account_id", venues.c.account_id, unique=True,
 artists = Table(
     "artists", metadata,
     Column("artist_id", Integer, primary_key=True, autoincrement=True),
-    Column("tm_attraction_id", String(25)),
     Column("name", Unicode(100), nullable=False),
     Column("genre_id", Integer, ForeignKey("genres.genre_id")),
 )
@@ -87,7 +85,6 @@ artists = Table(
 events = Table(
     "events", metadata,
     Column("event_id", Integer, primary_key=True, autoincrement=True),
-    Column("tm_event_id", String(25)),
     Column("name", Unicode(200), nullable=False),
     Column("venue_id", Integer, ForeignKey("venues.venue_id"), nullable=False),
     Column("event_date", Date, nullable=False),

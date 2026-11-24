@@ -28,19 +28,19 @@ PASSWORD = "Concert2026!"
 SAMPLE = {
     db.genres: [{"genre_id": 1, "name": "Rock"}],
     db.venues: [
-        {"venue_id": 1, "tm_venue_id": "TMV1", "name": "The Fillmore", "address": "1805 Geary Blvd",
+        {"venue_id": 1, "name": "The Fillmore", "address": "1805 Geary Blvd",
          "city": "San Francisco", "state": "CA", "postal_code": "94115"},
-        {"venue_id": 2, "tm_venue_id": "TMV2", "name": "Fillmore Auditorium", "address": None,
+        {"venue_id": 2, "name": "Fillmore Auditorium", "address": None,
          "city": "Denver", "state": "CO", "postal_code": "80218"},
     ],
     db.artists: [
-        {"artist_id": 1, "tm_attraction_id": "TMA1", "name": "Headliner Band", "genre_id": 1},
-        {"artist_id": 2, "tm_attraction_id": "TMA2", "name": "Opening Act", "genre_id": None},
+        {"artist_id": 1, "name": "Headliner Band", "genre_id": 1},
+        {"artist_id": 2, "name": "Opening Act", "genre_id": None},
     ],
     db.events: [
-        {"event_id": 1, "tm_event_id": "TME1", "name": "Big Rock Night", "venue_id": 1,
+        {"event_id": 1, "name": "Big Rock Night", "venue_id": 1,
          "event_date": date(2026, 12, 5), "event_time": time(20, 0), "status": "onsale"},
-        {"event_id": 2, "tm_event_id": "TME2", "name": "Matinee", "venue_id": 1,
+        {"event_id": 2, "name": "Matinee", "venue_id": 1,
          "event_date": date(2026, 12, 6), "event_time": None, "status": "cancelled"},
     ],
     db.event_artists: [
