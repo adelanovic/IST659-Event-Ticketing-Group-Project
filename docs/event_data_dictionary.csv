@@ -1,0 +1,268 @@
+﻿entity,field_path,field_name,data_type,repeats,events_with_field,pct_of_events,example_value,description
+Event,name,name,string,no,600,100%,Aftershock,Event name/title as listed.
+Event,type,type,string,no,600,100%,event,Object type; always 'event'.
+Event,id,id,string,no,600,100%,G5vYZbMN28lpf,Unique Ticketmaster event ID. Case-sensitive (some IDs differ only by letter case).
+Event,test,test,boolean,no,600,100%,FALSE,True if this is a Ticketmaster test record (should be excluded).
+Event,url,url,string,no,600,100%,https://on.fgtix.com/trk/g3Nfc,Link to the event's ticket-buying page.
+Event,locale,locale,string,no,600,100%,en-us,"Language/region of the record, e.g. en-us."
+Event,images,images,array,no,600,100%,,List of promotional images in different sizes/aspect ratios.
+Event,images[],images,object,yes,600,100%,,One image.
+Event,images[].ratio,ratio,string,yes,600,100%,16_9,"Aspect ratio, e.g. 16_9, 3_2, 4_3."
+Event,images[].url,url,string,yes,600,100%,https://s1.ticketm.net/dam/a/f66/9591a53c-6f55-4cca-b3a3-59b126530f66_TABLET_...,Image URL.
+Event,images[].width,width,integer,yes,600,100%,1024,Width in pixels.
+Event,images[].height,height,integer,yes,600,100%,576,Height in pixels.
+Event,images[].fallback,fallback,boolean,yes,600,100%,FALSE,True if this is a generic placeholder rather than a specific image.
+Event,sales,sales,object,no,600,100%,,Ticket sale windows.
+Event,sales.public,public,object,no,600,100%,,General public on-sale window.
+Event,sales.public.startDateTime,startDateTime,string,no,600,100%,2025-11-28T18:00:00Z,Public on-sale start in UTC.
+Event,sales.public.startTBD,startTBD,boolean,no,600,100%,FALSE,True if the on-sale start is to be determined.
+Event,sales.public.startTBA,startTBA,boolean,no,600,100%,FALSE,True if the on-sale start is to be announced.
+Event,sales.public.endDateTime,endDateTime,string,no,600,100%,2026-10-01T18:00:00Z,Public on-sale end in UTC.
+Event,dates,dates,object,no,600,100%,,Date/time information for the event.
+Event,dates.start,start,object,no,600,100%,,When the event starts.
+Event,dates.start.localDate,localDate,string,no,600,100%,2026-10-01,Start date in the venue's local time (YYYY-MM-DD).
+Event,dates.start.localTime,localTime,string,no,599,100%,11:00:00,Start time in the venue's local time (HH:MM:SS).
+Event,dates.start.dateTime,dateTime,string,no,599,100%,2026-10-01T18:00:00Z,Start date and time in UTC (ISO 8601).
+Event,dates.start.dateTBD,dateTBD,boolean,no,600,100%,FALSE,True if the date is to be determined.
+Event,dates.start.dateTBA,dateTBA,boolean,no,600,100%,FALSE,True if the date is to be announced.
+Event,dates.start.timeTBA,timeTBA,boolean,no,600,100%,FALSE,True if the time is to be announced.
+Event,dates.start.noSpecificTime,noSpecificTime,boolean,no,600,100%,FALSE,True if the event has no specific start time.
+Event,dates.timezone,timezone,string,no,452,75%,America/Los_Angeles,"Venue time zone (IANA name), e.g. America/New_York."
+Event,dates.status,status,object,no,600,100%,,Event status.
+Event,dates.status.code,code,string,no,600,100%,onsale,"Status code: onsale, offsale, cancelled, postponed, rescheduled."
+Event,dates.spanMultipleDays,spanMultipleDays,boolean,no,600,100%,FALSE,True if the event runs over multiple days.
+Event,classifications,classifications,array,no,600,100%,,"List of category tags. Usually 1; some have several, with one flagged primary."
+Event,classifications[],classifications,object,yes,600,100%,,"One classification (segment > genre > subgenre, plus type > subtype)."
+Event,classifications[].primary,primary,boolean,yes,599,100%,TRUE,True for the main classification when there are several.
+Event,classifications[].segment,segment,object,yes,600,100%,,Top-level category.
+Event,classifications[].segment.id,id,string,yes,600,100%,KZFzniwnSyZfZ7v7nJ,Ticketmaster segment ID.
+Event,classifications[].segment.name,name,string,yes,600,100%,Music,"Segment name, e.g. Music, Sports, Arts & Theatre, Miscellaneous."
+Event,classifications[].genre,genre,object,yes,597,100%,,Genre within the segment.
+Event,classifications[].genre.id,id,string,yes,597,100%,KnvZfZ7vAe6,Ticketmaster genre ID.
+Event,classifications[].genre.name,name,string,yes,597,100%,Undefined,"Genre name, e.g. Rock, Country, Pop. 'Undefined'/'Other' are real values."
+Event,classifications[].subGenre,subGenre,object,yes,574,96%,,Subgenre within the genre.
+Event,classifications[].subGenre.id,id,string,yes,574,96%,KZazBEonSMnZfZ7v6JI,Ticketmaster subgenre ID.
+Event,classifications[].subGenre.name,name,string,yes,574,96%,Undefined,"Subgenre name, e.g. Alternative Rock."
+Event,classifications[].type,type,object,yes,451,75%,,Secondary classification type (separate from the genre hierarchy).
+Event,classifications[].type.id,id,string,yes,451,75%,KZAyXgnZfZ7v7lt,Ticketmaster type ID.
+Event,classifications[].type.name,name,string,yes,451,75%,Event Style,"Type name, e.g. Event Style, Group, Parking."
+Event,classifications[].subType,subType,object,yes,451,75%,,Sub-type under type.
+Event,classifications[].subType.id,id,string,yes,451,75%,KZFzBErXgnZfZ7vA6E,Ticketmaster subtype ID.
+Event,classifications[].subType.name,name,string,yes,451,75%,Festival,"Subtype name, e.g. Festival, Band, Regular."
+Event,classifications[].family,family,boolean,yes,600,100%,FALSE,True if flagged as family-friendly.
+Event,promoter,promoter,object,no,310,52%,,The event's primary promoter (same as the first entry in promoters).
+Event,promoter.id,id,string,no,310,52%,494,Promoter ID.
+Event,promoter.name,name,string,no,310,52%,PROMOTED BY VENUE,"Promoter name, e.g. LIVE NATION MUSIC, AEG LIVE."
+Event,promoter.description,description,string,no,310,52%,PROMOTED BY VENUE / NTL / USA,Promoter description (name / region / country).
+Event,promoters,promoters,array,no,310,52%,,All promoters for the event (an event can have more than one).
+Event,promoters[],promoters,object,yes,310,52%,,One promoter.
+Event,promoters[].id,id,string,yes,310,52%,494,Promoter ID.
+Event,promoters[].name,name,string,yes,310,52%,PROMOTED BY VENUE,Promoter name.
+Event,promoters[].description,description,string,yes,310,52%,PROMOTED BY VENUE / NTL / USA,Promoter description.
+Event,ageRestrictions,ageRestrictions,object,no,289,48%,,Age restriction information.
+Event,ageRestrictions.legalAgeEnforced,legalAgeEnforced,boolean,no,289,48%,FALSE,True if a minimum age is enforced.
+Event,ticketing,ticketing,object,no,437,73%,,Ticketing feature flags.
+Event,ticketing.safeTix,safeTix,object,no,289,48%,,SafeTix (rotating-barcode mobile tickets) setting.
+Event,ticketing.safeTix.enabled,enabled,boolean,no,289,48%,FALSE,True if SafeTix mobile tickets are used.
+Event,ticketing.allInclusivePricing,allInclusivePricing,object,no,437,73%,,All-in pricing setting.
+Event,ticketing.allInclusivePricing.enabled,enabled,boolean,no,437,73%,FALSE,True if displayed prices include fees.
+Event,nameOrigin,nameOrigin,string,no,600,100%,primaryAttraction,"Where the event name came from, e.g. primaryAttraction."
+Event,ticketTextLines,ticketTextLines,object,no,289,48%,,"Text printed on the physical/digital ticket, by locale."
+Event,ticketTextLines.{locale},{locale},object,no,289,48%,,Ticket text for one locale (e.g. en-us).
+Event,ticketTextLines.{locale}.line{1-6},line{1-6},string,no,289,48%,DO NOT DELETE,One line of ticket text (lines 1-6). Often blank or internal codes.
+Event,_embedded,_embedded,object,no,600,100%,,Related records nested inside the event: venues and attractions.
+Venue,_embedded.venues,venues,array,no,600,100%,,Venue(s) where the event takes place (normally exactly one).
+Venue,_embedded.venues[],venues,object,yes,600,100%,,One venue.
+Venue,_embedded.venues[].name,name,string,yes,600,100%,Discovery Park,Venue name.
+Venue,_embedded.venues[].type,type,string,yes,600,100%,venue,Object type; always 'venue'.
+Venue,_embedded.venues[].id,id,string,yes,600,100%,KovZpZAata7A,Unique Ticketmaster venue ID. Case-sensitive.
+Venue,_embedded.venues[].test,test,boolean,yes,600,100%,FALSE,True if this is a test record.
+Venue,_embedded.venues[].url,url,string,yes,452,75%,https://www.ticketmaster.com/discovery-park-tickets-sacramento/venue/229454,Venue page on Ticketmaster.
+Venue,_embedded.venues[].locale,locale,string,yes,600,100%,en-us,Language/region of the record.
+Venue,_embedded.venues[].postalCode,postalCode,string,yes,600,100%,95833,ZIP/postal code.
+Venue,_embedded.venues[].timezone,timezone,string,yes,600,100%,America/Los_Angeles,Venue time zone (IANA name).
+Venue,_embedded.venues[].city,city,object,yes,600,100%,,City.
+Venue,_embedded.venues[].city.name,name,string,yes,600,100%,Sacramento,City name.
+Venue,_embedded.venues[].state,state,object,yes,600,100%,,State/province.
+Venue,_embedded.venues[].state.name,name,string,yes,600,100%,California,"State name, e.g. California."
+Venue,_embedded.venues[].state.stateCode,stateCode,string,yes,600,100%,CA,"State abbreviation, e.g. CA."
+Venue,_embedded.venues[].country,country,object,yes,600,100%,,Country.
+Venue,_embedded.venues[].country.name,name,string,yes,600,100%,United States Of America,Country name.
+Venue,_embedded.venues[].country.countryCode,countryCode,string,yes,600,100%,US,"ISO country code, e.g. US."
+Venue,_embedded.venues[].address,address,object,yes,599,100%,,Street address.
+Venue,_embedded.venues[].address.line1,line1,string,yes,599,100%,Interstate 5 @ Garden Highway,Address line 1.
+Venue,_embedded.venues[].location,location,object,yes,599,100%,,Geographic coordinates.
+Venue,_embedded.venues[].location.longitude,longitude,string,yes,599,100%,-121.5606703,Longitude (stored as text in the API).
+Venue,_embedded.venues[].location.latitude,latitude,string,yes,599,100%,38.630932,Latitude (stored as text in the API).
+Venue,_embedded.venues[].markets,markets,array,yes,292,49%,,Ticketmaster sales markets the venue belongs to (can be several).
+Venue,_embedded.venues[].markets[],markets,object,yes,292,49%,,One market.
+Venue,_embedded.venues[].markets[].name,name,string,yes,292,49%,N. California/N. Nevada,"Market name, e.g. New York/Tri-State Area."
+Venue,_embedded.venues[].markets[].id,id,string,yes,292,49%,41,Market ID.
+Venue,_embedded.venues[].dmas,dmas,array,yes,440,73%,,Designated Market Areas (Nielsen TV/media regions) the venue is in.
+Venue,_embedded.venues[].dmas[],dmas,object,yes,440,73%,,One DMA.
+Venue,_embedded.venues[].dmas[].id,id,integer,yes,440,73%,250,DMA ID (number).
+Venue,_embedded.venues[].boxOfficeInfo,boxOfficeInfo,object,yes,209,35%,,Box office details.
+Venue,_embedded.venues[].boxOfficeInfo.willCallDetail,willCallDetail,string,yes,165,28%,Available after 9am day of show only at main entrance of the venue inside Dis...,Will-call pickup instructions (free text).
+Venue,_embedded.venues[].parkingDetail,parkingDetail,string,yes,202,34%,Parking is available for $5 Exit Garden Highway off I-5,Parking information (free text).
+Venue,_embedded.venues[].generalInfo,generalInfo,object,yes,201,34%,,Venue rules.
+Venue,_embedded.venues[].generalInfo.generalRule,generalRule,string,yes,184,31%,No coolers No umbrellas No food No video cameras Picture cameras are ok One w...,"General venue rules, e.g. prohibited items (free text, can be long)."
+Venue,_embedded.venues[].generalInfo.childRule,childRule,string,yes,179,30%,Children 5 & under are free.,Rules for children (free text).
+Venue,_embedded.venues[].upcomingEvents,upcomingEvents,object,yes,600,100%,,"Counts of upcoming events, broken down by ticketing source."
+Venue,_embedded.venues[].upcomingEvents.{source},{source},integer,yes,600,100%,4,"Upcoming event count on one ticketing platform (key = platform, e.g. ticketmaster, ticketweb, universe, tmr, mfx-de)."
+Venue,_embedded.venues[].upcomingEvents._total,_total,integer,yes,600,100%,4,Total number of upcoming events across all sources.
+Venue,_embedded.venues[].upcomingEvents._filtered,_filtered,integer,yes,600,100%,0,Number of upcoming events excluded by filters.
+Attraction,_embedded.attractions,attractions,array,no,499,83%,,"Artists/performers appearing at the event (0, 1 or many)."
+Attraction,_embedded.attractions[],attractions,object,yes,499,83%,,"One attraction (artist, band, tour or festival)."
+Attraction,_embedded.attractions[].name,name,string,yes,499,83%,Aftershock,Artist/performer name.
+Attraction,_embedded.attractions[].type,type,string,yes,499,83%,attraction,Object type; always 'attraction'.
+Attraction,_embedded.attractions[].id,id,string,yes,499,83%,K8vZ917fs67,Unique Ticketmaster attraction ID. Case-sensitive.
+Attraction,_embedded.attractions[].test,test,boolean,yes,499,83%,FALSE,True if this is a test record.
+Attraction,_embedded.attractions[].url,url,string,yes,480,80%,https://www.ticketmaster.com/aftershock-tickets/artist/2248012,Artist page on Ticketmaster.
+Attraction,_embedded.attractions[].locale,locale,string,yes,499,83%,en-us,Language/region of the record.
+Attraction,_embedded.attractions[].externalLinks,externalLinks,object,yes,423,70%,,"Artist links on other sites, grouped by platform."
+Attraction,_embedded.attractions[].externalLinks.{link_type},{link_type},array,yes,423,70%,,"Links for one platform (spotify, instagram, youtube, facebook, twitter, homepage, itunes, wiki, lastfm, musicbrainz, tiktok, soundcloud, bandcamp)."
+Attraction,_embedded.attractions[].externalLinks.{link_type}[],{link_type},object,yes,423,70%,,One link.
+Attraction,_embedded.attractions[].externalLinks.{link_type}[].url,url,string,yes,423,70%,https://twitter.com/AFTERSHOCKSAC,Link URL.
+Attraction,_embedded.attractions[].images,images,array,yes,499,83%,,List of promotional images in different sizes/aspect ratios.
+Attraction,_embedded.attractions[].images[],images,object,yes,499,83%,,One image.
+Attraction,_embedded.attractions[].images[].ratio,ratio,string,yes,499,83%,16_9,"Aspect ratio, e.g. 16_9, 3_2, 4_3."
+Attraction,_embedded.attractions[].images[].url,url,string,yes,499,83%,https://s1.ticketm.net/dam/a/f66/9591a53c-6f55-4cca-b3a3-59b126530f66_TABLET_...,Image URL.
+Attraction,_embedded.attractions[].images[].width,width,integer,yes,499,83%,1024,Width in pixels.
+Attraction,_embedded.attractions[].images[].height,height,integer,yes,499,83%,576,Height in pixels.
+Attraction,_embedded.attractions[].images[].fallback,fallback,boolean,yes,499,83%,FALSE,True if this is a generic placeholder rather than a specific image.
+Attraction,_embedded.attractions[].classifications,classifications,array,yes,499,83%,,"List of category tags. Usually 1; some have several, with one flagged primary."
+Attraction,_embedded.attractions[].classifications[],classifications,object,yes,499,83%,,"One classification (segment > genre > subgenre, plus type > subtype)."
+Attraction,_embedded.attractions[].classifications[].primary,primary,boolean,yes,499,83%,TRUE,True for the main classification when there are several.
+Attraction,_embedded.attractions[].classifications[].segment,segment,object,yes,499,83%,,Top-level category.
+Attraction,_embedded.attractions[].classifications[].segment.id,id,string,yes,499,83%,KZFzniwnSyZfZ7v7nJ,Ticketmaster segment ID.
+Attraction,_embedded.attractions[].classifications[].segment.name,name,string,yes,499,83%,Music,"Segment name, e.g. Music, Sports, Arts & Theatre, Miscellaneous."
+Attraction,_embedded.attractions[].classifications[].genre,genre,object,yes,499,83%,,Genre within the segment.
+Attraction,_embedded.attractions[].classifications[].genre.id,id,string,yes,499,83%,KnvZfZ7vAe6,Ticketmaster genre ID.
+Attraction,_embedded.attractions[].classifications[].genre.name,name,string,yes,499,83%,Undefined,"Genre name, e.g. Rock, Country, Pop. 'Undefined'/'Other' are real values."
+Attraction,_embedded.attractions[].classifications[].subGenre,subGenre,object,yes,499,83%,,Subgenre within the genre.
+Attraction,_embedded.attractions[].classifications[].subGenre.id,id,string,yes,499,83%,KZazBEonSMnZfZ7v6JI,Ticketmaster subgenre ID.
+Attraction,_embedded.attractions[].classifications[].subGenre.name,name,string,yes,499,83%,Undefined,"Subgenre name, e.g. Alternative Rock."
+Attraction,_embedded.attractions[].classifications[].type,type,object,yes,480,80%,,Secondary classification type (separate from the genre hierarchy).
+Attraction,_embedded.attractions[].classifications[].type.id,id,string,yes,480,80%,KZAyXgnZfZ7v7lt,Ticketmaster type ID.
+Attraction,_embedded.attractions[].classifications[].type.name,name,string,yes,480,80%,Event Style,"Type name, e.g. Event Style, Group, Parking."
+Attraction,_embedded.attractions[].classifications[].subType,subType,object,yes,480,80%,,Sub-type under type.
+Attraction,_embedded.attractions[].classifications[].subType.id,id,string,yes,480,80%,KZFzBErXgnZfZ7vA6E,Ticketmaster subtype ID.
+Attraction,_embedded.attractions[].classifications[].subType.name,name,string,yes,480,80%,Festival,"Subtype name, e.g. Festival, Band, Regular."
+Attraction,_embedded.attractions[].classifications[].family,family,boolean,yes,499,83%,FALSE,True if flagged as family-friendly.
+Attraction,_embedded.attractions[].upcomingEvents,upcomingEvents,object,yes,499,83%,,"Counts of upcoming events, broken down by ticketing source."
+Attraction,_embedded.attractions[].upcomingEvents.{source},{source},integer,yes,499,83%,4,"Upcoming event count on one ticketing platform (key = platform, e.g. ticketmaster, ticketweb, universe, tmr, mfx-de)."
+Attraction,_embedded.attractions[].upcomingEvents._total,_total,integer,yes,499,83%,4,Total number of upcoming events across all sources.
+Attraction,_embedded.attractions[].upcomingEvents._filtered,_filtered,integer,yes,499,83%,0,Number of upcoming events excluded by filters.
+Attraction,_embedded.attractions[].externalLinks.{link_type}[].id,id,string,yes,326,54%,c07f0676-9143-4217-8a9f-4c26bd636f13,Platform-specific ID (MusicBrainz only).
+Attraction,_embedded.attractions[].aliases,aliases,array,yes,35,6%,,Other names/spellings for the artist.
+Attraction,_embedded.attractions[].aliases[],aliases,string,yes,35,6%,my chrm,One alternative name.
+Attraction,_embedded.attractions[].draftStatus,draftStatus,string,yes,87,14%,ACCEPTED,"Internal record status, e.g. ACCEPTED."
+Event,info,info,string,no,299,50%,Single Day Ticket for October 1st Only Latin Music Month? Conference 2026 Joi...,Free-text event information from the promoter/venue.
+Event,pleaseNote,pleaseNote,string,no,311,52%,Single Day Ticket for October 1st Only,"Free-text notes/warnings for buyers (policies, restrictions)."
+Event,seatmap,seatmap,object,no,306,51%,,Seating chart.
+Event,seatmap.staticUrl,staticUrl,string,no,306,51%,https://mapsapi.tmol.io/maps/geometry/3/event/0B0064D8EA555DC5/staticImage?ty...,URL of a static seat map image.
+Event,accessibility,accessibility,object,no,204,34%,,Accessibility (ADA) information.
+Event,accessibility.ticketLimit,ticketLimit,integer,no,177,30%,4,Maximum number of accessible-seating tickets per purchase.
+Venue,_embedded.venues[].images,images,array,yes,224,37%,,List of promotional images in different sizes/aspect ratios.
+Venue,_embedded.venues[].images[],images,object,yes,224,37%,,One image.
+Venue,_embedded.venues[].images[].ratio,ratio,string,yes,221,37%,16_9,"Aspect ratio, e.g. 16_9, 3_2, 4_3."
+Venue,_embedded.venues[].images[].url,url,string,yes,224,37%,https://s1.ticketm.net/dbimages/24514v.jpg,Image URL.
+Venue,_embedded.venues[].images[].width,width,integer,yes,224,37%,640,Width in pixels.
+Venue,_embedded.venues[].images[].height,height,integer,yes,224,37%,360,Height in pixels.
+Venue,_embedded.venues[].images[].fallback,fallback,boolean,yes,224,37%,FALSE,True if this is a generic placeholder rather than a specific image.
+Venue,_embedded.venues[].boxOfficeInfo.phoneNumberDetail,phoneNumberDetail,string,yes,172,29%,(323) 343-6600,Box office phone (free text).
+Venue,_embedded.venues[].boxOfficeInfo.openHoursDetail,openHoursDetail,string,yes,194,32%,Monday: CLOSED Tuesday - Fridays: 11-6pm Saturday: 11-4 pm Sunday: CLOSED The...,Box office hours (free text).
+Venue,_embedded.venues[].boxOfficeInfo.acceptedPaymentDetail,acceptedPaymentDetail,string,yes,190,32%,Cash And Credit Cards Are Accepted At The Box Office.,Accepted payment methods (free text).
+Event,dates.initialStartDate,initialStartDate,object,no,9,2%,,Original start date before the event was rescheduled.
+Event,dates.initialStartDate.localDate,localDate,string,no,9,2%,2026-09-17,"Original start date, venue local time."
+Event,dates.initialStartDate.localTime,localTime,string,no,9,2%,16:30:00,"Original start time, venue local time."
+Event,dates.initialStartDate.dateTime,dateTime,string,no,9,2%,2026-09-17T20:30:00Z,Original start in UTC.
+Event,products,products,array,no,150,25%,,"Add-on products sold with the event (parking, VIP, merch)."
+Event,products[],products,object,yes,150,25%,,One product.
+Event,products[].name,name,string,yes,150,25%,PARKWHIZ EVENTS CENTER AT OSCEOLA HERITAGE PARK,Product name.
+Event,products[].id,id,string,yes,150,25%,1AeFZ_8GkMF0NJZ,Product ID.
+Event,products[].url,url,string,yes,150,25%,https://www.ticketmaster.com/parkwhiz-events-center-at-osceola-heritage-kissi...,Product purchase URL.
+Event,products[].type,type,string,yes,150,25%,Upsell,"Product type, e.g. Upsell."
+Event,products[].classifications,classifications,array,yes,150,25%,,"List of category tags. Usually 1; some have several, with one flagged primary."
+Event,products[].classifications[],classifications,object,yes,150,25%,,"One classification (segment > genre > subgenre, plus type > subtype)."
+Event,products[].classifications[].primary,primary,boolean,yes,150,25%,TRUE,True for the main classification when there are several.
+Event,products[].classifications[].segment,segment,object,yes,150,25%,,Top-level category.
+Event,products[].classifications[].segment.id,id,string,yes,150,25%,KZFzniwnSyZfZ7v7n1,Ticketmaster segment ID.
+Event,products[].classifications[].segment.name,name,string,yes,150,25%,Miscellaneous,"Segment name, e.g. Music, Sports, Arts & Theatre, Miscellaneous."
+Event,products[].classifications[].genre,genre,object,yes,150,25%,,Genre within the segment.
+Event,products[].classifications[].genre.id,id,string,yes,150,25%,KnvZfZ7v7ll,Ticketmaster genre ID.
+Event,products[].classifications[].genre.name,name,string,yes,150,25%,Undefined,"Genre name, e.g. Rock, Country, Pop. 'Undefined'/'Other' are real values."
+Event,products[].classifications[].subGenre,subGenre,object,yes,150,25%,,Subgenre within the genre.
+Event,products[].classifications[].subGenre.id,id,string,yes,150,25%,KZazBEonSMnZfZ7vAv1,Ticketmaster subgenre ID.
+Event,products[].classifications[].subGenre.name,name,string,yes,150,25%,Undefined,"Subgenre name, e.g. Alternative Rock."
+Event,products[].classifications[].type,type,object,yes,150,25%,,Secondary classification type (separate from the genre hierarchy).
+Event,products[].classifications[].type.id,id,string,yes,150,25%,KZAyXgnZfZ7vAva,Ticketmaster type ID.
+Event,products[].classifications[].type.name,name,string,yes,150,25%,Parking,"Type name, e.g. Event Style, Group, Parking."
+Event,products[].classifications[].subType,subType,object,yes,150,25%,,Sub-type under type.
+Event,products[].classifications[].subType.id,id,string,yes,150,25%,KZFzBErXgnZfZ7vAFe,Ticketmaster subtype ID.
+Event,products[].classifications[].subType.name,name,string,yes,150,25%,Regular,"Subtype name, e.g. Festival, Band, Regular."
+Event,products[].classifications[].family,family,boolean,yes,150,25%,FALSE,True if flagged as family-friendly.
+Event,doorsTimes,doorsTimes,object,no,81,14%,,When doors open.
+Event,doorsTimes.localDate,localDate,string,no,81,14%,2026-10-01,"Doors-open date, venue local time."
+Event,doorsTimes.localTime,localTime,string,no,81,14%,15:30:00,"Doors-open time, venue local time."
+Event,doorsTimes.dateTime,dateTime,string,no,81,14%,2026-10-01T19:30:00Z,Doors-open time in UTC.
+Event,linkMoreInfo,linkMoreInfo,object,no,73,12%,,Link to additional information (e.g. bag policy).
+Event,linkMoreInfo.descriptions,descriptions,object,no,73,12%,,"Link text, by locale."
+Event,linkMoreInfo.descriptions.{locale},{locale},string,no,73,12%,Bag Policy and Prohibited Items,Link text for one locale.
+Event,linkMoreInfo.url,url,string,no,73,12%,https://www.ohpark.com/guest-services/prohibited-items,URL of the additional information.
+Venue,_embedded.venues[].accessibleSeatingDetail,accessibleSeatingDetail,string,yes,172,29%,This is an accessible venue.,Accessible seating information (free text).
+Event,dates.access,access,object,no,163,27%,,When ticket holders can access the event/venue.
+Event,dates.access.startDateTime,startDateTime,string,no,162,27%,2026-10-01T20:30:00Z,Access start in UTC.
+Event,dates.access.startApproximate,startApproximate,boolean,no,163,27%,FALSE,True if the access start is approximate.
+Event,dates.access.endDateTime,endDateTime,string,no,29,5%,2026-10-01T22:45:00Z,Access end in UTC.
+Event,dates.access.endApproximate,endApproximate,boolean,no,163,27%,FALSE,True if the access end is approximate.
+Event,dates.end,end,object,no,164,27%,,When the event ends (if provided).
+Event,dates.end.localDate,localDate,string,no,28,5%,2026-10-01,"End date, venue local time."
+Event,dates.end.localTime,localTime,string,no,30,5%,18:45:00,"End time, venue local time."
+Event,dates.end.dateTime,dateTime,string,no,30,5%,2026-10-01T22:45:00Z,End date and time in UTC.
+Event,dates.end.approximate,approximate,boolean,no,164,27%,FALSE,True if the end time is approximate.
+Event,dates.end.noSpecificTime,noSpecificTime,boolean,no,164,27%,FALSE,True if there is no specific end time.
+Event,priceRanges,priceRanges,array,no,151,25%,,List of price ranges (often missing; Ticketmaster only shares this for some events).
+Event,priceRanges[],priceRanges,object,yes,151,25%,,One price range.
+Event,priceRanges[].type,type,string,yes,151,25%,standard,"Price type, e.g. standard, standard including fees."
+Event,priceRanges[].currency,currency,string,yes,151,25%,USD,"Currency code, e.g. USD."
+Event,priceRanges[].min,min,decimal,yes,151,25%,35.46,Lowest ticket price.
+Event,priceRanges[].max,max,decimal,yes,151,25%,45.76,Highest ticket price.
+Event,sales.presales,presales,array,no,191,32%,,List of presale windows (before the public on-sale).
+Event,sales.presales[],presales,object,yes,191,32%,,One presale.
+Event,sales.presales[].startDateTime,startDateTime,string,yes,191,32%,2026-06-17T14:00:00Z,Presale start in UTC.
+Event,sales.presales[].endDateTime,endDateTime,string,yes,191,32%,2026-06-19T13:00:00Z,Presale end in UTC.
+Event,sales.presales[].name,name,string,yes,191,32%,Artist Presale,"Presale name, e.g. Artist Presale, Citi Cardmember Presale."
+Event,sales.presales[].description,description,string,yes,105,18%,Live Nation Presales are available exclusively to Live Nation All Access memb...,Long description of who qualifies for the presale.
+Event,sales.presales[].shortDescription,shortDescription,string,yes,152,25%,Available exclusively to Live Nation All Access members,Short description of the presale.
+Event,sales.presales[].linkDescription,linkDescription,string,yes,97,16%,Join for Free to Unlock Presale,Text for the presale link.
+Event,sales.presales[].url,url,string,yes,97,16%,https://www.livenation.com/allaccess,Link to sign up for / access the presale.
+Event,ticketLimit,ticketLimit,object,no,198,33%,,Ticket purchase limit.
+Event,ticketLimit.info,info,string,no,198,33%,There is an overall 6 ticket limit for this event.,"Free-text limit, e.g. 'There is an overall 6 ticket limit for this event.'"
+Event,outlets,outlets,array,no,148,25%,,Other places to buy tickets.
+Event,outlets[],outlets,object,yes,148,25%,,One outlet.
+Event,outlets[].url,url,string,yes,148,25%,https://drpepperpark.com,Outlet URL.
+Event,outlets[].type,type,string,yes,148,25%,venueBoxOffice,"Outlet type, e.g. venueBoxOffice."
+Event,ageRestrictions.ageRuleDescription,ageRuleDescription,string,no,19,3%,16 & Over,"Age rule text, e.g. '18 & Over', '21+'."
+Venue,_embedded.venues[].social,social,object,yes,64,11%,,Social media accounts.
+Venue,_embedded.venues[].social.twitter,twitter,object,yes,64,11%,,Twitter/X account.
+Venue,_embedded.venues[].social.twitter.handle,handle,string,yes,64,11%,@mercuryloungeny,Twitter/X handle.
+Venue,_embedded.venues[].ada,ada,object,yes,70,12%,,ADA contact details.
+Venue,_embedded.venues[].ada.adaPhones,adaPhones,string,yes,70,12%,(212) 260-4700,ADA contact phone.
+Venue,_embedded.venues[].ada.adaCustomCopy,adaCustomCopy,string,yes,69,12%,Mercury Lounge is an all General Admission venue. Patrons requesting accessib...,ADA policy text.
+Venue,_embedded.venues[].ada.adaHours,adaHours,string,yes,66,11%,ada@mercuryloungenyc.com,ADA contact hours or email.
+Event,products[].onUpsellLandingPage,onUpsellLandingPage,boolean,yes,19,3%,TRUE,True if listed on the upsell landing page.
+Event,accessibility.info,info,string,no,31,5%,Accessible seating is available for wheelchairs and companions. There is a tw...,Free-text accessibility details.
+Event,upsellLandingPageUrl,upsellLandingPageUrl,string,no,19,3%,https://www.ticketmaster.com/extras/mastodon-detroit-michigan-10-01-2026/0800...,"Link to a page of add-ons (parking, merch, upgrades)."
+Venue,_embedded.venues[].aliases,aliases,array,yes,23,4%,,Other names for the venue.
+Venue,_embedded.venues[].aliases[],aliases,string,yes,23,4%,The Carolina Theatre,One alternative name.
+Venue,_embedded.venues[].address.line2,line2,string,yes,28,5%,"New York, NY 10021",Address line 2.
+Event,accessibility.url,url,string,no,4,1%,http://verizonarena.com/policies-and-guidelines/ada-handicapped-and-accessibi...,Link to more accessibility information.
+Event,accessibility.urlText,urlText,string,no,4,1%,Click here for more info about ADA seating,Text for the accessibility link.
+Event,images[].attribution,attribution,string,yes,4,1%,re-added CMG-100378,Image credit/attribution text.
+Attraction,_embedded.attractions[].images[].attribution,attribution,string,yes,8,1%,re-added CMG-100378,Image credit/attribution text.
+Event,description,description,string,no,4,1%,+ American Express® Card Members can purchase tickets from Thu 9/10 10:30AM t...,Long event description (rarely populated).
+Venue,_embedded.venues[].externalLinks,externalLinks,object,yes,1,0%,,"External links for the venue, grouped by type."
+Venue,_embedded.venues[].externalLinks.{link_type},{link_type},array,yes,1,0%,,Links of one type (e.g. appDeepLink).
+Venue,_embedded.venues[].externalLinks.{link_type}[],{link_type},object,yes,1,0%,,One link.
+Venue,_embedded.venues[].externalLinks.{link_type}[].url,url,string,yes,1,0%,https://intuitdome.com/events/intuit-dome-app,Link URL.

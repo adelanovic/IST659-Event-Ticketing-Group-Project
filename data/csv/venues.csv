@@ -1,0 +1,947 @@
+venue_id,name,address,city,state,postal_code
+1,04 Center,2701 South Lamar Blvd.,Austin,TX,78704
+2,1884 Lounge,1555 Madison Ave,Memphis,TN,38104
+3,191 Toole,191 E Toole Ave,Tucson,AZ,85701
+4,3rd and Lindsley,818 3rd Ave. S,Nashville,TN,37210
+5,40 Watt Club,285 W. Washington,Athens,GA,30601
+6,45 East,315 SE 3rd Ave,Portland,OR,97214
+7,54 Below,254 W 54th Street,New York,NY,10019
+8,713 Music Hall,401 Franklin Street,Houston,TX,77201
+9,7th Street Entry,29 N 7th Street,Minneapolis,MN,55403
+10,8 Seconds Saloon,111 N Lynhurst Dr,Indianapolis,IN,46224
+11,9:30 CLUB,815 V Street N.W.,Washington,DC,20001
+12,9th & Jackson Outdoors,317 S 9th Ave,Phoenix,AZ,85007
+13,9th St. Parallel at Knitting Factory,416 S 9th St,Boise,ID,83702
+14,A&R Music Bar,391 Neil Ave,Columbus,OH,43215
+15,ASU Gammage,1200 South Forest Ave,Tempe,AZ,85287
+16,ASU Kerr,6110 North Scottsdale Road,Scottsdale,AZ,85253
+17,Abravanel Hall,123 W South Temple,Salt Lake City,UT,84101
+18,Academy LA,6021 Hollywood Blvd.,Los Angeles,CA,90028
+19,Access at Aliante Casino & Hotel,7300 Aliante Parkway,North Las Vegas,NV,89084
+20,Ace * Mission Studios,516 S Mission Rd,Los Angeles,CA,90033
+21,Ace of Cups,"2619 N. High St., Columbus, OH 43202",Columbus,OH,43202
+22,Ace of Spades,1417 R St.,Sacramento,CA,95811
+23,Acrisure Arena at Greater Palm Springs,75702 Varner Rd.,Palm Desert,CA,92211
+24,Aggie Theater,204 S College Ave,Fort Collins,CO,80524
+25,Agora Theatre,5000 Euclid Avenue,Cleveland,OH,44113
+26,Alabama Theatre,1817 3rd Ave. North,Birmingham,AL,35203
+27,Aladdin Theater,3017 SE Milwaukie Ave,Portland,OR,97202
+28,Albany Municipal Auditorium,200 N Jackson St,Albany,GA,31701
+29,Albatross,113 E. Bay St.,Jacksonville,FL,32202
+30,Alerus Center,1200 42nd Street South,Grand Forks,ND,58201
+31,Alexis Park Resort Hotel,375 E Harmon Ave,Las Vegas,NV,89169
+32,Alice Drive Baptist Church,1305 Loring Mill Rd,Sumter,SC,29150
+33,Allstate Arena,6920 North Mannheim Road,Rosemont,IL,60018
+34,Amaturo Theater at Broward Center,201 SW 5th Avenue,Ft Lauderdale,FL,33312
+35,Amerant Bank Arena,1 Panther Parkway,Sunrise,FL,33323
+36,American Music Theatre,2425 Lincoln Hwy East,Lancaster,PA,17602
+37,Ames Center,12600 Nicollet Avenue,Burnsville,MN,55337
+38,Angel Of The Winds Arena,2000 Hewitt Ave.,Everett,WA,98201
+39,Angelina Arts Alliance,3500 S. 1st St,Lufkin,TX,75901
+40,Anthem - Hard Rock Hotel & Casino Sioux City,111 3rd St,Sioux City,IA,51101
+41,Antone's Nightclub,305 E 5th Street,Austin,TX,78701
+42,Aragon Ballroom,1106 W Lawrence,Chicago,IL,60640
+43,Archer Music Hall,939 Hamilton Street,Allentown,PA,18101
+44,Ardmore Music Hall,23 East Lancaster Avenue,Ardmore,PA,19003
+45,Arena Theatre,"7326 Southwest Fwy,",Houston,TX,77074
+46,Ariat Arena,1911 Montgomery Street,Fort Worth,TX,76107
+47,Arizona Financial Theatre,400 West Washington Street,Phoenix,AZ,85003
+48,Arlene Schnitzer Concert Hall,1037 SW Broadway Dr,Portland,OR,97205
+49,Arlington Music Hall,224 North Center Street,Arlington,TX,76011
+50,Armory,500 South 6th St,Minneapolis,MN,55415
+51,Arrow,939 Hamilton Street,Allentown,PA,18101
+52,Arties Bar and Grill,1121 State Rout 12,Frenchtown,NJ,08825
+53,Artis-Naples,5833 Pelican Bay Blvd,Naples,FL,34108
+54,Asbury Hall at Babeville,341 Delaware Ave,Buffalo,NY,14202
+55,Ashland Armory,208 Oak Street,Ashland,OR,97520
+56,Assembly Food Hall,5055 Broadway Place,Nashville,TN,37203
+57,Atlanta Symphony Hall,1280 Peachtree St,Atlanta,GA,30309
+58,August Hall,420 Mason St,San Francisco,CA,94102
+59,Austin City Limits Live at The Moody Theater,310 W Willie Nelson Blvd,Austin,TX,78701
+60,Avalon Hollywood,1735 Vine St.,Hollywood,CA,90028
+61,Avalon Theatre - MD,40 E Dover St,Easton,MD,21601
+62,Aventura Arts & Cultural Center,3385 NE 188th Street,Aventura,FL,33180
+63,Aztec Theatre,104 North St. Mary's Street,San Antonio,TX,78205
+64,BJCC Theatre,1001 19th Street North,Birmingham,AL,35203
+65,BOK Center,200 S. Denver,Tulsa,OK,74103
+66,Balboa Theatre,868 Fourth Avenue,San Diego,CA,92101
+67,Ball Arena,1000 Chopper Circle,Denver,CO,80204
+68,Ball State University Pruis Hall,2000 W. University Ave.,Muncie,IN,47306
+69,Baltimore Soundstage,124 Market Place,Baltimore,MD,21202
+70,Bankhead Theater - Livermore Valley PAC,2400 First Street,Livermore,CA,94550
+71,Barbara B. Mann Performing Arts Hall,13350 FSW Pkwy,Fort Myers,FL,33919
+72,Barclays Center,620 Atlantic Ave,Brooklyn,NY,11217
+73,Bass Concert Hall,2350 Robert Dedman Drive,Austin,TX,78712
+74,Baton Rouge River Center Theater,220 St. Louis Street,Baton Rouge,LA,70802
+75,Bayou Music Center,520 Texas Ave.,Houston,TX,77002
+76,Beachland Ballroom,15711 Waterloo Rd,East Cleveland,OH,44110
+77,Beacon Theatre - Hopewell,401 N Main St,Hopewell,VA,23860
+78,Beat Kitchen,2100 W. Belmont,Chicago,IL,60618
+79,Beau Rivage Theatre,875 Beach Blvd,Biloxi,MS,39530
+80,Beer City Music Hall,1141 NW 2nd ST,Oklahoma City,OK,73106
+81,Belly Up,143 S. Cedros Ave,Solana Beach,CA,92075
+82,Belly Up Tavern,143 S Cedros Ave,Solana Beach,CA,92075
+83,Benchmark International Arena,401 Channelside Dr,Tampa,FL,33602
+84,Benedum Center,719 Liberty Ave,Pittsburgh,PA,15222
+85,Bergen Performing Arts Center,30 N. Van Brunt Street,Englewood,NJ,07631
+86,Bethel Woods Center for the Arts,200 Hurd Road,Bethel,NY,12720
+87,Big Night Live,110 Causeway Street,Boston,MA,02114
+88,Bijou Theatre,803 S. Gay St.,Knoxville,TN,37902
+89,Bilheimer Capitol Theatre,405 Cleveland Street,Clearwater,FL,33755
+90,Bill Graham Civic Auditorium,99 Grove Street,San Francisco,CA,94102
+91,Billy Bob's,2520 Rodeo Plaza,Fort Worth,TX,76164
+92,Bimbo's 365 Club,1025 Columbus Avenue,San Francisco,CA,94133
+93,Birchmere,3701 Mt. Vernon Ave,Alexandria,VA,22305
+94,Birdland,315 W 44th Street,New York,NY,10036
+95,Birdland Jazz Club,315 West 44th Street,New York,NY,10036
+96,Birdland Theater,315 West 44th Street,New York,NY,10036
+97,Bismarck Event Center,315 South 5th Street,Bismarck,ND,58504
+98,Black Bear Casino Resort,1789 Highway 210,Carlton,MN,55718
+99,Black Sheep,2106 E Platte Ave,Colorado Springs,CO,80909
+100,Bloomington Center for the Performing Arts,600 N. East Street,Bloomington,IL,61701
+101,Blue Gate Performing Arts Center,760 S Van Buren St,Shipshewana,IN,46565
+102,Blue Note Hawaii,2335 Kalakaua Ave,Honolulu,HI,96815
+103,Blue Note Jazz Club,131 W. 3rd St,New York,NY,10012
+104,Blue Note Jazz Club - NY,131 W 3rd St,New York,NY,10012
+105,Blue Note Los Angeles,6372 Sunset Blvd,Los Angeles,CA,90028
+106,Blue Ocean Music Hall,4 Oceanfront North,Salisbury,MA,01952
+107,Bluebird Cafe,4104 Hillsboro Pike,Nashville,TN,37215
+108,Bluebird Theatre,3317 E. Colfax Avenue,Denver,CO,80206
+109,Boardwalk Hall,2301 Boardwalk,Atlantic City,NJ,08401
+110,Bob Hope Theatre,242 E Main St.,Stockton,CA,95202
+111,Boca Black Box,8221 Glades Rd #10,Boca Raton,FL,33434
+112,Boettcher Hall,1000 14th Street,Denver,CO,80202
+113,Bogart's,2621 Short Vine Street,Cincinnati,OH,45219
+114,Bojangles Coliseum,2700 E Independence Boulevard,Charlotte,NC,28205
+115,Booth Theatre,222 W. 45th St.,New York,NY,10036
+116,Boston Symphony Hall,301 Massachusetts Ave,Boston,MA,02115
+117,Bottom Lounge,1375 W. Lake St,Chicago,IL,60607
+118,Bourbon Hall Live,116 W Jefferson St,Louisville,KY,40202
+119,Bourbon Theatre,1415 O Street,Lincoln,NE,68508
+120,Bowery Ballroom,6 Delancey St.,New York,NY,10002
+121,Bowery Palace,327 Bowery,New York,NY,10003
+122,Brewsky's,3818 W 4th St,Hattiesburg,MS,39401
+123,Brick and Mortar Music Hall,1710 Mission Street,San Francisco,CA,94103
+124,Bridge View Center,102 Church Street,Ottumwa,IA,52501
+125,Brighton Music Hall presented by Citizens,158 Brighton Avenue,Boston,MA,02134
+126,Brooklyn Bowl,61 Wythe Ave,Brooklyn,NY,11249
+127,Brooklyn Bowl Las Vegas,3545 S Las Vegas Boulevard,Las Vegas,NV,89109
+128,Brooklyn Bowl Nashville,925 3rd Ave N,Nashville,TN,37201
+129,Brooklyn Bowl Philadelphia,1009 Canal Street,Philadelphia,PA,19123
+130,Brooklyn Paramount,385 Flatbush Ave. Extension,Brooklyn,NY,11201
+131,Brooklyn Steel,319 Frost St,Brooklyn,NY,11222
+132,Brookshire Grocery Arena,2000 Brookshire Arena Drive,Bossier City,LA,71112
+133,Brown County Music Center,200 Maple Leaf Boulevard,Nashville,IN,47448
+134,Buckhead Theatre by SCANA Energy,3110 Roswell Rd,Atlanta,GA,30305
+135,Buell Theatre,1350 Curtis Street,Denver,CO,80204
+136,Buffalo Convention Center,153 Franklin St,Buffalo,NY,14202
+137,Bugsy's Cabaret at Flamingo,3555 Las Vegas Blvd,Las Vegas,NV,89109
+138,CFG Bank Arena,201 W Baltimore St,Baltimore,MD,21201
+139,CHI Health Center Omaha,455 N. 10th Street,Omaha,NE,68102
+140,Cable Dahmer Arena,19100 E. Valley View Parkway,Independence,MO,64055
+141,Cadillac Palace,151 W Randolph Street,Chicago,IL,60601
+142,Caesars Event Center at Caesars Southern Indiana,11999 Casino Center Drive SE,Elizabeth,IN,47117
+143,Cafe Du Nord,2174 Market St.,San Francisco,CA,94114
+144,Cafe Eleven,501 A1A Beach Blvd,Saint Augustine,FL,32080
+145,Cain's Ballroom,423 North Main St,Tulsa,OK,74103
+146,Camille's at The Bellwether,333 S. Boylston St,Los Angeles,CA,90017
+147,Canyon View Credit Union Stage at Maverik Center,3200 South Decker Lake Drive,West Valley City,UT,84119
+148,Capital City Music Hall,234 N 2nd Street,Harrisburg,PA,17101
+149,Capital City Music Hall Lower Level,234 N 2nd Street,Harrisburg,PA,17101
+150,Capital One Arena,601 F Street NW,Washington,DC,20004
+151,Capital One Hall,7750 Capital One Tower Road,Tysons,VA,22102
+152,Capitol Center for the Arts - NH,44 S Main St,Concord,NH,03301
+153,Cargo,255 North Virginia Street,Reno,NV,89501
+154,Cargo Concert Hall,255 North Virginia Street,Reno,NV,89501
+155,Carolina Theatre - Durham,309 W Morgan St,Durham,NC,27701
+156,Carpenter Theatre at Dominion Energy Center,600 East Grace St.,Richmond,VA,23219
+157,Cary Memorial Hall,1605 Massachusetts Avenue,Lexington,MA,02024
+158,Casbah-San Diego,2501 Kettner Blvd,San Diego,CA,92101
+159,Catalina Jazz Club,6725 W. Sunset Blvd.,Hollywood,CA,90028
+160,Celebrity Theatre,440 N. 32nd St.,Phoenix,AZ,85008
+161,Center Stage Theater,1374 W Peachtree St. NW,Atlanta,GA,30309
+162,Cerritos Center for the Performing Arts,18000 Park Plaza Drive,Cerritos,CA,90703
+163,Channel 24,1800 24th St,Sacramento,CA,95816
+164,Charleston Pour House,1977 Maybank Hwy,Charleston,SC,29412
+165,Chelsea’s Live,1010 Nicholson Dr,Baton Rouge,LA,70801
+166,Chickie Wah Wah,2828 Canal Street,New Orleans,LA,70119
+167,Choctaw Grand Theater,4418 US-69,Durant,OK,74701
+168,Christian Life Center,3489 Little York Rd,Dayton,OH,45414
+169,Cincinnati Music Hall,1243 Elm St.,Cincinnati,OH,45202
+170,Citizens House of Blues Boston,15 Lansdowne St.,Boston,MA,02215
+171,Citizens Live at The Wylie,1201 Wylie Ave,Pittsburgh,PA,15219
+172,City Winery - Atlanta,650 North Avenue,Atlanta,GA,30308
+173,City Winery - Chicago,1200 W. Randolph Street,Chicago,IL,60607
+174,Classic Center Theatre,300 N. Thomas St.,Athens,GA,30601
+175,Climate Pledge Arena,334 1st Ave N,Seattle,WA,98109
+176,Clock-Out Lounge,4864 Beacon Ave S,Seattle,WA,98108
+177,Clowes Memorial Hall,4602 Sunset Avenue,Indianapolis,IN,46208
+178,Club Cafe,56-58 South 12th Street,Pittsburgh,PA,15203
+179,Club LA,34876 Emerald Coast Pkwy,Destin,FL,32541
+180,Club Underground,555 E 4th St,Reno,NV,89512
+181,Cobb Energy Performing Arts Centre,2800 Cobb Galleria Parkway,Atlanta,GA,30339
+182,Coca-Cola Roxy,800 Battery Ave SE #500,Atlanta,GA,30339
+183,Coconino Center for the Arts,2300 N Fort Valley Rd,Flagstaff,AZ,86001
+184,Coffee Butler Amphitheater,35 E Quay Rd.,Key West,FL,33040
+185,College Street Music Hall,238 College Street,New Haven,CT,06510
+186,Colonial Theatre - Phoenixville,227 Bridge Street,Phoenixville,PA,19460
+187,Colorado Convention Center,700 14th St,Denver,CO,80202
+188,Columbia County Performing Arts Center,1000 Market Street,Evans,GA,30809
+189,Come and Take It Live,2015 E. Riverside Dr,Austin,TX,78741
+190,Community Arts Center - PA,220 West Fourth Street,Williamsport,PA,17701
+191,Concert Hall at Century II,225 W Douglas Avenue,Wichita,KS,67202
+192,Copernicus Center,5216 W. Lawrence Ave,Chicago,IL,60630
+193,Cornerstone - CA,"2367 Shattuck Ave, Berkeley, CA 94704",Berkeley,CA,94704
+194,Covelli Centre,229 East Front Street,Youngstown,OH,44503
+195,Crescent Ballroom,308 North 2nd Ave,Phoenix,AZ,85003
+196,Crest Theater,1013 K Street,Sacramento,CA,95814
+197,Criss Angel Theater at Planet Hollywood,3667 Las Vegas Blvd S.,Las Vegas,NV,89109
+198,Crystal Ballroom at Somerville Theatre,55 Davis Square,Somerville,MA,02144
+199,Culture Room,3045 N Federal Hwy,Ft Lauderdale,FL,33306
+200,DCU Center,50 Foster Street,Worcester,MA,01608
+201,DPAC,123 William V Bill Bell Way,Durham,NC,27701
+202,DUCTWORK - Houston,813 St Emanuel St,Houston,TX,77003
+203,Daniels Pavilion,5833 Pelican Bay Blvd,Naples,FL,34108
+204,Dante's,350 West Burnside Street,Portland,OR,97209
+205,Daryl's House,130 NY-22,Pawling,NY,12564
+206,David A. Straz Center - Carol Morsani Hall,1010 N W C Macinnes Pl,Tampa,FL,33602
+207,David Geffen Hall,10 Lincoln Center Plaza,New York,NY,10023
+208,DeVos Performance Hall,303 Monroe NW,Grand Rapids,MI,49503
+209,Deadwood Mountain Grand,1906 Deadwood Mountain Drive,Deadwood,SD,57732
+210,Delmar Hall,6133 Delmar Blvd.,Saint Louis,MO,63112
+211,Delta Center,301 West South Temple,Salt Lake City,UT,84101
+212,Desert Diamond Arena,9400 West Maryland,Glendale,AZ,85305
+213,Diamondback Music Hall,49345 S Interstate 94 Service Dr,Belleville,MI,48111
+214,DigAlert Grove of Anaheim,2200 East Katella Ave.,Anaheim,CA,92806
+215,District 142,142 Maple St,Wyandotte,MI,48192
+216,District Music Hall,71 Wall Street,Norwalk,CT,06850
+217,Dolby Live,3770 S. Las Vegas Blvd,Las Vegas,NV,89109
+218,Dolby Theatre,6801 Hollywood Blvd.,Hollywood,CA,90028
+219,Dothan Civic Center,126 N. Saint Andrews Street,Dothan,AL,36303
+220,Duling Hall,622 Duling Ave.,Jackson,MS,39216
+221,EPIC Event Center,2351 Holmgren Way Suite 1,Green Bay,WI,54304
+222,Eccles Theater - Salt Lake City,131 South Main Street,Salt Lake City,UT,84111
+223,Echoplex,1154 Glendale Blvd,Los Angeles,CA,90026
+224,Echostage,2135 Queens Chapel Road NE,Washington,DC,20018
+225,Eddie's Attic,515 N McDonough St,Decatur,GA,30030
+226,El Corazon,109 Eastlake Avenue East,Seattle,WA,98109
+227,El Rey - NM,622 Central Ave. S.W.,Albuquerque,NM,87102
+228,El Rey Theatre - Los Angeles,5515 Wilshire Blvd.,Los Angeles,CA,90036
+229,Elevation 27,600 Nevan Rd,Virginia Beach,VA,23451
+230,Ellen Eccles Theatre,43 S Main St,Logan,UT,84321
+231,Elsewhere,"599 Johnson Ave., Brooklyn, NY 11237",Brooklyn,NY,11237
+232,Elsinore Theatre,170 High St,Salem,OR,97301
+233,Emo's Austin,2015 E Riverside Dr.,Austin,TX,78741
+234,Empire Live,93 N Pearl St,Albany,NY,12207
+235,Empire Underground,93 N Pearl St,Albany,NY,12207
+236,Empty Bottle,1035 N. Western Ave.,Chicago,IL,60622
+237,Encore at Uptown Theater,3700 Broadway,Kansas City,MO,64111
+238,Enterprise Center,1401 Clark Ave,Saint Louis,MO,63103
+239,Exchange LA,618 S. Spring Street,Los Angeles,CA,90014
+240,Exit/In,2208 Elliston Place,Nashville,TN,37203
+241,ExtraMile Arena,1401 Bronco Lane,Boise,ID,83725
+242,F.M. Kirby Center,71 Public Square,Wilkes Barre,PA,18701
+243,FITZGERALDS SIDEBAR,6615 W Roosevelt Road,Berwyn,IL,60402
+244,FIVE,1028 Park Street,Jacksonville,FL,32204
+245,FTL War Memorial Auditorium,800 NE 8th Street,Ft Lauderdale,FL,33304
+246,Fair Park,909 1st Ave,Dallas,TX,75210
+247,Family Arena,2002 Arena Parkway,Saint Charles,MO,63303
+248,Fargo Theatre,314 Broadway,Fargo,ND,58102
+249,Feinstein's at The Nikko,222 Mason Street,San Francisco,CA,94102
+250,Felton Music Hall,6275 Highway 9,Felton,CA,95018
+251,Fete Music Hall,103 Dike Street,Providence,RI,02909
+252,Fillmore Auditorium (Denver),1510 Clarkson,Denver,CO,80218
+253,First Avenue,701 1st Ave N,Minneapolis,MN,55403
+254,First Horizon Coliseum,1921 West Gate City Blvd,Greensboro,NC,27403
+255,Fiserv Forum,1111 Vel R. Phillips Ave,Milwaukee,WI,53203
+256,Fishers Event Center,11000 Stockdale Street,Fishers,IN,46037
+257,Fitzgerald Theater,10 Exchange St E,Saint Paul,MN,55101
+258,Flagstar Strand Theatre for the Performing Arts,12 N. Saginaw St.,Pontiac,MI,48342
+259,Flagstar at Westbury Music Fair,960 Brush Hollow Road,Westbury,NY,11590
+260,Florida Theatre Jacksonville,128 East Forsyth Street,Jacksonville,FL,32202
+261,Fontainebleau Las Vegas,2777 S Las Vegas Blvd,Las Vegas,NV,89109
+262,Ford Idaho Center Arena,16200 Idaho Center Boulevard,Nampa,ID,83687
+263,Fox Cities P.A.C.,400 W. College Avenue,Appleton,WI,54911
+264,Fox Theater - Oakland,1807 Telegraph Ave,Oakland,CA,94612
+265,Fox Theatre & Cafe,1135 13th St.,Boulder,CO,80303
+266,Fox Theatre - Atlanta,660 Peachtree St. NE,Atlanta,GA,30308
+267,Fox Theatre - Tucson AZ,17 W Congress,Tucson,AZ,85701
+268,Fox Theatre Detroit,2211 Woodward Ave,Detroit,MI,48201
+269,Foxhole Hollywood,6520 Hollywood Blvd,Los Angeles,CA,90028
+270,"Fred Kavli Theatre- B of A Performing Arts Center,Thousand Oaks",2100 E. Thousand Oaks,Thousand Oaks,CA,91362
+271,Freedom Hall Civic Center,1320 Pactolas Rd.,Johnson City,TN,37604
+272,Fremont Theater,1035 Monterey Street,San Luis Obispo,CA,93401
+273,Frost Bank Center,1 Frost Bank Center Drive,San Antonio,TX,78219
+274,Funk 'n Waffles,307-313 Clinton Street,Syracuse,NY,13202
+275,Funny Bone Comedy Club - Kansas City,"7260 NW 87th Street, Located in Zona Rosa, KC, MO",Kansas City,MO,64153
+276,Funny Bone Comedy Club - Orlando,9101 International Drive,Orlando,FL,32819
+277,Funny Bone Comedy Club - Richmond,"11800 W Broad St, #1090",Richmond,VA,23233
+278,Funny Bone Comedy Club - St. Louis,614 W Port Plaza Dr,"St, Louis",MO,63146
+279,GIANT Center,550 West Hersheypark Drive,Hershey,PA,17033
+280,GLC Live at 20 Monroe,11 Ottawa Avenue Northwest,Grand Rapids,MI,49503
+281,Gaillard Center,95 Calhoun Street,Charleston,SC,29401
+282,Gainbridge Fieldhouse,125 S. Pennsylvania St.,Indianapolis,IN,46204
+283,Garcia's Chicago,1001 W Washington Blvd,Chicago,IL,60607
+284,Garcia's at The Capitol Theatre,149 Westchester Ave,Port Chester,NY,10573
+285,Garden Amp,12762 Main Street,Garden Grove,CA,92840
+286,Garden Amphitheatre,12762 Main Street,Garden Grove,CA,92840
+287,Gas South Arena,6400 Sugarloaf Parkway,Duluth,GA,30097
+288,Gas South Theater,6400 Sugarloaf Parkway,Duluth,GA,30097
+289,Gasa Gasa,4920 Freret St,New Orleans,LA,70115
+290,Genesee Theatre,203 N. Genesee St.,Waukegan,IL,60085
+291,George Van Dusen Theatre at North Shore Center,9501 Skokie Blvd,Skokie,IL,60077
+292,Gin Mill,1750 Main Street,Northampton,PA,18067
+293,Globe Iron,2325 Elm St.,Cleveland,OH,44113
+294,Gogue Performing Arts Center,910 S College Street,Auburn University,AL,36849
+295,Goizueta Stage for Youth and Families,1280 Peachtree St. NE,Atlanta,GA,30309
+296,Golden 1 Center,500 David J Stern Walk,Sacramento,CA,95814
+297,Golden Nugget - Lake Charles,2550 Ameristar Blvd,Lake Charles,LA,70601
+298,Golden State Theatre,417 Alvarado Street,Monterey,CA,93940
+299,Goldfield Trading Post - Roseville,"238 vernon, St.",Roseville,CA,95678
+300,Gothic Theatre,3263 South Broadway,Englewood,CO,80110
+301,Gramercy Theatre,127 East 23rd Street,New York,NY,10010
+302,Grammy Museum LA Live,800 W Olympic Blvd,Los Angeles,CA,90015
+303,Grand Ole Opry House,2804 Opryland Dr.,Nashville,TN,37214
+304,Great American Music Hall,850 O'Farrell St.,San Francisco,CA,94109
+305,Green Valley Ranch Grand Events Center,2300 Paseo Verde Parkway,Henderson,NV,89052
+306,H-E-B Performance Hall,100 Auditorium Circle,San Antonio,TX,78205
+307,HI-FI Indy and HI-FI Annex,1043 Virginia Ave UNIT 4,Indianapolis,IN,46203
+308,Hackensack Meridian Health Theatre at the Count Basie Center,99 Monmouth St,Red Bank,NJ,07701
+309,Hamburger Mary's - West Hollywood,8288 Santa Monica Boulevard,West Hollywood,CA,90046
+310,Hard Rock Live,1 Seminole Way,Hollywood,FL,33314
+311,Hard Rock Live Biloxi,777 Beach Blvd,Biloxi,MS,39530
+312,Hard Rock Live Northern Indiana,5400 West 29th Avenue,Gary,IN,46406
+313,Hard Rock Live Orlando,6050 Universal Blvd,Orlando,FL,32819
+314,Hard Rock Live Rockford,7801 E State Street,Rockford,IL,61108
+315,Hard Rock Live Sacramento,3317 Forty Mile Road,Wheatland,CA,95692
+316,Hard Rock Live at Etess Arena,1000 Boardwalk,Atlantic City,NJ,08401
+317,Harrah's Cherokee Center - Asheville,87 Haywood Street,Asheville,NC,28801
+318,Harrah's Cherokee Resort Event Center,777 Casino Drive,Cherokee,NC,28719
+319,Harrah's Showroom at Harrah's Las Vegas,3475 Las Vegas Blvd S,Las Vegas,NV,89109
+320,Hart Theatre at The Egg,Empire State Plaza,Albany,NY,12220
+321,Haven City Market,8443 HAVEN AVE,Rancho Cucamonga,CA,91730
+322,Hawthorne Gospel Church,2000 NJ-208,Hawthorne,NJ,07506
+323,Hawthorne Theatre,1507 SE 39th Ave,Portland,OR,97214
+324,Hayes Hall,5833 Pelican Bay Blvd,Naples,FL,34108
+325,Heartwood Soundstage,"619 S Main St., Gainesville, FL 32601",Gainesville,FL,32601
+326,Heights Theater,"339 W 19th St, Houston, TX 77008",Houston,TX,77008
+327,Heindl Center for the Performing Arts Center,315 Northwest Dr,Senatobia,MS,38668
+328,Heinz Hall,600 Penn Ave.,Pittsburgh,PA,15222
+329,Helen DeVitt Jones Theater at The Buddy Holly Hall,1300 Mac Davis Lane,Lubbock,TX,79401
+330,Henry J. Kaiser Center for the Arts,10 Tenth Street,Oakland,CA,94607
+331,Heritage Bank Center,100 Broadway,Cincinnati,OH,45202
+332,Hershey Theatre,15 E. Caracas Ave,Hershey,PA,17033
+333,Hertz Arena,11000 Everblades Parkway,Estero,FL,33928
+334,High Noon Saloon,701 East Washington Avenue,Madison,WI,53703
+335,Hill Country Live,30 West 26th Street,New York,NY,10010
+336,Historic BAL Theatre,14808 E 14th Street,San Leandro,CA,94578
+337,Historic Masonic Temple,700 N Madison Ave,Bay City,MI,48708
+338,Historic Park Theatre and Event Center,848 Park Ave.,Cranston,RI,02910
+339,Hobart Art Theatre,230 Main St.,Hobart,IN,46342
+340,Holiday Theater - MCA Denver,2644 W 32nd Ave,Denver,CO,80211
+341,Holland Performing Arts Center,1200 Douglas Street,Omaha,NE,68102
+342,Hollywood Casino Gulf Coast,711 Hollywood Blvd,Bay St Louis,MS,39520
+343,Hollywood Palladium,6215 Sunset Blvd,Hollywood,CA,90028
+344,Hollywood Pantages Theatre,6233 Hollywood Blvd.,Los Angeles,CA,90028
+345,Honda Center,2695 E. Katella,Anaheim,CA,92806
+346,Hop Springs,6790 John Bragg Highway,Murfreesboro,TN,37127
+347,House of Blues Anaheim,"400 W Disney Way, #337",Anaheim,CA,92802
+348,House of Blues Chicago,329 N Dearborn St,Chicago,IL,60654
+349,House of Blues Cleveland,308 Euclid Avenue,Cleveland,OH,44114
+350,House of Blues Dallas,2200 N Lamar St,Dallas,TX,75202
+351,House of Blues Houston,1204 Caroline Street,Houston,TX,77002
+352,House of Blues Las Vegas,3950 Las Vegas Blvd,Las Vegas,NV,89119
+353,House of Blues Myrtle Beach,4640 Highway 17 South,North Myrtle Beach,SC,29582
+354,House of Blues New Orleans,225 Decatur Street,New Orleans,LA,70130
+355,House of Blues Orlando,1490 East Lake Buena Vista Dr,Orlando,FL,32830
+356,House of Blues San Diego,1055 5th Avenue,San Diego,CA,92101
+357,House of Independents,572 Cookman Ave.,Asbury Park,NJ,07712
+358,Howard Theatre,620 T Street NW,Washington,DC,20001
+359,Hoyt Sherman Place,1501 Woodland Avenue,Des Moines,IA,50309
+360,Humphreys Backstage Live,2241 Shelter Island Drive,San Diego,CA,92106
+361,IP Casino Resort and Spa,850 Bayview Ave,Biloxi,MS,39530
+362,Impact Fuel Room,481 Peterson Rd.,Libertyville,IL,60048
+363,Indiana University Auditorium,Indiana University 1211 East 7th Street,Bloomington,IN,47405
+364,Intuit Dome,3930 West Century Blvd,Inglewood,CA,90303
+365,Iridium,1650 Broadway,New York,NY,10019
+366,Iron City,513 22nd Street South,Birmingham,AL,35233
+367,Irving Plaza Powered By Verizon 5G,17 Irving Place,New York,NY,10003
+368,J.E. Broyhill Civic Center,1913 Hickory Blvd. SE,Lenoir,NC,28645
+369,Jabbawockeez Theater at MGM Grand Hotel & Casino,3799 Las Vegas Blvd South,Las Vegas,NV,89109
+370,Jack London Revue,529 SW 4th Ave.,Portland,OR,97204
+371,Jacobs Music Center,750 B Street,San Diego,CA,92101
+372,Jammin Java,227 Maple Avenue East,Vienna,VA,22180
+373,Jannus Live,16 2nd Street North,St Petersburg,FL,33701
+374,Jannus Live,200 First Ave. N,Saint Petersburg,FL,33701
+375,Jazzcultural,349 W 46th St,New York,NY,10036
+376,Jefferson Theater,110 E. Main St.,Charlottesville,VA,22902
+377,Jimmy's Jazz and Blues Club,135 Congress Street,Portsmouth,NH,03801
+378,Joe's Live Rosemont,5441 Park Pl,Rosemont,IL,60018
+379,John T Floore Country Store,14492 Old Bandera Rd,Helotes,TX,78023
+380,"John, James and Clara Knight Stage",182 S Main St.,Akron,OH,44308
+381,KEMBA Live!,405 Neil Avenue,Columbus,OH,43215
+382,Kaseya Center,601 Biscayne Blvd,Miami,FL,33132
+383,Keith-Albee Theatre,924 Fourth Ave.,Huntington,WV,25701
+384,Keswick Theatre,291 Keswick Ave. & Easton Rd.,Glenside,PA,19038
+385,Key West Theater,512 Eaton Street,Key West,FL,33040
+386,KeyBank Center,One Seymour H. Knox III Plaza,Buffalo,NY,14203
+387,Kia Center,400 W Church St.,Orlando,FL,32801
+388,Kia Forum,3900 W Manchester Blvd.,Inglewood,CA,90305
+389,Kilby Court,741 S Kilby Ct,Salt Lake City,UT,84101
+390,Kings Theatre,1027 Flatbush Avenue,Brooklyn,NY,11226
+391,Knight Concert Hall-Adrienne Arsht PAC,1444 Biscayne Blvd,Miami,FL,33132
+392,Knight Theater,430 South Tryon St,Charlotte,NC,28202
+393,Knitting Factory - Spokane,919 W Sprague Ave,Spokane,WA,99201
+394,Knoxville Civic Auditorium,500 Howard Baker Jr Drive,Knoxville,TN,37915
+395,Kravis Center - Dreyfoos Hall,701 Okeechobee Blvd.,West Palm Beach,FL,33401
+396,L'Auberge Casino & Hotel Baton Rouge,777 L'Auberge Avenue,Baton Rouge,LA,70820
+397,LIV Nightclub Las Vegas,2777 S Las Vegas Blvd,Las Vegas,NV,89109
+398,LIV Nightclub Miami,4441 Collins Ave,Miami Beach,FL,33140
+399,Lake Charles Event Ctr Rosa Hart Theatre,900 Lakeshore Dr.,Lake Charles,LA,70601
+400,Landmark Credit Union Live,1051 N. Vel R. Phillips Avenue,Milwaukee,WI,53203
+401,Landmark Theatre,362 South Salina Street,Syracuse,NY,13202
+402,Laughlin Event Center,1975 S. Casino Drive,Laughlin,NV,89029
+403,Legacy Arena at the BJCC,1898 9th Ave North,Birmingham,AL,35203
+404,Lehman Center for the Performing Arts,250 Bedford Park Blvd West,Bronx,NY,10468
+405,Lenovo Center,1400 Edwards Mill Road,Raleigh,NC,27607
+406,Lensic Performing Arts Center,211 West San Francisco Street,Santa Fe,NM,87501
+407,Liberty Hall,644 Massachusettes,Lawrence,KS,66044
+408,Lincoln Theatre,1215 U St NW,Washington,DC,20009
+409,Lincoln Theatre-NC,126 E. Cabarrus St,Raleigh,NC,27601
+410,Linda Ronstadt Music Hall,260 South Church Avenue,Tucson,AZ,85701
+411,Lisner Auditorium,"730 21st Street, NW",Washington,DC,20052
+412,Little Caesars Arena,2645 Woodward,Detroit,MI,48201
+413,Loew's Jersey Theatre,54 Journal Square Plaza,Jersey City,NJ,07306
+414,Longhorn Ballroom & Backyard Amphitheater,216 Corinth St,Dallas,TX,75207
+415,Lori's Roadhouse,4924 Union Centre Pavilion Dr,West Chester,OH,45069
+416,Lovin' Cup,300 Park Point Dr.,Rochester,NY,14623
+417,Lowbrow Palace,111 E. Robinson Ave,El Paso,TX,79902
+418,Lowell Memorial Auditorium,50 East Merrimack St.,Lowell,MA,01852
+419,Lucas Oil Live at WinStar World Casino,777 Casino Avenue,Thackerville,OK,73459
+420,Lucinda's,169 Avenue A,New York,NY,10009
+421,Ludlow Garage Cincinnati,342 Ludlow Ave.,Cincinnati,OH,45220
+422,Luhrs Center,475 Lancaster Dr,Shippensburg,PA,17257
+423,Luther Burbank Center,50 Mark West Springs Rd,Santa Rosa,CA,95403
+424,M&T Bank Arena,305 Sherman Avenue,Hamden,CT,06518
+425,MGM Grand Garden Arena,3799 Las Vegas Blvd S,Las Vegas,NV,89109
+426,MGM Music Hall at Fenway,2 Lansdowne St.,Boston,MA,02215
+427,MVP Arena,51 South Pearl Street,Albany,NY,12207
+428,Madison Square Garden,7th Ave & 32nd Street,New York,NY,10001
+429,Madrid Theatre,3810 Main Street,Kansas City,MO,64111
+430,Magic Bag,22920 Woodward Ave.,Ferndale,MI,48220
+431,Mahaffey Theater,400 1st Street S,St Petersburg,FL,33701
+432,Main Street Crossing,111 W Main St,Tomball,TX,77375
+433,Majestic Theatre Dallas,1925 Elm Street,Dallas,TX,75201
+434,Majestic Theatre-MI,4140 Woodward Ave,Detroit,MI,48201
+435,Manchester Music Hall,899 Manchester St.,Lexington,KY,40508
+436,Margot and Bill Winspear Opera House,2403 Flora Street,Dallas,TX,75201
+437,Marion Cultural and Civic Center,800 Tower Square Plaza,Marion,IL,62959
+438,Marquee Theatre,730 N. Mill Ave,Tempe,AZ,85281
+439,Marquis,2009 Larimer St,Denver,CO,80205
+440,Maryland Hall for the Creative Arts,801 Chase Street,Annapolis,MD,21401
+441,Masonic Temple - Detroit,500 Temple St,Detroit,MI,48201
+442,Maxwell C. King Center for the Performing Arts,3865 N. Wickham Rd.,Melbourne,FL,32935
+443,Mayo Civic Center Arena,30 Civic Ctr Dr SE,Rochester,MN,55904
+444,McAllen Performing Arts Center,801 Convention Center Blvd.,McAllen,TX,78501
+445,McCallum Theatre,73000 Fred Waring Drive,Palm Desert,CA,92260
+446,McMenamins Crystal Ballroom,1332 West Burnside St,Portland,OR,97209
+447,McWane Science Center IMAX Dome Theater,200 19th Street North,Birmingham,AL,35203
+448,MegaCorp Pavilion,101 W 4th St.,Newport,KY,41071
+449,Memorial Hall - OH,1225 Elm St.,Cincinnati,OH,45202
+450,Mercedes-Benz Amphitheater,2710 Jack Warner Parkway,Tuscaloosa,AL,35401
+451,Mercury Ballroom,611 S 4th Street,Louisville,KY,40202
+452,Mercury Lounge,217 East Houston St.,New York,NY,10002
+453,Merrill Auditorium,239 Park Avenue & Congress Street,Portland,ME,04101
+454,Mesa Arts Center,1 East Main Street,Mesa,AZ,85201
+455,Mesa Theatre & Club,538 Main St.,Grand Junction,CO,81501
+456,Metro,3730 N. Clark St.,Chicago,IL,60657
+457,Mezzrow,163 W 10th St,New York,NY,10014
+458,Mickey's Black Box,101 Rock Lititz Blvd,Lititz,PA,17543
+459,Middle C Jazz,300 S Brevard St,Charlotte,NC,28202
+460,Middle East - Upstairs,472 Massachusetts Ave,Cambridge,MA,02139
+461,Miller High Life Theatre,500 West Kilbourn Avenue,Milwaukee,WI,53203
+462,Minglewood Hall,1555 Madison Avenue,Memphis,TN,38104
+463,Mission Ballroom,4242 Wynkoop St,Denver,CO,80216
+464,Mississippi Coliseum,1207 Mississippi St,Jackson,MS,39202
+465,Moda Center,"One Center Court, Suite 100",Portland,OR,97227
+466,Moe's Alley,1535 Commercial Way,Santa Cruz,CA,95065
+467,Mohegan Arena at Casey Plaza,255 Highland Park Boulevard,Wilkes Barre,PA,18702
+468,Mohegan Pennsylvania,"1280 Highway, 315 Blvd",Wilkes Barre,PA,18702
+469,Mohegan Sun Arena,1 Mohegan Sun Blvd,Uncasville,CT,06382
+470,Montgomery Performing Arts Centre,201 Tallapoosa Street,Montgomery,AL,36104
+471,Moody Center ATX,2001 Robert Dedman Drive,Austin,TX,78712
+472,Moon Room at Summit,1902 Blake Street,Denver,CO,80202
+473,Moore Theatre,1932 2nd Ave,Seattle,WA,98101
+474,Morrison Center for the Performing Arts,2201 W Friendship Ln,Boise,ID,83725
+475,Mortgage Matchup Center,201 East Jefferson Street,Phoenix,AZ,85004
+476,Morton Meyerson Symphony Center,2301 Flora St.,Dallas,TX,75201
+477,Mount Baker Theatre,106 N. Commercial St.,Bellingham,WA,98225
+478,Mr Smalls Theatre,400 Lincoln Ave,Millvale,PA,15209
+479,Muriel Kauffman Theatre-Kauffman PAC,1601 Broadway Blvd,Kansas City,MO,64108
+480,Music Box,1337 India Street,San Diego,CA,92101
+481,Music Farm,32 Ann Street,Charleston,SC,29403
+482,Music Hall of Williamsburg,,Brooklyn,NY,11211
+483,Musical Instrument Museum,4725 E. Mayo Blvd.,Phoenix,AZ,85050
+484,Mystic Lake Casino Hotel,2400 Mystic Lake Blvd,Prior Lake,MN,55372
+485,Mystic Theatre,23 Petaluma Blvd,Petaluma,CA,94952
+486,NOTO,1209 Vine Street,Philadelphia,PA,19107
+487,Nashua Center For the Arts,201 Main Street,Nashua,NH,03060
+488,Navy Pier,600 E. Grand Ave.,Chicago,IL,60611
+489,Neal S Blaisdell Arena,777 Ward Avenue,Honolulu,HI,96814
+490,Neck of the Woods,406 Clement St,San Francisco,CA,94118
+491,Nectar Lounge,412 N 36th St,Seattle,WA,98103
+492,Neighborhood Theatre Main Room,511 E 36th St,Charlotte,NC,28205
+493,Neighborhood Theatre Tap Room,"511 E 36th St, Charlotte",Charlotte,NC,28205
+494,Neptune Theatre,1303 NE 45th Street,Seattle,WA,98105
+495,Nevermore Hall,20 Market Place,Baltimore,MD,21202
+496,New Jersey Performing Arts Center,1 Center Street,Newark,NJ,07102
+497,New Orleans Jazz Market,1436 Oretha Castle Haley Boulevard,New Orleans,LA,70113
+498,New World Music Hall,810 E Skagway Ave,Tampa,FL,33604
+499,Newmark Theatre,1111 S.W. Broadway,Portland,OR,97205
+500,Newport Music Hall,1722 N. High St.,Columbus,OH,43201
+501,Nikki Lopez Philly,304 South St,Philadelphia,PA,10147
+502,Nile Theater,105 West Main Street,Mesa,AZ,85210
+503,Niswonger Performing Arts Center-TN,212 Tusculum Blvd,Greeneville,TN,37745
+504,North Theatre at North Shore Center for the Performing Arts,9501 Skokie Blvd,Skokie,IL,60077
+505,Northfield Park Racino - Center Stage,10777 Northfield Rd,Northfield,OH,44067
+506,Nova SD,"454 Sixth Ave., San Diego, CA 92101",San Diego,CA,92101
+507,Oakland Arena,7000 Coliseum Way,Oakland,CA,94621
+508,Observatory Festival Grounds,3503 South Harbor Boulevard,Santa Ana,CA,92704
+509,"Ocean Resort Casino, HQ2 Nightclub and HQ2 Dayclub/Beachclub",500 Boardwalk,Atlantic City,NJ,03401
+510,Off The Rails Boston,25 School Street,Boston,MA,02108
+511,Off The Rails Music Venue,90 Commercial Street,Worcester,MA,01608
+512,Ogden Theatre,935 E. Colfax Ave.,Denver,CO,80218
+513,Ohio Theatre - Playhouse Square,1511 Euclid Ave,Cleveland,OH,44115
+514,Old National Centre,502 N. New Jersey,Indianapolis,IN,46204
+515,Omnia Las Vegas,3570 Las Vegas Blvd,Las Vegas,NV,89109
+516,On the Record,3770 S Las Vegas Blvd,Las Vegas,NV,89109
+517,Ophelia's Electric Soapbox,1215 20th St,Denver,CO,80202
+518,Orchestra Hall-MN,,Minneapolis,MN,55403
+519,Orpheum Theater - Omaha,409 S. 16th St.,Omaha,NE,68102
+520,Orpheum Theatre,842 S. Broadway,Los Angeles,CA,90014
+521,Orpheum Theatre presented by Citizens,1 Hamilton PL,Boston,MA,02108
+522,Oscura,816 Manatee Ave E,Bradenton,FL,34208
+523,Outset,1675 N Elston Ave,Chicago,IL,60642
+524,Ovens Auditorium,2900 E Independence Boulevard,Charlotte,NC,28205
+525,Oxford Performing Arts Center - AL,"100 Choccolocco Street, Oxford, AL 36203",Oxford,AL,36203
+526,Oxnard Performing Arts Center,800 HOBSON WAY,Oxnard,CA,93030
+527,PH Live at Planet Hollywood,3667 S Las Vegas Blvd,Las Vegas,NV,89109
+528,PPL Center,7th and Hamilton Street,Allentown,PA,18101
+529,Pabst Theater,144 E. Wells St.,Milwaukee,WI,53202
+530,Pacific Electric,1729 Naud Street,Los Angeles,CA,90012
+531,Palace Theatre Columbus,34 W. Broad St.,Columbus,OH,43215
+532,Palace Theatre-NH,80 Hanover Street,Manchester,NH,03101
+533,Palace of Fine Arts,3301 Lyon Street,San Francisco,CA,94123
+534,Palladium Times Square,1515 Broadway,New York City,NY,10036
+535,Palladium-MA,261 Main St.,Worcester,MA,01608
+536,Palm Springs Cultural Center,2300 E Baristo Rd,Palm Springs,CA,92262
+537,Paper Tiger,2410 N. St. Mary's St.,San Antonio,TX,78212
+538,Pappy and Harriets Pioneertown Palace,53688 Pioneertown Road,Pioneertown,CA,92268
+539,Paradise Rock Club presented by Citizens,967 Commonwealth Avenue,Boston,MA,02215
+540,Paramount Center for the Arts - MN,913 W Saint Germain St,Saint Cloud,MN,56301
+541,Paramount Theater - VA,215 East Main Street,Charlottesville,VA,22902
+542,Paramount Theatre,1124 Meridian Plaza,Anderson,IN,46016
+543,Paramount Theatre,1621 Glenarm,Denver,CO,80202
+544,Paramount Theatre,911 Pine St,Seattle,WA,98101
+545,Paramount Theatre Oakland,2025 Broadway,Oakland,CA,94612
+546,Park West,322 W. Armitage,Chicago,IL,60614
+547,Payne Arena,2600 N. 10th Street (Hwy 336),Hidalgo,TX,78557
+548,Peace Center,101 West Broad St.,Greenville,SC,29601
+549,Pearl Concert Theater at Palms Casino Resort,4321 West Flamingo Road,Las Vegas,NV,89103
+550,Pechanga Resort Casino,45000 Pechanga Parkway,Temecula,CA,92592
+551,Penn & Teller Theater at Rio Las Vegas,3700 W Flamingo RD,Las Vegas,NV,89103
+552,Penn's Peak,325 Maury Road,Jim Thorpe,PA,18229
+553,Pensacola Saenger Theatre,118 S Palafox,Pensacola,FL,32501
+554,Peoples Bank Theatre,"222 Putnam St, Marietta, OH 45750",Marietta,OH,45750
+555,Performing Arts Center at Kent State Tuscarawas,330 University Drive NE,New Philadelphia,OH,44663
+556,Phoenix Symphony Hall,75 N 2nd St,Phoenix,AZ,85004
+557,Pier 48,"Pier 48, Shed A",San Francisco,CA,94158
+558,Pike Room @ The Crofoot,1 S. Saginaw,Pontiac,MI,48342
+559,Pikes Peak Center,190 S. Cascade Ave.,Colorado Springs,CO,80903
+560,Pineapples,1434 Pineapple Ave,Melbourne,FL,32935
+561,Plaza Live - Orlando,425 N Bumby Ave,Orlando,FL,32803
+562,Plaza Theatre,128 S. Palm Canyon Dr.,Palm Springs,CA,92262
+563,Ponte Vedra Concert Hall,1050 A1A North,Ponte Vedra Beach,FL,32082
+564,Prairie Home Alliance Theater,201 SW Jefferson Ave,Peoria,IL,61602
+565,Premier Theater at Foxwoods Resort Casino,39 Norwich Westerly Road,Mashantucket,CT,06339
+566,Presence Arena,555 Main St,Atlanta,GA,30324
+567,Prudential Center,25 Lafayette Street,Newark,NJ,07102
+568,REVENANT MUSIC HALL,211 N Virginia St,Reno,NV,89501
+569,RYSE Nightclub,One Ameristar Blvd,Saint Charles,MO,63301
+570,Racket NYC,431 W 16th St,New York,NY,10011
+571,Radio Room,110 Poinsett Hwy,Greenville,SC,29609
+572,Radius - Chicago,640 West Cermak Rd,Chicago,IL,60616
+573,Ramova Theatre,3520 S. Halsted St,Chicago,IL,60609
+574,Rams Head On Stage,33 West St,Annapolis,MD,21401
+575,Ramsey Concert Hall,230 River Rd,Athens,GA,30605
+576,Rec Room,79 W Chippewa,Buffalo,NY,14202
+577,ReelWorks Denver,1399 35th St,Denver,CO,80205
+578,Regency - MO,"307 Park Central East, Springfield, MO, 65806",Springfield,MO,65806
+579,Reggies Bananna's Shack,2105 South State Street,Chicago,IL,60616
+580,Reggies Music Joint,2105 South State Street,Chicago,IL,60616
+581,Resch Center,820 Armed Forces Drive,Green Bay,WI,54304
+582,Revolution Hall - Portland,1300 SE Stark Street #110,Portland,OR,97214
+583,Revolution Live,100 SW 3rd Ave,Ft Lauderdale,FL,33312
+584,Rialto Square Theatre,102 N Chicago,Joliet,IL,60432
+585,Rialto Theatre-Tucson,318 Congress St,Tucson,AZ,85701
+586,Richardson Auditorium - NJ,68 Nassau St,Princeton,NJ,08542
+587,Ridgefield Playhouse,80 E Ridge Rd,Ridgefield,CT,06877
+588,Rio Las Vegas,3700 W Flamingo RD,Las Vegas,NV,89103
+589,Rio Theatre Santa Cruz,1205 Soquel Ave,Santa Cruz,CA,95062
+590,Riverfront Park - Cocoa Village,401 Riveredge Blvd,Cocoa,FL,32922
+591,Riverside Municipal Auditorium,3485 Mission Inn Ave,Riverside,CA,92501
+592,Riverside Theater - WI,116 W. Wisconsin Ave.,Milwaukee,WI,53203
+593,Rivertown Theaters for the Performing Arts,325 Minor St,Kenner,LA,70062
+594,Riviera Theatre- IL,4750 N. Broadway,Chicago,IL,60640
+595,Roadrunner-Boston,89 Guest St,Boston,MA,02135
+596,Robinson Center,426 West Markham,Little Rock,AR,72201
+597,Rockefellers,3620 Washington Ave,Houston,TX,77007
+598,Rocket Arena,One Center Court,Cleveland,OH,44115
+599,Rockwell at The Complex - UT,536 West 100 South,Salt Lake City,UT,84101
+600,Rose Auditorium,1910 Church St SE,Salem,OR,97302
+601,Rose Marie and John Beston Hall,4245 East Ave,Rochester,NY,14618
+602,Roseland Theater,8 NW 6th Avenue,Portland,OR,97209
+603,Roxian Theatre Presented By Citizens,425 Chartiers Ave,McKees Rocks,PA,15136
+604,Roxy Theatre-CA,9009 Sunset Blvd,West Hollywood,CA,90069
+605,Royal Oak Music Theatre,318 W. 4th St.,Royal Oak,MI,48067
+606,Royale Boston,279 Tremont St,Boston,MA,02116
+607,Rumba Cafe,2507 Summit St,Columbus,OH,43202
+608,Russell Industrial Center,1600 Clay St,Detroit,MI,48211
+609,Ruth Eckerd Hall,1111 N McMullen Booth Rd.,Clearwater,FL,33759
+610,Ryman Auditorium,116 5th Ave. N,Nashville,TN,37219
+611,SAP Center at San Jose,525 W Santa Clara,San Jose,CA,95113
+612,SHU Community Theatre,1420 Post Rd,Fairfield,CT,06824
+613,SILO,1340 Manufacturing St,Dallas,TX,75207
+614,SNHU Arena,555 Elm St,Manchester,NH,03101
+615,SOMA - Mainstage,3350 Sports Arena Blvd,San Diego,CA,92110
+616,SPACE,1245 Chicago Avenue,Evanston,IL,60202
+617,Saban Theatre,8440 Wilshire Blvd.,Beverly Hills,CA,90211
+618,Saenger Theater Hattiesburg,201 Forrest St,Hattiesburg,MS,39401
+619,Saenger Theatre Mobile,6 South Joachim St.,Mobile,AL,36602
+620,Saenger Theatre-New Orleans,1111 Canal Street,New Orleans,LA,70112
+621,Saint Andrew's Hall,431 E Congress St,Detroit,MI,48226
+622,San Jose Civic,135 San Carlos St.,San Jose,CA,95113
+623,Saracen Casino Resort,1 Saracen Resort Drive,Pine Bluff,AR,71601
+624,Save Mart Center,2650 East Shaw Ave.,Fresno,CA,93710
+625,Scheels Arena,5225 31st Ave South,Fargo,ND,58104
+626,Schermerhorn Symphony Center,One Symphony Place,Nashville,TN,37201
+627,"Scherr Forum- B of A Performing Arts Center, Thousand Oaks",2100 E. Thousand Oaks Blvd,Thousand Oaks,CA,91362
+628,Schubas,3159 N Southport Ave,Chicago,IL,60657
+629,Scorpion Bar at Patriot Place,253 Patriot Place,Foxborough,MA,02035
+630,Selena Auditorium,1901 N. Shoreline,Corpus Christi,TX,78401
+631,Seminole Center,506 1st Street,Immokalee,FL,34142
+632,Seminole Hard Rock Tampa Event Center,5223 N. Orient Road,Tampa,FL,33610
+633,Shalin Liu Performance Center,37 Main St,Rockport,MA,01966
+634,Sharon L Morse Performing Arts Center,1051 Main St,The Villages,FL,32159
+635,Sheldon Concert Hall,3648 Washington Blvd,Saint Louis,MO,63108
+636,Showbox SODO,1700 1st Ave,Seattle,WA,98134
+637,Showroom at Casino Arizona,101 and McKellips,Scottsdale,AZ,85271
+638,Shreveport Municipal Memorial Auditorium,705 Elvis Presley Blvd.,Shreveport,LA,71101
+639,Shubert Theatre - CT,247 College St,New Haven,CT,06510
+640,Simmons Bank Arena,One Simmons Bank Arena Drive,North Little Rock,AR,72114
+641,Skully's Music Diner,1151 North High Street,Columbus,OH,43201
+642,Small's,10339 Conant,Hamtramck,MI,48201
+643,Smalls Jazz Club,183 W 10th St,New York,NY,10014
+644,Smart Financial Centre at Sugar Land,18111 Lexington Blvd.,Sugar Land,TX,77479
+645,Smith's Olde Bar,1578 Piedmont Avenue NE,Atlanta,GA,30324
+646,Snug Harbor Jazz Bistro,626 Frenchmen St,New Orleans,LA,70116
+647,SoFi Stadium,1001 S. Stadium Dr,Inglewood,CA,90301
+648,Soaring Eagle Casino & Resort,6800 E Soaring Eagle Blvd,Mount Pleasant,MI,48858
+649,Soma,3350 Sports Arena Blvd,San Diego,CA,92110
+650,Somerville Theatre,55 Davis Square,Somerville,MA,02144
+651,Sonia,10 Brookline St.,Cambridge,MA,02139
+652,Sony Hall,235 W 46th St,New York,NY,10036
+653,Sound Board at MotorCity Casino Hotel,2901 Grand River,Detroit,MI,48201
+654,Sound Waves at Hard Rock Hotel & Casino Atlantic City,1000 Boardwalk,Atlantic City,NJ,08401
+655,Soundstage at Graceland,3717 Elvis Presley Blvd,Memphis,TN,38116
+656,South Point Showroom at South Point Hotel Casino and Spa,9777 S. Las Vegas Blvd,Las Vegas,NV,89183
+657,South Shore Room at Harrah's Lake Tahoe,15 Hwy 50,Lake Tahoe,NV,89449
+658,Southern Theatre,21 E. Main Street,Columbus,OH,43215
+659,Spartanburg Memorial Auditorium,385 North Church Street,Spartanburg,SC,29303
+660,Sphere,255 Sands Avenue,Las Vegas,NV,89169
+661,Spirit Hall,242 51st St.,Pittsburgh,PA,15201
+662,Spokane Live at Spokane Tribe Casino,14300 U.S. Route 2,Airway Heights,WA,99001
+663,Springfield Symphony Hall,34 Court Street,Springfield,MA,01103
+664,St. Cecilia Music Center,24 Ransom Ave NE,Grand Rapids,MI,49503
+665,Stable Hall,307 Pearl Pkwy,San Antonio,TX,78215
+666,Stage AE,400 North Shore Drive,Pittsburgh,PA,15222
+667,Stage Red,8463 Sierra Ave,Fontana,CA,92335
+668,Star Theater,13 NW Sixth Avenue,Portland,OR,97209
+669,Starland Ballroom,570 Jernee Mill Road,Sayreville,NJ,08872
+670,State Farm Arena,One State Farm Drive,Atlanta,GA,30303
+671,State Theatre,609 Congress St,Portland,ME,04101
+672,State Theatre- Easton,453 Northampton St,Easton,PA,18042
+673,Steelhouse Omaha,1100 Dodge St,Omaha,NE,68102
+674,Steinmetz Hall,445 S Magnolia Ave,Orlando,FL,32801
+675,Stifel Theatre,1400 Market Street,Saint Louis,MO,63103
+676,Stranahan Theatre,4645 Heatherdowns Blvd.,Toledo,OH,43614
+677,Strummer's,833 E Fern Ave,Fresno,CA,93728
+678,Stubb's Waller Creek Amphitheater,801 Red River,Austin,TX,78701
+679,Subterranean,2011 North Ave,Chicago,IL,60647
+680,Summit Music Hall,1902 Blake St,Denver,CO,80202
+681,Sunrise Theatre,117 South Second St,Fort Pierce,FL,34950
+682,Sycuan Casino,5469 Dehesa Rd.,El Cajon,CA,92019
+683,Symphony Center-IL,220 S. Michigan Ave.,Chicago,IL,60604
+684,T-Mobile Center,1407 Grand Blvd,Kansas City,MO,64106
+685,TSDMAAC,15701 James Couzens Fwy.,Detroit,MI,48238
+686,Tabernacle Presented by iTHINK Financial,152 Luckie Street,Atlanta,GA,30303
+687,Taft Theatre,317 East 5th Street,Cincinnati,OH,45202
+688,Talking Stick Resort,9800 E. Talking Stick Way,Scottsdale,AZ,85256
+689,Tally Ho Theater,19 West Market St,Leesburg,VA,20176
+690,Tannahill's Music Hall & Lounge,122 E. Exchange Suite 200,Fort Worth,TX,76164
+691,Taper Auditorium,200 University St,Seattle,WA,98101
+692,Target Center,600 First Ave. North,Minneapolis,MN,55403
+693,Temblor Brewing Company,3200 Buck Owens Blvd.,Bakersfield,CA,93308
+694,Teragram Ballroom,1234 West 7th Street,Los Angeles,CA,90017
+695,Terminal West,887 West Marietta St NW,Atlanta,GA,30318
+696,Terrace Theater - Long Beach Convention and Entertainment Center,300 E Ocean BL,Long Beach,CA,90802
+697,Thalia Hall,1807 S Allport St,Chicago,IL,60608
+698,Thalia Mara Hall,255 E Pascagoula St,Jackson,MS,39201
+699,The 808,808 Sevier Ave,Knoxville,TN,37920
+700,The Abbey,100 South Eola Drive,Orlando,FL,32801
+701,The Admiral-NE,2234 S. 13th St.,Omaha,NE,68108
+702,The Anthem,901 Wharf St SW,Washington,DC,20024
+703,The Arts Campus at Willits,400 Robinson St,Basalt,CO,81621
+704,The Atlantis,2047 9th St NW,Washington,DC,20001
+705,The Banyan Live,8199 Southern Blvd Suite B,West Palm Beach,FL,33411
+706,The Basement,1604 Eighth Ave South,Nashville,TN,37203
+707,The Basement East,917 Woodland St,Nashville,TN,37206
+708,The BayCare Sound,301 Drew Street,Clearwater,FL,33756
+709,The Belasco,1050 South Hill Street,Los Angeles,CA,90015
+710,The Bell House,149 7th Street,Brooklyn,NY,11215
+711,The Bellwether,333 S. Boylston St.,Los Angeles,CA,90017
+712,The Blue Note,17 N 9th St,Columbia,MO,65201
+713,The BrickWorks,191 E 2nd Street,Chico,CA,95928
+714,The Broadberry,"2729 W Broad St,",Richmond,VA,23220
+715,The Bronze Peacock at House of Blues Houston,1204 Caroline Street,Houston,TX,77002
+716,The Buddy Holly Hall of Performing Arts and Sciences,1300 Mac Davis LN,Lubbock,TX,79401
+717,The Cabot,"286 Cabot Street, Beverly, MA 01915",Beverly,MA,01915
+718,The Cambridge Room at House Of Blues,2200 N Lamar St,Dallas,TX,75202
+719,The Cambridge Room at House of Blues Cleveland,308 Euclid Ave,Cleveland,OH,44114
+720,The Canyon - Agoura Hills,28912 Roadside Dr,Agoura Hills,CA,91301
+721,The Capitol Theatre,149 Westchester Ave,Port Chester,NY,10573
+722,The Carolina,230 N Tryon,Charlotte,NC,28202
+723,The Castle Theatre,209 E Washington St,Bloomington,IL,61701
+724,The Castro Theatre,429 Castro Street,San Francisco,CA,94114
+725,The Caverns,555 Charlie Roberts Road,Pelham,TN,37366
+726,The Chapel,777 Valencia Street,San Francisco,CA,94110
+727,The Charleston Music Hall,37 John St.,Charleston,SC,29403
+728,The Chicago Theatre,175 N State St,Chicago,IL,60601
+729,The Church Nightclub,1160 Lincoln St,Denver,CO,80203
+730,The Clyde Theatre-IN,1808 Bluffton Rd,Fort Wayne,IN,46809
+731,The Coach House,"33157 Camino Capistrano, Suite C",San Juan Capistrano,CA,92675
+732,The Colosseum at Caesars Palace,3570 S Las Vegas Blvd,Las Vegas,NV,89109
+733,The Comedy Chateau (Yorick Showroom),4615 Lankershim Blvd,North Hollywood,CA,91602
+734,The Commonwealth Room,195 W 2100 S,Salt Lake City,UT,84115
+735,The Cotillion,11120 W Kellogg St,Wichita,KS,67209
+736,The Cove at River Spirit Casino Resort,8330 Riverside Parkway,Tulsa,OK,74137
+737,The Crepe Place,1134 Soquel Ave.,Santa Cruz,CA,95062
+738,The Crocodile,2505 1st Ave,Seattle,WA,98121
+739,The Depot,13 North 400 West,Salt Lake City,UT,84101
+740,The Dome by Rutter Mills,400 20th Street,Virginia Beach,VA,23451
+741,The Drake - Amherst,44 N Pleasant St,Amherst,MA,01002
+742,The ELM,506 N 7th Ave,Bozeman,MT,59715
+743,The Eastern-GA,777 Memorial Dr SE Building C,Atlanta,GA,30316
+744,The Echo,1822 W Sunset Blvd,Los Angeles,CA,90026
+745,The Echo Lounge & Music Hall,1323 N. Stemmons Fwy.,Dallas,TX,75207
+746,The Event at Graton Resort and Casino,630 Park Court,Rohnert Park,CA,94928
+747,The Factory,17105 North Outer 40 Road,Saint Louis,MO,63141
+748,The Fennec - Main Stage,1630 2nd Ave S,Birmingham,AL,35233
+749,The Fillmore,1805 Geary Boulevard,San Francisco,CA,94115
+750,The Fillmore Charlotte,820 Hamilton Street,Charlotte,NC,28206
+751,The Fillmore Detroit,2115 Woodward (Next To the Fox),Detroit,MI,48201
+752,The Fillmore Miami Beach at Jackie Gleason Theater,1700 Washington Ave,Miami Beach,FL,33139
+753,The Fillmore Minneapolis presented by Affinity Plus,525 5th Street North,Minneapolis,MN,55401
+754,The Fillmore New Orleans,6 Canal St,New Orleans,LA,70130
+755,The Fillmore Philadelphia,29 E Allen Street,Philadelphia,PA,19123
+756,The Fillmore Silver Spring,8656 Colesville Road,Silver Spring,MD,20910
+757,The Fonda Theatre,6126 Hollywood Blvd.,Los Angeles,CA,90028
+758,The Foundry,29 E Allen Street,Philadelphia,PA,19123
+759,The Foundry,4256 Pearl Road,Cleveland,OH,44109
+760,The Fruit,305 South Dillard St.,Durham,NC,27701
+761,The Funhouse at Mr. Smalls,400 Lincoln Ave,Millvale,PA,15209
+762,The Grand (Boston),58 Seaport Blvd #300,Boston,MA,02210
+763,The Grand at The Complex - UT,536 West 100 South,Salt Lake City,UT,84101
+764,The Hall,721 West 9th Street,Little Rock,AR,72201
+765,The Hall at Live!,7002 Arundel Mills Cir #7777,Hanover,MD,21076
+766,The Independent,628 Divisadero St,San Francisco,CA,94117
+767,The Intersection,133 Cesar E. Chavez Ave SW,Grand Rapids,MI,49503
+768,The Jam Spot,415 Central Ave NW,Albuquerque,NM,87102
+769,The Joy Theater,1200 Canal Street,New Orleans,LA,70112
+770,The Kent Stage,175 E. Main Street,Kent,OH,44240
+771,The Lerner Theatre,410 S. Main Street,Elkhart,IN,46516
+772,The Liacouras Center,1776 N. Broad St.,Philadelphia,PA,19121
+773,The Liberty,312 N Virginia Ave,Roswell,NM,88201
+774,The Loving Touch,22634 Woodward Ave,Ferndale,MI,48220
+775,The Lyric Theatre,1800 3rd Ave N,Birmingham,AL,35203
+776,The Machine Shop - MI,3539 S Dort Hwy,Flint,MI,48507
+777,The Magnolia,210 E Main Street,El Cajon,CA,92020
+778,The Masonic,1111 California St,San Francisco,CA,94108
+779,The Masquerade - Altar,50 Lower Alabama Street,Atlanta,GA,30303
+780,The Masquerade - Heaven,Kenny's Alley @ Underground Atlanta,Atlanta,GA,30303
+781,The Masquerade - Hell,92 Pryor Street SW,Atlanta,GA,30303
+782,The Masquerade - Purgatory,92 Pryor Street SW,Atlanta,GA,30303
+783,The Merry Widow,51 S Conception St,Mobile,AL,36602
+784,The Met Presented by Highmark,858 N Broad St,Philadelphia,PA,19130
+785,The Midland Theatre - MO,1228 Main St,Kansas City,MO,64105
+786,The Mill & Mine,227 W. Depot Avenue,Knoxville,TN,37917
+787,The Momentary - AR,507 SE E St,Bentonville,AR,72712
+788,The Montage Music Hall,50 Chestnut Street,Rochester,NY,14604
+789,The Moroccan Lounge,901 E 1st Street,Los Angeles,CA,90012
+790,The National,708 East Broad,Richmond,VA,23219
+791,The Nick,2514 10th Ave S,Birmingham,AL,35205
+792,The Novo by Microsoft,800 West Olympic Blvd,Los Angeles,CA,90015
+793,The Observatory,3503 S. Harbor Blvd.,Santa Ana,CA,92704
+794,The Observatory North Park,2891 University Ave,San Diego,CA,92104
+795,The Orange Peel,101 Biltmore Ave,Asheville,NC,28801
+796,The Orpheum Theatre Memphis,203 S. Main St.,Memphis,TN,38103
+797,The Pageant,6161 Delmar,Saint Louis,MO,63112
+798,The Palazzo Theatre at The Venetian Resort,3355 S Las Vegas Blvd,Las Vegas,NV,89109
+799,The Pantheon at Caesars Virginia,1100 W Main St,Danville,VA,24541
+800,The Paramount in concert with Northwell,370 New York Ave,Huntington,NY,11743
+801,The Parish at House of Blues Anaheim,"400 W Disney Way, #337",Anaheim,CA,92802
+802,The Peabody Daytona Beach,600 Auditorium Blvd.,Daytona Beach,FL,32118
+803,The Peppermint Club,8713 Beverly Blvd,Los Angeles,CA,90048
+804,The Plaza Theatre Performing Arts Center,125 Pioneer Plaza,El Paso,TX,79901
+805,The Press Club,1119 21st Street,Sacramento,CA,95811
+806,The Pyramid Scheme,68 Commerce Avenue SW,Grand Rapids,MI,49506
+807,The Rady Shell at Jacobs Park,200 Marina Park Way,San Diego,CA,92101
+808,The Rail,112 Turner Cmns Wy,Lexington,KY,40508
+809,The Railhead at Boulder Station Hotel & Casino,4111 Boulder Highway,Las Vegas,NV,89121
+810,The Rave-Eagles Club,2401 W. Wisconsin Ave.,Milwaukee,WI,53233
+811,The Rebel Lounge,2303 East Indian School Rd.,Phoenix,AZ,85016
+812,The Regency Ballroom,1290 Sutter Street,San Francisco,CA,94109
+813,The Regent Theater,448 S. Main St.,Los Angeles,CA,90013
+814,The Rino,314 Armour Rd,North Kansas City,MO,64116
+815,The Ritz,2820 Industrial Drive,Raleigh,NC,27609
+816,The Ritz,400 S 1st St,San Jose,CA,95113
+817,The Ritz Ybor,1503 E 7th Ave,Tampa,FL,33675
+818,The Rock,136 North Park,Tucson,AZ,85719
+819,The Rock at La Cantera,1 Spurs Way,San Antonio,TX,78256
+820,The Salt Shed Indoors (Shed),1357 N Elston Ave,Chicago,IL,60642
+821,The Santander Performing Arts Center,136 North 6th Street,Reading,PA,19601
+822,The Senate,1022 Senate Street,Columbia,SC,29201
+823,The Shelter,431 E Congress St.,Detroit,MI,48226
+824,The Show at Agua Caliente Casino Rancho Mirage,32250 Bob Hope Dr,Rancho Mirage,CA,92270
+825,The Showbox,1426 1st Ave.,Seattle,WA,98104
+826,The Showroom at Wild Horse Pass Resort & Casino,5040 Wild Horse Pass Blvd,Chandler,AZ,85226
+827,The Showroom at the Golden Nugget,129 E Fremont St,Las Vegas,NV,89101
+828,The Sinclair Music Hall,50 Church Street,Cambridge,MA,02138
+829,The Sound,2260 Jimmy Durante Blvd,Del Mar,CA,92014
+830,The Southern Café & Music Hall,103 South 1st St.,Charlottesville,VA,22902
+831,The Southgate House Revival,111 E Sixth Street,Newport,KY,41071
+832,The Southgate House Revival - Revival Room,111 E Sixth Street,Newport,KY,41071
+833,The Sovereign,1200 South 7th Street,St. Louis,MO,63103
+834,The Stone Pony,913 Ocean Ave,Asbury Park,NJ,07712
+835,The Sylvee,25 S. Livingston Street,Madison,WI,53703
+836,The Theatre at Resorts World Las Vegas,3000 South Las Vegas Boulevard,Las Vegas,NV,89109
+837,The Truth,440 Chestnut Street,Nashville,TN,37203
+838,The Tuacahn Amphitheatre,1100 Tuacahn,Ivins,UT,84738
+839,The UC Theatre,2036 University Ave,Berkeley,CA,94704
+840,The Underground,820 Hamilton St,Charlotte,NC,28206
+841,The Van Buren,401 W Van Buren St,Phoenix,AZ,85003
+842,The Venetian Theatre at The Venetian Resort,3355 S Las Vegas Blvd,Las Vegas,NV,89109
+843,The Venue at Horseshoe Casino,777 Casino Center Drive,Hammond,IN,46320
+844,The Venue at Thunder Valley Casino Resort,1200 Athens Avenue,Lincoln,CA,95648
+845,The Vogel at Count Basie Center for the Arts,99 Monmouth Street,Red Bank,NJ,07701
+846,The Vogue,6259 N College Ave,Indianapolis,IN,46220
+847,The Walker Theatre,399 McCallie Avenue,Chattanooga,TN,37402
+848,The Wellmont Theater,5 Seymour Street,Montclair,NJ,07042
+849,The Wilbur,246 Tremont St.,Boston,MA,02116
+850,The Wilma,131 S Higgins Ave,Missoula,MT,59802
+851,The Wiltern,3790 Wilshire Blvd.,Los Angeles,CA,90010
+852,The Winchester Tavern and Music Hall,12112 Madison Avenue,Lakewood,OH,44107
+853,The Wind Creek Event Center,77 Wind Creek Blvd.,Bethlehem,PA,18015
+854,The Women's Museum,3800 Parry Ave,Dallas,TX,75210
+855,The Wonder Bar,1213 Ocean Ave,Asbury Park,NJ,07712
+856,Theatre of Living Arts,334 South St,Philadelphia,PA,19147
+857,Thirsty Horse Saloon,2335 NW Military Hwy,San Antonio,TX,78231
+858,Three Links Deep Ellum,2704 Elm Street,Dallas,TX,75226
+859,Thunderbird Cafe & Music Hall,4053 Butler St.,Pittsburgh,PA,15201
+860,Time Nightclub,1875 Newport Blvd. Suite B245,Costa Mesa,CA,92627
+861,Tipitina's,501 Napoleon Ave,New Orleans,LA,70115
+862,Top Hat,134 West Front Street,Missoula,MT,59802
+863,Tower Theatre,835 NW Wall Street,Bend,OR,97701
+864,Tower Theatre - OR,835 NW Wall Street,Bend,OR,97709
+865,Tower Theatre - Oklahoma City,"425 NW 23rd St, Oklahoma City, OK 73103",Oklahoma City,OK,73103
+866,Town Ballroom,681 Main Street,Buffalo,NY,14203
+867,Town Hall,123 West 43rd Street,New York,NY,10036
+868,Township Auditorium,1703 Taylor Street,Columbia,SC,29201
+869,Toyota Arena,4000 E. Ontario Center Parkway,Ontario,CA,91764
+870,Toyota Center,1510 Polk Street,Houston,TX,77002
+871,Toyota Center - TX,1510 Polk St,Houston,TX,77002
+872,Toyota Center Kennewick,7000 W. Grandridge Blvd,Kennewick,WA,99336
+873,Toyota Oakdale Theatre,95 South Turnpike Road,Wallingford,CT,06492
+874,Tractor,5213 Ballard Avenue NW,Seattle,WA,98107
+875,Transplants Brewing Company,40242 La Quinta Ln,Palmdale,CA,93551
+876,Trilith LIVE,175 Trilith Pkwy,Fayetteville,GA,30214
+877,Tropicana Showroom at Tropicana Atlantic City,2831 Boardwalk Ave,Atlantic City,NJ,08401
+878,Troubadour,9081 Santa Monica Blvd.,West Hollywood,CA,90069
+879,Turntable,6281 N College Ave,Indianapolis,IN,46220
+880,Union Stage,"740 Water Street SW, Washington, DC 20024",Washington,DC,20024
+881,Union Transfer,1026 Spring Garden Street,Philadelphia,PA,19123
+882,United Center,1901 W Madison,Chicago,IL,60612
+883,Uptown Theater,3700 Broadway,Kansas City,MO,64111
+884,Uptown Theater Minneapolis,2900 Hennepin Ave,Minneapolis,MN,55408
+885,Uptown Theatre Napa,1350 3rd St,Napa,CA,94559
+886,V Theater at Planet Hollywood Inside the Miracle Mile Mall,3663 Las Vegas Blvd South Suite 360A,Las Vegas,NV,89109
+887,V theater at Planet Hollywood Las Vegas,3663 Las Vegas Blvd South,Las Vegas,NV,89109
+888,VBC Mark C Smith Concert Hall,700 Monroe Street,Huntsville,AL,35801
+889,VBC Mars Music Hall,700 Monroe St. SW,Huntsville,AL,35801
+890,Val Air Ballroom,417 5th St.,West Des Moines,IA,50265
+891,Valley Bar,130 N. Central Avenue,Phoenix,AZ,85004
+892,Van Andel Arena,130 Fulton West,Grand Rapids,MI,49503
+893,Van Wezel Performing Arts Hall,777 N Tamiami Trail,Sarasota,FL,34236
+894,Variety Playhouse,1099 Euclid Ave Ne,Atlanta,GA,30307
+895,Varsity Theater,1308 SE 4th Street,Minneapolis,MN,55414
+896,Ventura Music Hall,1888 E. Thompson Blvd.,Ventura,CA,93001
+897,Vibrant Music Hall,2938 Grand Prairie Pkwy,Waukee,IA,50263
+898,Vic Theatre,3145 N Sheffield Ave,Chicago,IL,60657
+899,Victoria Theatre-OH,138 North Main Street,Dayton,OH,45402
+900,Victory North,2603 Whitaker Street,Savannah,GA,31401
+901,Viejas Arena at Aztec Bowl San Diego State University,SDSU,San Diego,CA,92182
+902,Vilar Performing Arts Center,68 Avondale Ln,Avon,CO,81620
+903,Vinyl,1374 West Peachtree St,Atlanta,GA,30309
+904,Vinyl Music Hall,2 S Palafox St,Pensacola,FL,32502
+905,Virginia G. Piper Theater,7380 E 2nd St,Scottsdale,AZ,85251
+906,Vivid Music Hall,201 W University Ave,Gainesville,FL,32601
+907,Vogue Theatre - IN,6259 North College Ave.,Indianapolis,IN,46220
+908,VooDoo at Harrah's Kansas City,One Riverboat Drive,Kansas City,MO,64116
+909,Voodoo Room at the House of Blues San Diego,1055 5th Avenue,San Diego,CA,92101
+910,WAMU Theater,800 Occidental Ave S,Seattle,WA,98134
+911,WOW Hall,291 W. 8th Ave.,Eugene,OR,97401
+912,Wally's,144 Ashworth Avenue,Hampton,NH,03842
+913,Walt Disney Concert Hall,,Los Angeles,CA,90037
+914,Walter Studios,747 West Roosevelt St,Phoenix,AZ,85007
+915,War Memorial Auditorium-FL,800 NE. 8th St.,Fort Lauderdale,FL,33304
+916,Warehouse Live Midtown,2600 Travis Street,Houston,TX,77006
+917,Warner Theatre,513 13th St NW,Washington,DC,20004
+918,Warsaw,261 Driggs Ave,Brooklyn,NY,11222
+919,Water of Life Church,7625 East Avenue,Fontana,CA,92336
+920,Webster Underground,31 Webster St,Hartford,CT,06114
+921,Wells Hall at The Parker,707 NE 8th Street,Ft Lauderdale,FL,33304
+922,Westgate Las Vegas Cabaret Theater,3000 Paradise,Las Vegas,NV,89109
+923,Westgate Las Vegas International Theater,3000 Paradise Rd,Las Vegas,NV,89109
+924,Whisky A Go Go,8901 W Sunset Boulevard,West Hollywood,CA,90069
+925,White Oak Music Hall - Downstairs,2915 N Main St,Houston,TX,77009
+926,White Oak Music Hall - Upstairs,"2915 N Main St,",Houston,TX,77009
+927,Will's Pub,1042 N Mills Ave,Orlando,FL,32803
+928,Williams Center - CUG Cantina - Rutherford,15 Sylvan Street,Rutherford,NJ,07070
+929,Wings Event Center,3600 Van Rick Dr.,Kalamazoo,MI,49001
+930,Wiseguys Comedy Club - Salt Lake City,194 South 400 West,Salt Lake City,UT,84101
+931,Wonder Ballroom,128 NE Russell St,Portland,OR,97212
+932,Woodlands Tavern,1200 West Third Avenue,Columbus,OH,43212
+933,Woodruff Arts Center,,Atlanta,GA,30309
+934,X Rocks Theater at Horseshoe Las Vegas,3645 S Las Vegas Blvd,Las Vegas,NV,89109
+935,X-Ray Arcade,5036 S Packard Ave,Cudahy,WI,53110
+936,XL Live,801 S 10th Street,Harrisburg,PA,17104
+937,XS Nightclub at Wynn Las Vegas,3131 Las Vegas Blvd. South,Las Vegas,NV,89109
+938,Xfinity Mobile Arena,3601 South Broad St,Philadelphia,PA,19148
+939,Yaamava Theater,777 San Manuel Blvd S,Highland,CA,92346
+940,Yoshi's Oakland,510 Embarcadero West,Oakland,CA,94621
+941,YouTube Theater,1011 S. Stadium Dr,Inglewood,CA,90301
+942,Yucca Tap Room,29 W. Southern Ave,Tempe,AZ,85282
+943,Zeiterion Theatre-MA,684 Purchase St.,New Bedford,MA,02740
+944,ZeyZey Miami,353 NE 61st St,Miami,FL,33137
+945,miniBar,3810 Broadway Blvd,Kansas City,MO,64111
+946,recordBar,1520 Grand Blvd.,Kansas City,MO,64108

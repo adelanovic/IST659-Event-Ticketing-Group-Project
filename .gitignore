@@ -1,0 +1,39 @@
+# ---- Secrets: never commit ----------------------------------------------------
+# Real settings live in .env files; copy the .env.example next to each one.
+.env
+.env.*
+!.env.example
+*.secret_key
+.secret_key
+*.pem
+*.key
+
+# ---- Ticketmaster data ---------------------------------------------------------
+# Raw API downloads and old copies: large, re-creatable with fetch_ticketmaster.py,
+# and Ticketmaster data is for academic use only (see the project charter).
+data/raw_events.json
+data/archive_*/
+data/events_filtered.csv
+# data/csv/ IS kept: the team builds on it.
+
+# ---- SQL scripts: not shared yet ---------------------------------------------------
+# The project-level sql/ folder (INSERT and BULK INSERT scripts) stays local for now.
+# Leading slash = only this top-level folder; website/sql/ is still tracked.
+/sql/
+
+# ---- Python and tools -------------------------------------------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.playwright-mcp/
+
+# ---- Local databases and editor/OS files ----------------------------------------------
+*.db
+*.sqlite3
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+~$*
