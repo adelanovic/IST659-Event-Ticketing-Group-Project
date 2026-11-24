@@ -12,20 +12,29 @@ stored only as Argon2id hashes.
 
 ## Run it in Docker (recommended)
 
-SQL Server runs separately, from the `learn-databases` project. Start it first:
+Needs Docker Desktop, installed and running. Step-by-step instructions with
+troubleshooting are in the [project README](../README.md#quick-start-run-the-website).
+
+SQL Server runs separately, from the course's
+[`learn-databases`](https://github.com/mafudge/learn-databases) project. Start it
+first, from wherever you cloned it (keep the folder named `learn-databases`; the
+website joins its Docker network, `learn-databases_learndb_net`):
 
 ```powershell
-cd ..\..\learn-databases
+cd <path to>\learn-databases
 docker-compose up -d
 ```
 
-Then, from this folder:
+Then, from this `website` folder:
 
 ```powershell
-copy .env.example .env      # first time only; then set SECRET_KEY and DB_PASSWORD
-up.bat                      # start the site
-down.bat                    # stop the site and DELETE its database
+copy .env.example .env      # first time only; set DB_PASSWORD to learn-databases' MSSQL_SA_PASSWORD
+.\up.bat                    # start the site
+.\down.bat                  # stop the site and DELETE its database
 ```
+
+On a Mac or Linux, use `docker compose up -d --build` and `docker compose down`
+instead of the `.bat` files.
 
 Nothing is kept between runs: `down.bat` drops the `concert_tickets` database
 (all accounts, claimed venues and listed events), and the next `up.bat` starts
@@ -37,24 +46,25 @@ from a clean copy. On a fresh start the container loads the Ticketmaster CSVs fr
 | `demo.venue@example.com` | `DemoVenue2026!` | Venue account managing Smalls Jazz Club |
 | `demo.customer@example.com` | `DemoCustomer2026!` | Customer account |
 
-`down.bat` asks before deleting; `down.bat /y` skips the question. To wipe the
+`.\down.bat` asks before deleting; `.\down.bat /y` skips the question. To wipe the
 database without stopping anything, run `.venv\Scripts\python reset_db.py`.
 
-Open http://127.0.0.1:5000. The web container joins the `learn-databases_learndb_net`
-network and reaches SQL Server at hostname `mssql`. On start it waits up to 60
-seconds for SQL Server, creates the `concert_tickets` database and the
-`customers` table if they don't exist, then starts gunicorn.
+Open http://127.0.0.1:5000. The web container reaches SQL Server at hostname
+`mssql` on the `learn-databases_learndb_net` network. On start it waits up to 60
+seconds for SQL Server, creates the `concert_tickets` database and any missing
+tables, loads the CSVs if the tables are empty, adds the demo logins, then starts
+gunicorn. The first start takes 1 to 2 minutes while the image builds.
 
 | Task | Command |
 |---|---|
-| Rebuild after code changes (keeps data) | `up.bat` |
+| Rebuild after code changes (keeps data) | `.\up.bat` |
 | See logs | `docker compose logs -f web` |
-| Stop and delete data | `down.bat` |
+| Stop and delete data | `.\down.bat` |
 | Stop but keep data | `docker compose down` |
 
 ## Run it without Docker
 
-Double-click `run.bat`, or run `.\run.bat` in this folder. It creates `.venv` on
+Needs Python 3.12 or newer. Double-click `run.bat`, or run `.\run.bat` in this folder. It creates `.venv` on
 first use and starts the site at http://127.0.0.1:5000, connecting to the same
 SQL Server through `localhost:1433`. Stop the Docker container first, since both
 use port 5000.
